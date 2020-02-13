@@ -1,0 +1,41 @@
+function randomString(len, charSet) {
+    charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var randomString = '';
+    for (var i = 0; i < len; i++) {
+        var randomPoz = Math.floor(Math.random() * charSet.length);
+        randomString += charSet.substring(randomPoz,randomPoz+1);
+    }
+    return randomString;
+}
+
+<div id="dvemployeelist" class="container-md p-5 text-white">
+            <form id="frmemployeelist" action="" method="POST">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1 id="lblEmployeeList">List</h1>
+                    </div>
+                </div>
+                <div class="table-responsive-md">
+                    <table class="table-bordered table-dark table-striped display" id="table_employee">
+                        <thead>
+                        <tr class="tableheaders">
+                            <th class="linement"> Activation Code </th>
+                            <th class="linement"> First Name </th>
+                            <th class="linement"> Last Name </th>
+                            <th class="linement"> Position </th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr class="tableheaders">
+                            <th class="linement"> Activation Code </th>
+                            <th class="linement"> First Name </th>
+                            <th class="linement"> Last Name </th>
+                            <th class="linement"> Position </th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>

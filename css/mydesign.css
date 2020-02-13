@@ -1,0 +1,27 @@
+#nav_bar
+{
+    border-radius: 10px;
+}
+#dvcontact
+{
+    background-color: #282c31;
+    border: 1px solid #17a2b8;
+    border-radius: 10px;
+}
+#dvLogin
+{
+    background-color: #282c31;
+    border-radius: 10px;
+}
+card
+{
+    border: #17a2b8;
+}
+#card_body
+{
+    background-color: #282c31;
+}
+#card_footer
+{
+    background-color: #2d3137;
+}

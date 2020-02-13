@@ -1,0 +1,126 @@
+#nav_bar
+{
+    border-radius: 10px;
+}
+#dvLogin
+{
+    background-color: #282c31;
+    border-radius: 10px;
+    border: 1px solid #17a2b8;
+}
+#mobile_icon, #password_icon
+{
+    background-color: #17a2b8;
+    padding-right: 8%;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+#icon_mobile
+{
+    margin-left: 95%;
+    margin-top: 50%;
+}
+#icon_password
+{
+    margin-left: 65%;
+    margin-top: 40%;
+}
+#txtPhone_number, #txtPassword
+{
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+hr.line
+{
+    border: 5px solid #17a2b8;
+    border-radius: 5px;
+}
+card
+{
+    border: #17a2b8;
+}
+#card_body
+{
+    background-color: #282c31;
+}
+#card_footer
+{
+    background-color: #2d3137;
+}
+.btn-info:hover[id=dropdrop]
+{
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+.btn-info:focus[id=dropdrop], .btn-info.focus[id=dropdrop]
+{
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+}
+.btn-info.disabled[id=dropdrop], .btn-info:disabled[id=dropdrop]
+{
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.btn-info:not(:disabled):not(.disabled):active[id=dropdrop], .btn-info:not(:disabled):not(.disabled).active[id=dropdrop],
+.show > .btn-info.dropdown-toggle[id=dropdrop]
+{
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.btn-info:not(:disabled):not(.disabled):active:focus[id=dropdrop], .btn-info:not(:disabled):not(.disabled).active:focus[id=dropdrop],
+.show > .btn-info.dropdown-toggle:focus[id=dropdrop]
+{
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+}
+#txtFirst_name, #txtLast_name, #contact_First_name, #contact_Last_name
+{
+    text-transform: uppercase;
+}
+.tableheaders
+{
+    font-size: 23px;
+    text-align: left;
+}
+.linementcell
+{
+    padding-left: 10px;
+}
+.linement
+{
+    padding-left: 1%;
+    width: 200px;
+}
+.table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th
+{
+    background-color: #343a40;
+}
+.table-striped tbody tr:nth-child(even) td, .table-striped thead tr:nth-child(even) th, thead
+{
+    background-color: #6c757d;
+
+    color:#fff;
+}
+#lblSearch, #lblShow, #table_employee_info
+{
+    color: white;
+}
+.table_employee
+{
+
+}
+.paginate_button
+{
+    background-color: #45A29E;
+}
+.paging_simple_numbers
+{
+    color: white;
+}
