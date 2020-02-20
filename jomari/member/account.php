@@ -78,6 +78,7 @@ $db_select_user->db_select_member_mainpage($fPhone_number);
     </div>
 </div>
 <br>
+<br>
 <div class="row">
     <div class="col-md-4">
         <div class="container-md p-5 text-white" id="dvLogin">
@@ -138,6 +139,97 @@ $db_select_user->db_select_member_mainpage($fPhone_number);
                         </tfoot>
                         <tbody>
                         <?php $db_select_user->db_select_account_table(); ?>
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<div class="row">
+    <div class="col-md-4">
+        <div class="container-md p-5 text-white" id="dvLogin">
+            <h1 id="" class="text-center">Add address</h1>
+            <br>
+            <form action="includes/add_address.php" method="POST" class="needs-validation" novalidate>
+                <div class="form-group">
+                    <label id="">Region:
+                        <select name="select_region" id="slc_region" onchange="" class="btn btn-info dropdown-toggle form-control" required>
+
+                        </select>
+                    </label>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+                <div class="form-group">
+                    <label id="">Province:
+                        <select id="slc_province" name="select_province" class="btn btn-info dropdown-toggle form-control" disabled required>
+
+                        </select>
+                    </label>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+                <div class="form-group">
+                    <label id="">Municipality:
+                        <select id="slc_citymun" name="select_city_mun" class="btn btn-info dropdown-toggle form-control" disabled required>
+
+                        </select>
+                    </label>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+                <div class="form-group">
+                    <label id="">Barangay:
+                        <select id="slc_brgy" name="select_brgy" class="btn btn-info dropdown-toggle form-control" disabled required>
+
+                        </select>
+                    </label>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+                <div class="form-group">
+                    <p id="lblSponsor">Address: </p>
+                    <input type="text" class="form-control" id="txtAddress" name="fAddress" placeholder="Enter address" disabled required/>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+                <button class="btn btn-block btn-info" type="submit" id="btnAdd_Address" name="buttonAdd_Address">Add</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div id="dvhomeaddress" class="container-md p-5 text-white">
+            <form id="frmemployeelist" action="" method="POST">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1 id="lblAddress">Home Address</h1>
+                    </div>
+                </div>
+                <div class="table-responsive-md">
+                    <table class="table-bordered table-dark table-striped display" id="table_Address">
+                        <thead>
+                        <tr class="tableheaders">
+                            <th class="linement"> Region </th>
+                            <th class="linement"> Province </th>
+                            <th class="linement"> Municipality </th>
+                            <th class="linement"> Barangay </th>
+                            <th class="linement"> Address </th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr class="tableheaders">
+                            <th class="linement"> Region </th>
+                            <th class="linement"> Province </th>
+                            <th class="linement"> Municipality </th>
+                            <th class="linement"> Barangay </th>
+                            <th class="linement"> Address </th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        <?php $db_select_user->db_select_home_location_table(); ?>
                         </tbody>
                     </table>
                 </div>

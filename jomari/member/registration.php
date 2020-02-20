@@ -46,13 +46,13 @@ $db_select_location = new db_connection_member();
                         <div class="col-md-6">
                             <div class="form-group">
                                 <p id="lblActivation_code">Activation Code: </p>
-                                <input type="text" class="form-control" id="txtActivation_pin" name="fActivation_code" placeholder="Enter Activation Code" maxlength="20" required/>
+                                <input type="text" class="form-control" id="txtActivation_pin" name="fActivation_code" placeholder="Enter Activation Code" onkeypress="return AvoidSpace()" maxlength="20" minlength="20" required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                             <div class="form-group">
                                 <p id="lblPhone_number">Phone number: </p>
-                                <input type="text" class="form-control" id="txtPhone_number" name="fPhone_number_registration" placeholder="Enter Phone number" maxlength="11" required/>
+                                <input type="text" class="form-control" id="txtPhone_number" name="fPhone_number_registration" placeholder="Enter Phone number" pattern="[0]{1}[9]{1}[0-9]{9}" onkeypress="return AvoidSpace()" maxlength="11" required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
@@ -64,7 +64,7 @@ $db_select_location = new db_connection_member();
                             </div>
                             <div class="form-group">
                                 <p id="lblPassword">Password: </p>
-                                <input type="password" class="form-control" id="txtPassword" name="fPassword" placeholder="Enter Password" maxlength="60" required/>
+                                <input type="password" class="form-control" id="txtPassword" name="fPassword" onkeypress="return AvoidSpace()" placeholder="Enter Password" maxlength="60" required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
@@ -75,51 +75,41 @@ $db_select_location = new db_connection_member();
                             </div>
                             <div class="form-group">
                                 <p id="lblFirst_name">First Name: </p>
-                                <input type="text" class="form-control" id="txtFirst_name" name="fFirst_name" placeholder="Enter first name" pattern="[^'\x22][^1-9]+" maxlength="25" value="" required/>
+                                <input type="text" class="form-control" id="txtFirst_name" name="fFirst_name" placeholder="Enter first name" pattern="[^\s][a-zA-Z]+( [a-zA-Z]+)*[^\s]+" maxlength="25" minlength="2" value="" required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                             <div class="form-group">
                                 <p id="lblLast_name">Last Name: </p>
-                                <input type="text" class="form-control" id="txtLast_name" name="fLast_name" placeholder="Enter last name" pattern="[^'\x22][^1-9]+" maxlength="25" value="" required/>
+                                <input type="text" class="form-control" id="txtLast_name" name="fLast_name" placeholder="Enter last name" pattern="[^\s][a-zA-Z]+( [a-zA-Z]+)*[^\s]+" maxlength="25" minlength="2" value="" required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
                         <div class="col-md-6" id="">
-                            <div class="form-group">
-                                <label id="">Region:
-                                    <select name="select_region" id="slc_region" onchange="" class="btn btn-info dropdown-toggle form-control" required>
+                            <label id="">Region:
+                                <select name="select_region" id="slc_region" onchange="" class="btn btn-info dropdown-toggle form-control" required>
 
-                                    </select>
-                                </label>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                            </div>
-                            <div class="form-group">
-                                <label id="">Province:
-                                    <select id="slc_province" name="select_province" class="btn btn-info dropdown-toggle form-control" disabled required>
+                                </select>
+                            </label>
+                            <label id="">Province:
+                                <select id="slc_province" name="select_province" class="btn btn-info dropdown-toggle form-control" disabled required>
 
-                                    </select>
-                                </label>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                            </div>
-                            <div class="form-group">
-                                <label id="">Municipality:
-                                    <select id="slc_citymun" class="btn btn-info dropdown-toggle form-control" disabled required>
+                                </select>
+                            </label>
+                            <label id="">Municipality:
+                                <select id="slc_citymun" class="btn btn-info dropdown-toggle form-control" disabled required>
 
-                                    </select>
-                                </label>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                            </div>
-                            <div class="form-group">
-                                <label id="">Barangay:
-                                    <select id="slc_brgy" class="btn btn-info dropdown-toggle form-control" disabled required>
+                                </select>
+                            </label>
+                            <label id="">Barangay:
+                                <select id="slc_brgy" class="btn btn-info dropdown-toggle form-control" disabled required>
 
-                                    </select>
-                                </label>
+                                </select>
+                            </label>
+                            <div class="form-group">
+                                <p id="lblSponsor">Address: </p>
+                                <input type="text" class="form-control" id="txtAddress" name="fAddress" placeholder="Enter address" disabled required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>

@@ -63,6 +63,45 @@ $(document).ready(function()
         $this.addClass('btn btn-info');
     });
 } );
+$(document).ready(function()
+{
+    $('#table_Address').DataTable
+    ({
+        responsive: true,
+        "pageLength": 5,
+        "lengthMenu": [[5, 10], [5, 10]],
+        "sPaginationType": "full_numbers",
+        language: {
+            paginate: {
+                next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',
+                previous: '<i class="fa fa-step-backward" data-toggle="tooltip" data-placement="left" title="Previous"></i>',
+                first: '<i class="fa fa-fast-backward" data-toggle="tooltip" data-placement="left" title="Start"></i>',
+                last: '<i class="fa fa-fast-forward" data-toggle="tooltip" data-placement="right" title="End"></i>'
+            }
+        }
+    } );
+    $('#table_Address_wrapper .dataTables_filter').find('input').each(function ()
+    {
+        const $this = $(this);
+        $this.addClass('form-control-sm');
+    });
+    $('#table_Address_wrapper .dataTables_filter').find('label').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "lblSearch");
+    });
+    $('#table_Address_wrapper .dataTables_length').find('label').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "lblShow");
+    });
+    $('#table_Address_wrapper .dataTables_length').find('select').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "slcEntries");
+        $this.addClass('btn btn-info');
+    });
+} );
 function togglePassword()
 {
     var passtype = document.getElementById("txtPassword");
@@ -82,6 +121,7 @@ function AvoidSpace(event)
     {
         return false;
     }
+
 }
 
 $(document).ready(function()
@@ -90,6 +130,7 @@ $(document).ready(function()
     var provinceOptions = '';
     var citymunOptions = '';
     var brgyOptions = '';
+    var addressOption = '';
 
     //Region
     $.getJSON('refregion.json', function(data)
@@ -98,6 +139,7 @@ $(document).ready(function()
         provinceOptions = '<option value="">Select Province</option>';
         citymunOptions = '<option value="">Select Municipality</option>';
         brgyOptions = '<option value="">Select Barangay</option>';
+        addressOption = '';
         $.each(data, function(key, region)
         {
             regionOptions += '<option value="'+region.regCode+'">'+region.regDesc+'</option>';
@@ -106,6 +148,8 @@ $(document).ready(function()
         $('#slc_province').html(provinceOptions);
         $('#slc_citymun').html(citymunOptions);
         $('#slc_brgy').html(brgyOptions);
+        document.getElementById("txtAddress").disabled = true;
+        document.getElementById("txtAddress").value = "";
     });
     //Province
     $(document).on('change', '#slc_region', function()
@@ -121,20 +165,32 @@ $(document).ready(function()
                     if(region_id == province.regCode)
                     {
                         document.getElementById("slc_province").disabled = false;
+                        document.getElementById("txtAddress").value = "";
                         provinceOptions += '<option value="'+province.provCode+'">'+province.provDesc+'</option>';
                     }
                 });
                 $('#slc_province').html(provinceOptions);
             });
         }
-        else
+        if(region_id == 'Select Region')
         {
-            document.getElementById("slc_province").disabled = true;
+            $('#slc_citymun').html('<option value="">Select Municipality</option>');
+            $('#slc_brgy').html('<option value="">Select Barangay</option>');
+            document.getElementById("txtAddress").value = "";
+            document.getElementById("txtAddress").disabled = true;
             document.getElementById("slc_citymun").disabled = true;
             document.getElementById("slc_brgy").disabled = true;
+        }
+        else
+        {
             $('#slc_province').html('<option value="">Select Province</option>');
             $('#slc_citymun').html('<option value="">Select Municipality</option>');
             $('#slc_brgy').html('<option value="">Select Barangay</option>');
+            document.getElementById("txtAddress").disabled = true;
+            document.getElementById("slc_province").disabled = true;
+            document.getElementById("slc_citymun").disabled = true;
+            document.getElementById("slc_brgy").disabled = true;
+            document.getElementById("txtAddress").value = "";
         }
     });
     //City/Municipality
@@ -151,18 +207,28 @@ $(document).ready(function()
                     if(province_id == citymun.provCode)
                     {
                         document.getElementById("slc_citymun").disabled = false;
+                        document.getElementById("txtAddress").value = "";
                         citymunOptions += '<option value="'+citymun.citymunCode+'">'+citymun.citymunDesc+'</option>';
                     }
                 });
                 $('#slc_citymun').html(citymunOptions);
             });
         }
+        if(province_id == 'Select Province')
+        {
+            $('#slc_brgy').html('<option value="">Select Barangay</option>');
+            document.getElementById("txtAddress").value = "";
+            document.getElementById("slc_brgy").disabled = true;
+            document.getElementById("txtAddress").disabled = true;
+        }
         else
         {
             document.getElementById("slc_citymun").disabled = true;
             document.getElementById("slc_brgy").disabled = true;
+            document.getElementById("txtAddress").disabled = true;
             $('#slc_citymun').html('<option value="">Select Municipality</option>');
             $('#slc_brgy').html('<option value="">Select Barangay</option>');
+            document.getElementById("txtAddress").value = "";
         }
     });
     //Barangay
@@ -178,6 +244,7 @@ $(document).ready(function()
                 {
                     if(citymun_id == brgy.citymunCode)
                     {
+                        document.getElementById("txtAddress").value = "";
                         document.getElementById("slc_brgy").disabled = false;
                         brgyOptions += '<option value="'+brgy.brgyCode+'">'+brgy.brgyDesc+'</option>';
                     }
@@ -185,10 +252,32 @@ $(document).ready(function()
                 $('#slc_brgy').html(brgyOptions);
             });
         }
+        if(citymun_id == 'Select Municipality')
+        {
+            document.getElementById("txtAddress").value = "";
+            document.getElementById("txtAddress").disabled = true;
+        }
         else
         {
             document.getElementById("slc_brgy").disabled = true;
+            document.getElementById("txtAddress").disabled = true;
             $('#slc_brgy').html('<option value="">Select Barangay</option>');
+            document.getElementById("txtAddress").value = "";
+        }
+    });
+    //Address
+    $(document).on('change', '#slc_brgy', function()
+    {
+        var brgy_id = $(this).val();
+        if(brgy_id != '')
+        {
+            document.getElementById("txtAddress").disabled = false;
+            document.getElementById("txtAddress").value = "";
+        }
+        else
+        {
+            document.getElementById("txtAddress").value = "";
+            document.getElementById("txtAddress").disabled = true;
         }
     });
 });

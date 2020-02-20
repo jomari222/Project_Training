@@ -218,8 +218,29 @@ class db_connection_member
 
         $result = $sql_Select->get_result();
         $row = $result->fetch_assoc();
+        //////////////////////
+        $sql_Select_account_sponsor = $this->con->prepare('SELECT * FROM account WHERE username = ?');
+        $sql_Select_account_sponsor->bind_param('s', $user_sponsor);
+        $sql_Select_account_sponsor->execute() or die('Query error'.$this->con->error);
 
-        if($row['activation_code'] == $activation_code && $row['used'] == 0)
+        $result_account_sponsor = $sql_Select_account_sponsor->get_result();
+        $row_account_sponsor = $result_account_sponsor->fetch_assoc();
+        //////////////////////
+        $sql_Select_account = $this->con->prepare('SELECT * FROM account WHERE username = ?');
+        $sql_Select_account->bind_param('s', $username);
+        $sql_Select_account->execute() or die('Query error'.$this->con->error);
+
+        $result_account = $sql_Select_account->get_result();
+        $row_account = $result_account->fetch_assoc();
+        //////////////////////
+        $sql_Select_member = $this->con->prepare('SELECT * FROM member WHERE phone_number = ?');
+        $sql_Select_member->bind_param('s', $phone_number);
+        $sql_Select_member->execute() or die('Query error'.$this->con->error);
+
+        $result_member = $sql_Select_member->get_result();
+        $row_member = $result_member->fetch_assoc();
+
+        if($row['activation_code'] == $activation_code && $row['used'] == 0 && $row_account_sponsor['username'] == $user_sponsor && $row_member['phone_number'] != $phone_number && $row_account['username'] != $username)
         {
             $this->code_activation_id = $row['code_activation_id'];
             $this->db_insert_member($member_id,$phone_number,$first_name,$last_name,$position_id,$blocked);
@@ -231,6 +252,21 @@ class db_connection_member
         {
             include_once('message.php');
             MessageBackRegistration("Activation code already used.");
+        }
+        elseif($row_account_sponsor['username'] != $user_sponsor)
+        {
+            include_once('message.php');
+            MessageBackRegistration("Sponsor username invalid.");
+        }
+        elseif($row_member['phone_number'] == $phone_number)
+        {
+            include_once('message.php');
+            MessageBackRegistration("Phone number is already registered.");
+        }
+        elseif($row_account['username'] == $username)
+        {
+            include_once('message.php');
+            MessageBackRegistration("Username is already taken.");
         }
         else
         {
@@ -309,78 +345,94 @@ class db_connection_member
         $sql_Select->close();
     }
 
-    public function db_select_region()
+    public function db_select_home_location_table()
     {
-        $sql_Select = $this->con->prepare('SELECT * FROM refregion');
+        $sql_Select = $this->con->prepare('SELECT * FROM address WHERE member_id = ?');
+        $sql_Select->bind_param('s', $this->member_id);
         $sql_Select->execute() or die('Query error'.$this->con->error);
 
         $result = $sql_Select->get_result();
         while($row = $result->fetch_assoc())
         {
-            echo '<option value='.$row['regDesc'].'>'. $row['regDesc'] .'</option>';
-            $this->regCode = $row['regCode'];
-        }
+            $sql_Select_region = $this->con->prepare('SELECT * FROM refregion WHERE regCode = ?');
+            $sql_Select_region->bind_param('s', $row['region']);
+            $sql_Select_region->execute() or die(''.$this->con->error);
 
+            $result_region = $sql_Select_region->get_result();
+            $row_region = $result_region->fetch_assoc();
+
+            $sql_Select_province = $this->con->prepare('SELECT * FROM refprovince WHERE provCode = ?');
+            $sql_Select_province->bind_param('s', $row['province']);
+            $sql_Select_province->execute() or die(''.$this->con->error);
+
+            $result_province = $sql_Select_province->get_result();
+            $row_province = $result_province->fetch_assoc();
+
+            $sql_Select_city_mun = $this->con->prepare('SELECT * FROM refcitymun WHERE citymunCode = ?');
+            $sql_Select_city_mun->bind_param('s', $row['city']);
+            $sql_Select_city_mun->execute() or die(''.$this->con->error);
+
+            $result_city_mun = $sql_Select_city_mun->get_result();
+            $row_city_mun = $result_city_mun->fetch_assoc();
+
+            $sql_Select_barangay = $this->con->prepare('SELECT * FROM refbrgy WHERE brgyCode = ?');
+            $sql_Select_barangay->bind_param('s', $row['barangay']);
+            $sql_Select_barangay->execute() or die(''.$this->con->error);
+
+            $result_barangay= $sql_Select_barangay->get_result();
+            $row_barangay = $result_barangay->fetch_assoc();
+
+            echo '<tr>
+                    <td class="linement">'.$row_region['regDesc'].'</td>
+                    <td class="linement">'.$row_province['provDesc'].'</td>
+                    <td class="linement">'.$row_city_mun['citymunDesc'].'</td>
+                    <td class="linement">'.$row_barangay['brgyDesc'].'</td>
+                    <td class="linement">'.$row['unit'].'</td>
+                </tr>';
+        }
         $sql_Select->close();
     }
 
-    public function db_select_province($regDesc)
+    public function  db_select_table_region()
     {
-        $sql_Select = $this->con->prepare('SELECT * FROM refregion WHERE regDesc = ?');
-        $sql_Select->bind_param('s', $regDesc);
-        $sql_Select->execute() or die('Query error'.$this->con->error);
 
-        $result = $sql_Select->get_result();
-        while($row = $result->fetch_assoc())
-        {
-            $sql_Select2 = $this->con->prepare('SELECT * FROM refprovince WHERE regCode = ?');
-            $sql_Select2->bind_param('s', $row['regCode']);
-            $sql_Select2->execute() or die('Query error'.$this->con->error);
-
-            $result2 = $sql_Select2->get_result();
-            while($row2 = $result2->fetch_assoc())
-            {
-                echo '<option value='.$row2['provDesc'].'>'. $row2['provDesc'] .'</option>';
-                $this->provCode = $row2['provCode'];
-            }
-
-            $sql_Select2->close();
-        }
-
-        $sql_Select->close();
     }
 
-    public function db_select_city_mun($provCode)
+    public function  db_select_table_province()
     {
-        $sql_Select = $this->con->prepare('SELECT * FROM refcitymun WHERE provCode = ?');
-        $sql_Select->bind_param('s', $provCode);
-        $sql_Select->execute() or die('Query error'.$this->con->error);
 
-        $result = $sql_Select->get_result();
-        while($row = $result->fetch_assoc())
-        {
-            echo '<option value='.$row['citymunDesc'].'>'. $row['citymunDesc'] .'</option>';
-            $this->citymunCode = $row['citymunCode'];
-        }
-
-        $sql_Select->close();
     }
 
-    public function db_select_brgy($citymunCode)
+    public function  db_select_table_city()
     {
-        $sql_Select = $this->con->prepare('SELECT * FROM refbrgy WHERE citymunCode = ?');
-        $sql_Select->bind_param('s', $citymunCode);
-        $sql_Select->execute() or die('Query error'.$this->con->error);
 
-        $result = $sql_Select->get_result();
-        while($row = $result->fetch_assoc())
-        {
-            echo '<option value='.$row['brgyDesc'].'>'. $row['brgyDesc'] .'</option>';
-        }
-
-        $sql_Select->close();
     }
 
+    public function  db_select_table_barangay()
+    {
+
+    }
+
+    public function db_insert_home_address_register($region,$province,$city,$brgy,$address,$id)
+    {
+        $sql_Insert = $this->con->prepare('INSERT INTO address (region, province, city, barangay, unit, member_id)VALUES(?,?,?,?,?,?)');
+        $sql_Insert->bind_param('ssssss',$region,$province,$city,$brgy,$address,$id);
+        $sql_Insert->execute() or die('Query error'.$this->con->error);
+
+        $sql_Insert->close();
+    }
+
+    public function db_insert_home_address($region,$province,$city,$brgy,$address)
+    {
+        $sql_Insert = $this->con->prepare('INSERT INTO address (region, province, city, barangay, unit, member_id)VALUES(?,?,?,?,?,?)');
+        $sql_Insert->bind_param('ssssss',$region,$province,$city,$brgy,$address,$this->member_id);
+        $sql_Insert->execute() or die('Query error'.$this->con->error);
+
+        $sql_Insert->close();
+
+        include_once('message.php');
+        MessageBackAddAccount('Address has been added');
+    }
 
     function get_first_name()
     {

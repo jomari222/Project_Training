@@ -108,13 +108,9 @@ card
 
     color:#fff;
 }
-#lblSearch, #lblShow, #table_employee_info
+#lblSearch, #lblShow, #table_employee_info, #table_Address_info
 {
     color: white;
-}
-.table_employee
-{
-
 }
 .paginate_button
 {
