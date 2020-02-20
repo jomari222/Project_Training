@@ -1,0 +1,199 @@
+#bg
+{
+    background: url("../images/r-design-crystal-background-dark-compressor.jpg") no-repeat fixed;
+    background-size: 100% 100%;
+}
+#bg2
+{
+    background-color: #363737;
+}
+#dvLogin
+{
+    width: 90%;
+    border-radius: 5px;
+    border: 1px solid;
+    box-shadow: 5px 6px #888888;
+    background-color: #282c31;
+}
+div[id=dvemployeelist],[id=dvmainpage],[id=dvaddemployee],[id=dvcontact],[id=dvchangepassword]
+{
+    border-radius: 5px;
+    border: 1px solid;
+    background-color: #282c31;
+}
+#dvemployeelist
+{
+    height: 100%;
+}
+#dvchangepassword
+{
+    border-radius: 5px;
+    border: 1px solid;
+}
+#dvcontact
+{
+    border-radius: 5px;
+    border: 1px solid;
+}
+.tableheaders
+{
+    font-size: 23px;
+    text-align: left;
+}
+.tablecells
+{
+    font-size: 18px;
+}
+.linementcell
+{
+    padding-left: 10px;
+}
+.linement
+{
+    width: 80px;
+}
+h1[id=lblLoginform],[id=lblInformation],[id=lblEmployeeList],[id=lblAddEmployee],[id=lblcontact]
+{
+    color: #45A29E;
+}
+img[id=imgProfIcon]
+{
+    width:120px;
+    height:120px;
+}
+#btnChangePassword
+{
+    float: right;
+}
+#btnAddEmployee
+{
+    float: right;
+}
+#btnConfirm
+{
+    float: right;
+}
+#dark
+{
+    background-color: #45A29E;
+}
+#dark-nav
+{
+    background-color: #45A29E;
+    border-radius: 10px;
+}
+#_Search
+{
+    float: right;
+}
+#btnMain_page
+{
+    border-radius: 20px;
+}
+#dvchangepassword
+{
+    display: none;
+}
+
+.table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th
+{
+    background-color: #343a40;
+}
+.table-striped tbody tr:nth-child(even) td, .table-striped thead tr:nth-child(even) th, thead
+{
+    background-color: #6c757d;
+
+    color:#fff;
+}
+#lblSearch, #lblShow, #table_employee_info
+{
+    color: white;
+}
+.table_employee
+{
+
+}
+.paginate_button
+{
+    background-color: #45A29E;
+}
+.paging_simple_numbers
+{
+    color: white;
+}
+#header_main_page
+{
+    font-size: 100px;
+    color: white;
+}
+#paragraph_By
+{
+    font-size: 30px;
+    color: white;
+}
+.jumbotron
+{
+    background-color: #6c757d;
+}
+#slcEntries
+{
+    background-color: #45A29E;
+}
+.btn-info
+{
+    background-color: #45A29E;
+}
+#modal_modal
+{
+    color: white;
+}
+#user_icon
+{
+    background-color: #45A29E;
+    padding-right: 8%;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+#icon_user
+{
+    margin-left: 55%;
+    margin-top: 40%;
+}
+#txtUsername
+{
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+#password_icon
+{
+    background-color: #45A29E;
+    padding-right: 8%;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+#icon_password
+{
+    margin-left: 55%;
+    margin-top: 40%;
+}
+#txtPassword
+{
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+#id_AddFirst_name, #id_AddLast_name, #contact_First_name, #contact_Last_name
+{
+    text-transform: uppercase;
+}
+.social_footer
+{
+    padding-top: 1%;
+}
+input[id=txtEmployeeID],[id=txtFirstname],[id=txtLastname],[id=txtGender],[id=txtPosition],[id=id_Employee_ID]
+{
+    font-weight: bold;
+}
+input .form-control
+{
+    font-weight: bold;
+}

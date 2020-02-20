@@ -1,0 +1,17 @@
+Here are the accounts for the Website:
+
+Username: admin
+Password: admins
+Position: Administrator
+
+Username: Jomari
+Password: Garcia
+Position: Employee
+
+Username: jessica
+Password: garcia
+Position: Administrator
+
+Username: james_26
+Password: estrada
+Position: Employee
