@@ -108,13 +108,13 @@ card
 
     color:#fff;
 }
-#lblSearch, #lblShow, #table_employee_info, #table_Address_info
+#lblSearch, #lblShow, #table_employee_info, #table_Address_info, #lblShow_Address, #lblSearch_Address
 {
     color: white;
 }
 .paginate_button
 {
-    background-color: #45A29E;
+    background-color: #17a2b8;
 }
 .paging_simple_numbers
 {

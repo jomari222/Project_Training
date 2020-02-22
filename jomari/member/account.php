@@ -154,47 +154,32 @@ $db_select_user->db_select_member_mainpage($fPhone_number);
             <h1 id="" class="text-center">Add address</h1>
             <br>
             <form action="includes/add_address.php" method="POST" class="needs-validation" novalidate>
-                <div class="form-group">
-                    <label id="">Region:
-                        <select name="select_region" id="slc_region" onchange="" class="btn btn-info dropdown-toggle form-control" required>
+                <label id="">Region:
+                    <select name="select_region" id="slc_region" onchange="" class="btn btn-info dropdown-toggle form-control" required>
 
-                        </select>
-                    </label>
-                    <div class="valid-feedback">Valid.</div>
-                    <div class="invalid-feedback">Please fill out this field.</div>
-                </div>
-                <div class="form-group">
-                    <label id="">Province:
-                        <select id="slc_province" name="select_province" class="btn btn-info dropdown-toggle form-control" disabled required>
+                    </select>
+                </label>
+                <label id="">Province:
+                    <select id="slc_province" name="select_province" class="btn btn-info dropdown-toggle form-control" disabled required>
 
-                        </select>
-                    </label>
-                    <div class="valid-feedback">Valid.</div>
-                    <div class="invalid-feedback">Please fill out this field.</div>
-                </div>
-                <div class="form-group">
-                    <label id="">Municipality:
-                        <select id="slc_citymun" name="select_city_mun" class="btn btn-info dropdown-toggle form-control" disabled required>
+                    </select>
+                </label>
+                <label id="">Municipality:
+                    <select id="slc_citymun" name="select_city_mun" class="btn btn-info dropdown-toggle form-control" disabled required>
 
-                        </select>
-                    </label>
-                    <div class="valid-feedback">Valid.</div>
-                    <div class="invalid-feedback">Please fill out this field.</div>
-                </div>
-                <div class="form-group">
-                    <label id="">Barangay:
-                        <select id="slc_brgy" name="select_brgy" class="btn btn-info dropdown-toggle form-control" disabled required>
+                    </select>
+                </label>
+                <label id="">Barangay:
+                    <select id="slc_brgy" name="select_brgy" class="btn btn-info dropdown-toggle form-control" disabled required>
 
-                        </select>
-                    </label>
-                    <div class="valid-feedback">Valid.</div>
-                    <div class="invalid-feedback">Please fill out this field.</div>
-                </div>
+                    </select>
+                </label>
                 <div class="form-group">
                     <p id="lblSponsor">Address: </p>
                     <input type="text" class="form-control" id="txtAddress" name="fAddress" placeholder="Enter address" disabled required/>
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
+                    <div class="text-muted">House Number/Street (Ex: #111 Upper Street).</div>
                 </div>
                 <button class="btn btn-block btn-info" type="submit" id="btnAdd_Address" name="buttonAdd_Address">Add</button>
             </form>
@@ -202,7 +187,7 @@ $db_select_user->db_select_member_mainpage($fPhone_number);
     </div>
     <div class="col-md-8">
         <div id="dvhomeaddress" class="container-md p-5 text-white">
-            <form id="frmemployeelist" action="" method="POST">
+            <form id="frmaddresslist" action="" method="POST">
                 <div class="row">
                     <div class="col-md-8">
                         <h1 id="lblAddress">Home Address</h1>

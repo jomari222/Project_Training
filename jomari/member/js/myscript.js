@@ -88,17 +88,17 @@ $(document).ready(function()
     $('#table_Address_wrapper .dataTables_filter').find('label').each(function ()
     {
         const $this = $(this);
-        $this.attr("id", "lblSearch");
+        $this.attr("id", "lblSearch_Address");
     });
     $('#table_Address_wrapper .dataTables_length').find('label').each(function ()
     {
         const $this = $(this);
-        $this.attr("id", "lblShow");
+        $this.attr("id", "lblShow_Address");
     });
     $('#table_Address_wrapper .dataTables_length').find('select').each(function ()
     {
         const $this = $(this);
-        $this.attr("id", "slcEntries");
+        $this.attr("id", "slcEntries_Address");
         $this.addClass('btn btn-info');
     });
 } );

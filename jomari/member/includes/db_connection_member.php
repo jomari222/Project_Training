@@ -279,32 +279,23 @@ class db_connection_member
 
     public function db_select_member_account_add($activation_code,$username,$password,$sponsor)
     {
-        $sql_Select = $this->con->prepare('SELECT * FROM account');
+        $sql_Select = $this->con->prepare('SELECT * FROM account WHERE username = ?');
+        $sql_Select->bind_param('s', $username);
         $sql_Select->execute() or die('Query error'.$this->con->error);
 
         $result = $sql_Select->get_result();
         $row = $result->fetch_assoc();
 
-        if($username == $row['username'])
+        if($row['username'] != $username)
         {
-            include_once('message.php');
-            MessageBackAddAccount('Username already taken.');
-        }
-        elseif($activation_code == $row['activation_code'])
-        {
-            include_once('message.php');
-            MessageBackAddAccount('Activation code already used.');
-        }
-        else
-        {
-            $sql_Select = $this->con->prepare('SELECT * FROM code_activation WHERE BINARY activation_code = ?');
-            $sql_Select->bind_param('s', $activation_code);
-            $sql_Select->execute() or die('Query error'.$this->con->error);
+            $sql_Select_code_activation = $this->con->prepare('SELECT * FROM code_activation WHERE activation_code = ?');
+            $sql_Select_code_activation ->bind_param('s', $activation_code);
+            $sql_Select_code_activation ->execute() or die('Query error'.$this->con->error);
 
-            $result = $sql_Select->get_result();
-            $row = $result->fetch_assoc();
+            $result_code_activation  = $sql_Select_code_activation ->get_result();
+            $row_code_activation  = $result_code_activation ->fetch_assoc();
 
-            if($row['activation_code'] == $activation_code && $row['used'] == 0)
+            if($row_code_activation['activation_code'] == $activation_code && $row_code_activation['used'] == 0)
             {
                 $sql_Insert = $this->con->prepare('INSERT INTO account (code_activation_id, activation_code, username, password, user_sponsor, member_id)VALUES(?,?,?,?,?,?)');
                 $sql_Insert->bind_param('ssssss',$row['code_activation_id'],$activation_code,$username,$password,$sponsor,$this->member_id);
@@ -314,7 +305,7 @@ class db_connection_member
 
                 $this->db_update_code_activation($activation_code);
             }
-            elseif($row['activation_code'] == $activation_code && $row['used'] == 1)
+            elseif($row_code_activation['activation_code'] == $activation_code && $row_code_activation['used'] != 0)
             {
                 include_once('message.php');
                 MessageBackAddAccount("Activation code already used.");
@@ -324,7 +315,14 @@ class db_connection_member
                 include_once('message.php');
                 MessageBackAddAccount("Invalid activation code.");
             }
+            $sql_Select_code_activation->close();
         }
+        else
+        {
+            include_once('message.php');
+            MessageBackAddAccount('Username already taken.');
+        }
+        $sql_Select->close();
     }
 
     public function db_select_account_table()
@@ -424,14 +422,31 @@ class db_connection_member
 
     public function db_insert_home_address($region,$province,$city,$brgy,$address)
     {
-        $sql_Insert = $this->con->prepare('INSERT INTO address (region, province, city, barangay, unit, member_id)VALUES(?,?,?,?,?,?)');
-        $sql_Insert->bind_param('ssssss',$region,$province,$city,$brgy,$address,$this->member_id);
-        $sql_Insert->execute() or die('Query error'.$this->con->error);
+        $sql_Select_check = $this->con->prepare('SELECT * FROM address WHERE member_id = ?');
+        $sql_Select_check->bind_param('s', $this->member_id);
+        $sql_Select_check->execute() or die('Query error'.$this->con->error);
 
-        $sql_Insert->close();
+        $result_check = $sql_Select_check->get_result();
+        while($row_check = $result_check->fetch_assoc())
+        {
+            if($region == $row_check['region'] && $province == $row_check['province'] && $city == $row_check['city'] && $brgy == $row_check['barangay'] && $address == $row_check['unit'])
+            {
+                include_once('message.php');
+                MessageBackAddAccount('Address is already registered to your account.');
+            }
+            else
+            {
+                $sql_Insert = $this->con->prepare('INSERT INTO address (region, province, city, barangay, unit, member_id)VALUES(?,?,?,?,?,?)');
+                $sql_Insert->bind_param('ssssss',$region,$province,$city,$brgy,$address,$this->member_id);
+                $sql_Insert->execute() or die('Query error'.$this->con->error);
 
-        include_once('message.php');
-        MessageBackAddAccount('Address has been added');
+                include_once('message.php');
+                MessageBackAddAccount('Address has been added');
+
+                $sql_Insert->close();
+            }
+        }
+        $sql_Select_check->close();
     }
 
     function get_first_name()

@@ -55,12 +55,13 @@ $db_select_location = new db_connection_member();
                                 <input type="text" class="form-control" id="txtPhone_number" name="fPhone_number_registration" placeholder="Enter Phone number" pattern="[0]{1}[9]{1}[0-9]{9}" onkeypress="return AvoidSpace()" maxlength="11" required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
+                                <div class="text-muted">Ex: 09123456789</div>
                             </div>
                             <div class="form-group">
                                 <p id="lblUsername">Username: </p>
                                 <input type="text" class="form-control" id="txtUsername" name="fUsername_registration" onkeypress="return AvoidSpace()" placeholder="Enter Username" maxlength="60" required/>
                                 <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
+                                <div class="invalid-feedback">Please fill out this field. (Ex: 09123456789)</div>
                             </div>
                             <div class="form-group">
                                 <p id="lblPassword">Password: </p>
@@ -112,10 +113,11 @@ $db_select_location = new db_connection_member();
                                 <input type="text" class="form-control" id="txtAddress" name="fAddress" placeholder="Enter address" disabled required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
+                                <div class="text-muted">House Number/Street (Ex: #111 Upper Street).</div>
                             </div>
                             <div class="form-group">
                                 <p id="lblSponsor">Sponsor: </p>
-                                <input type="text" class="form-control" id="txtSponsor" name="fSponsor" placeholder="Enter sponsor's username" maxlength="60" value="" required/>
+                                <input type="text" class="form-control" id="txtSponsor" name="fSponsor" onkeypress="return AvoidSpace()" placeholder="Enter sponsor's username" maxlength="60" value="" required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
