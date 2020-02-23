@@ -51,8 +51,8 @@ class db_connection
         $sql_Insert->bind_param('ss', $activation_code, $used);
         $sql_Insert->execute() or die('Query error'.$this->con->error);
 
-        include_once('message.php');
-        MessageBackCodeMaker('Activation code has been generated.');
+        //include_once('message.php');
+        //MessageBackCodeMaker('Activation code has been generated.');
 
         $sql_Insert->close();
     }
@@ -172,32 +172,19 @@ class db_connection
         $sql_Select->close();
     }
 
-    public function generate_activation_code($qty)
+    public function generate_activation_code($qty,$used)
     {
-        for($i=1;$i<=$qty;$i++)
+        $code_pin = array();
+        for($i=0;$i<$qty;$i++)
         {
             $this->activation_code_list = substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"), 0, 20);
 
-            echo $this->activation_code_list."\n";
+            array_push($code_pin, $this->activation_code_list);
+
+            $this->db_insert_code_activation($code_pin[$i], $used);
+
+            echo $code_pin[$i] ."\n";
         }
-    }
-
-    function download_send_headers($filename) {
-        // disable caching
-        $now = gmdate("D, d M Y H:i:s");
-        header("Expires: Tue, 03 Jul 2030 06:00:00 GMT");
-        header("Cache-Control: max-age=0, no-cache, must-revalidate, proxy-revalidate");
-        header("Last-Modified: {$now} GMT");
-
-        // force download
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");
-        header('Content-Type: text/x-csv');
-
-        // disposition / encoding on response body
-        header("Content-Disposition: attachment;filename={$filename}");
-        header("Connection: close");
     }
 
     public function db_select_activation_code($qty)

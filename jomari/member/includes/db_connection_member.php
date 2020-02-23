@@ -268,6 +268,11 @@ class db_connection_member
             include_once('message.php');
             MessageBackRegistration("Username is already taken.");
         }
+        elseif($username == $user_sponsor)
+        {
+            include_once('message.php');
+            MessageBackRegistration("You cannot sponsor your own account.");
+        }
         else
         {
             include_once('message.php');
@@ -279,50 +284,76 @@ class db_connection_member
 
     public function db_select_member_account_add($activation_code,$username,$password,$sponsor)
     {
-        $sql_Select = $this->con->prepare('SELECT * FROM account WHERE username = ?');
-        $sql_Select->bind_param('s', $username);
+        $sql_Select = $this->con->prepare('SELECT * FROM account WHERE member_id = ?');
+        $sql_Select->bind_param('s', $this->member_id);
         $sql_Select->execute() or die('Query error'.$this->con->error);
 
         $result = $sql_Select->get_result();
-        $row = $result->fetch_assoc();
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        $sql_Select_username = $this->con->prepare('SELECT * FROM account WHERE username = ?');
+        $sql_Select_username->bind_param('s', $username);
+        $sql_Select_username->execute() or die('Query error'.$this->con->error);
 
-        if($row['username'] != $username)
+        $result_username = $sql_Select_username->get_result();
+        $row_username = $result_username->fetch_assoc();
+        ////////////////////////////////////////////////////////////////////////////////////////////
+        $sql_Select_sponsor = $this->con->prepare('SELECT * FROM account WHERE username = ?');
+        $sql_Select_sponsor->bind_param('s', $sponsor);
+        $sql_Select_sponsor->execute() or die('Query error'.$this->con->error);
+
+        $result_sponsor = $sql_Select_sponsor->get_result();
+        $row_sponsor = $result_sponsor->fetch_assoc();
+
+        while($row = $result->fetch_assoc())
         {
-            $sql_Select_code_activation = $this->con->prepare('SELECT * FROM code_activation WHERE activation_code = ?');
-            $sql_Select_code_activation ->bind_param('s', $activation_code);
-            $sql_Select_code_activation ->execute() or die('Query error'.$this->con->error);
-
-            $result_code_activation  = $sql_Select_code_activation ->get_result();
-            $row_code_activation  = $result_code_activation ->fetch_assoc();
-
-            if($row_code_activation['activation_code'] == $activation_code && $row_code_activation['used'] == 0)
-            {
-                $sql_Insert = $this->con->prepare('INSERT INTO account (code_activation_id, activation_code, username, password, user_sponsor, member_id)VALUES(?,?,?,?,?,?)');
-                $sql_Insert->bind_param('ssssss',$row['code_activation_id'],$activation_code,$username,$password,$sponsor,$this->member_id);
-                $sql_Insert->execute() or die('Query error'.$this->con->error);
-
-                $sql_Insert->close();
-
-                $this->db_update_code_activation($activation_code);
-            }
-            elseif($row_code_activation['activation_code'] == $activation_code && $row_code_activation['used'] != 0)
+            if($row['username'] == $sponsor)
             {
                 include_once('message.php');
-                MessageBackAddAccount("Activation code already used.");
+                MessageBackAddAccount("Cannot sponsor your own account.");
+            }
+            elseif($row_username['username'] == $username)
+            {
+                include_once('message.php');
+                MessageBackAddAccount('Username already taken.');
+            }
+            elseif($row_sponsor['username'] != $sponsor)
+            {
+                include_once('message.php');
+                MessageBackAddAccount('Invalid sponsor username.');
             }
             else
             {
-                include_once('message.php');
-                MessageBackAddAccount("Invalid activation code.");
+                $sql_Select_code_activation = $this->con->prepare('SELECT * FROM code_activation WHERE activation_code = ?');
+                $sql_Select_code_activation ->bind_param('s', $activation_code);
+                $sql_Select_code_activation ->execute() or die('Query error'.$this->con->error);
+
+                $result_code_activation  = $sql_Select_code_activation ->get_result();
+                $row_code_activation  = $result_code_activation ->fetch_assoc();
+
+                if($row_code_activation['activation_code'] == $activation_code && $row_code_activation['used'] == 0)
+                {
+                    $sql_Insert = $this->con->prepare('INSERT INTO account (code_activation_id, activation_code, username, password, user_sponsor, member_id)VALUES(?,?,?,?,?,?)');
+                    $sql_Insert->bind_param('ssssss',$row_code_activation['code_activation_id'],$activation_code,$username,$password,$sponsor,$this->member_id);
+                    $sql_Insert->execute() or die('Query error'.$this->con->error);
+
+                    $sql_Insert->close();
+
+                    $this->db_update_code_activation($activation_code);
+                }
+                elseif($row_code_activation['activation_code'] == $activation_code && $row_code_activation['used'] != 0)
+                {
+                    include_once('message.php');
+                    MessageBackAddAccount("Activation code already used.");
+                }
+                else
+                {
+                    include_once('message.php');
+                    MessageBackAddAccount("Invalid activation code.");
+                }
+                $sql_Select_code_activation->close();
             }
-            $sql_Select_code_activation->close();
+            $sql_Select->close();
         }
-        else
-        {
-            include_once('message.php');
-            MessageBackAddAccount('Username already taken.');
-        }
-        $sql_Select->close();
     }
 
     public function db_select_account_table()

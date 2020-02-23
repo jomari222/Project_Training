@@ -109,7 +109,7 @@ $db_select_user->db_select_member_mainpage($fPhone_number);
                     {
                     ?>
                         <div style="width: 80%" class="" id="dv_text_area">
-                            <textarea type="text" class="form-control" id="txtActivation_Code_" name="fActivation_Code_" rows="20" readonly><?php $db_insert->generate_activation_code($_POST['fQuantity']); ?></textarea>
+                            <textarea type="text" class="form-control" id="txtActivation_Code_" name="fActivation_Code_" rows="20" readonly><?php $db_insert->generate_activation_code($_POST['fQuantity'], $add_Used); ?></textarea>
                             <br>
                             <div class="row">
                                 <div class="col-md-6">

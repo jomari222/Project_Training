@@ -80,7 +80,7 @@ function download()
     anchor.download = "Activation_codes.csv";
     anchor.href = window.URL.createObjectURL(blob);
     anchor.target ="_blank";
-    anchor.style.display = "none"; // just to be safe!
+    anchor.style.display = "none";
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);
