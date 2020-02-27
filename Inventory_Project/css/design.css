@@ -1,0 +1,42 @@
+#body
+{
+    background-color: whitesmoke;
+}
+#txtFirst_name, #txtLast_name, #txtStore_name
+{
+    text-transform: uppercase;
+}
+#card_body
+{
+    background-color: white;
+}
+#card_footer
+{
+    background-color: white;
+}
+hr {
+    background-color: #0c0c0c;
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+}
+#col_information
+{
+    border-right: solid #343a40;
+}
+#col_product
+{
+    border-left: solid #343a40;
+}
+input[type=text]
+{
+    border-color: #343a40;
+}
+.tableheaders
+{
+    font-size: 180%;
+}
