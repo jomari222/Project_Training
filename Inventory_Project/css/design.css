@@ -14,7 +14,13 @@
 {
     background-color: white;
 }
-hr {
+#nav_bar
+{
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+hr
+{
     background-color: #0c0c0c;
     display: block;
     margin-top: 0.5em;
@@ -39,4 +45,30 @@ input[type=text]
 .tableheaders
 {
     font-size: 180%;
+}
+.table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th
+{
+    background-color: #343a40;
+}
+.table-striped tbody tr:nth-child(even) td, .table-striped thead tr:nth-child(even) th
+{
+    background-color: #6c757d;
+
+    color:#fff;
+}
+#lblShow_Address, #lblShow_orders, #lblSearch_orders, #lblSearch_Address
+{
+    color: black;
+}
+#table_Address_info, #table_orders
+{
+    color: white;
+}
+.paginate_button
+{
+    background-color: #343a40;
+}
+.paging_simple_numbers
+{
+    color: white;
 }

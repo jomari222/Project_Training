@@ -49,14 +49,14 @@ $db = new db_connection();
 <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
-        <form>
+        <form action="" method="POST" class="needs-validation" novalidate>
             <div class="card bg-dark">
                 <div class="card-header bg-dark">
                     <h1 class="text-center text-white">Form</h1>
                 </div>
                 <div class="card-body" id="card_body">
                     <div class="row">
-                        <div class="col-md-4" id="col_information">
+                        <div class="col-md-6" id="col_information">
                             <div class="form-group">
                                 <h3 class="">Information</h3>
                                 <hr>
@@ -84,7 +84,7 @@ $db = new db_connection();
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <h3 class="">Address</h3>
                             <hr>
                             <label id="">Region:
@@ -115,60 +115,6 @@ $db = new db_connection();
                                 <div class="text-muted">House Number/Street (Ex: #111 Upper Street).</div>
                             </div>
                         </div>
-                        <div class="col-md-4" id="col_product">
-                            <h3 class="">Product</h3>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <form>
-                                        <label id="">Product name:
-                                            <select name="select_product" id="slc_product" onchange="showProduct(this.value)" class="btn btn-dark dropdown-toggle form-control" required>
-                                                <option value="">Select Product</option>
-                                                <?php $db->db_select_product(); ?>
-                                            </select>
-                                        </label>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <div id="txt_Amount">
-                                            <label id="lbl_Amount">Amount:
-                                                <input type="text" class="form-control" id="txtAmount" name="fAmount" placeholder="Amount" value="" readonly required/>
-                                            </label>
-                                        </div>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label id="lblQty">Quantity:
-                                            <input type="number" class="form-control" id="txtQty" name="fQty" placeholder="Quantity" value="" max="100" min="1" disabled required/>
-                                        </label>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <div id="txt_Amount">
-                                            <label id="lbl_Amount">Total amount:
-                                                <input type="text" class="form-control" id="txtTotalAmount" name="fTotalAmount" placeholder="Total amount" value="" readonly required/>
-                                            </label>
-                                        </div>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label id="lblDiscount">Discount:
-                                            <input type="text" class="form-control" id="txtDiscount" name="fDiscount" placeholder="Discount" required/>
-                                        </label>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
@@ -192,27 +138,29 @@ $db = new db_connection();
         <form id="" action="" method="POST">
             <h1 id="lblList">Account List</h1>
             <div class="table-responsive-md">
-                <table width="100%" class="table-bordered table-dark table-striped display" id="table_Accounts">
+                <table width="100%" class="table-bordered table-dark table-striped display" id="table_List">
                     <thead>
                     <tr class="tableheaders">
+                        <th class="linement"> ID </th>
                         <th class="linement"> Name </th>
                         <th class="linement"> Store Name </th>
                         <th class="linement"> Address </th>
                         <th class="linement"> Contact no. </th>
-                        <th class="linement"> Account </th>
+                        <th class="linement"> Order </th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr class="tableheaders">
+                        <th class="linement"> ID </th>
                         <th class="linement"> Name </th>
                         <th class="linement"> Store Name </th>
                         <th class="linement"> Address </th>
                         <th class="linement"> Contact no. </th>
-                        <th class="linement"> Account </th>
+                        <th class="linement"> Order </th>
                     </tr>
                     </tfoot>
                     <tbody>
-                    <a href="product.php?lrn=<?php echo $row['fLRN']; ?>">Products</a>
+                        <?php $db->db_select_customer(); ?>
                     </tbody>
                 </table>
             </div>

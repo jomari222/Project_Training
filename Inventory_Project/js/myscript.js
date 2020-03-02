@@ -57,7 +57,7 @@ function showProduct(product_id)
 }
 $(document).ready(function()
 {
-    $('#table_sale').DataTable
+    $('#table_Inventory').DataTable
     ({
         responsive: true,
         "pageLength": 5,
@@ -72,28 +72,69 @@ $(document).ready(function()
             }
         }
     } );
-    $('#table_sale_wrapper .dataTables_filter').find('input').each(function ()
+    $('#table_Inventory_wrapper .dataTables_filter').find('input').each(function ()
     {
         const $this = $(this);
         $this.addClass('form-control-sm');
     });
-    $('#table_sale_wrapper .dataTables_filter').find('label').each(function ()
+    $('#table_Inventory_wrapper .dataTables_filter').find('label').each(function ()
     {
         const $this = $(this);
         $this.attr("id", "lblSearch");
     });
-    $('#table_sale_wrapper .dataTables_length').find('label').each(function ()
+    $('#table_Inventory_wrapper .dataTables_length').find('label').each(function ()
     {
         const $this = $(this);
         $this.attr("id", "lblShow");
     });
-    $('#table_sale_wrapper .dataTables_length').find('select').each(function ()
+    $('#table_Inventory_wrapper .dataTables_length').find('select').each(function ()
     {
         const $this = $(this);
         $this.attr("id", "slcEntries");
-        $this.addClass('btn btn-info');
+        $this.addClass('btn btn-dark');
     });
 } );
+
+$(document).ready(function()
+{
+    $('#table_orders').DataTable
+    ({
+        responsive: true,
+        "pageLength": 5,
+        "lengthMenu": [[5, 10], [5, 10]],
+        "sPaginationType": "full_numbers",
+        language: {
+            paginate: {
+                next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',
+                previous: '<i class="fa fa-step-backward" data-toggle="tooltip" data-placement="left" title="Previous"></i>',
+                first: '<i class="fa fa-fast-backward" data-toggle="tooltip" data-placement="left" title="Start"></i>',
+                last: '<i class="fa fa-fast-forward" data-toggle="tooltip" data-placement="right" title="End"></i>'
+            }
+        }
+    } );
+    $('#table_orders_wrapper .dataTables_filter').find('input').each(function ()
+    {
+        const $this = $(this);
+        $this.addClass('form-control-sm');
+    });
+    $('#table_orders_wrapper .dataTables_filter').find('label').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "lblSearch_orders");
+    });
+    $('#table_orders_wrapper .dataTables_length').find('label').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "lblShow_orders");
+    });
+    $('#table_orders_wrapper .dataTables_length').find('select').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "slcEntries_orders");
+        $this.addClass('btn btn-dark');
+    });
+} );
+
 $(document).ready(function()
 {
     $('#table_Address').DataTable
@@ -320,6 +361,70 @@ $(document).ready(function()
 
 $(document).ready(function()
 {
+    $(document).on('change', '#slc_product_inventory', function ()
+    {
+        var slcProduct = $(this).val();
+        if (slcProduct == "")
+        {
+            document.getElementById("txtNewPrice").disabled = true;
+            document.getElementById("txtAdd_Stock").disabled = true;
+            document.getElementById("btnAdd_Stock").disabled = true;
+            document.getElementById("btnMinus_Stock").disabled = true;
+            document.getElementById("btnChangePrice").disabled = true;
+            document.getElementById("txtPrice").value = "";
+        }
+        else
+        {
+            document.getElementById("txtNewPrice").disabled = false;
+            document.getElementById("txtAdd_Stock").disabled = false;
+            document.getElementById("btnAdd_Stock").disabled = false;
+            document.getElementById("btnMinus_Stock").disabled = false;
+            document.getElementById("btnChangePrice").disabled = false;
+        }
+    });
+});
+
+$(document).ready(function()
+{
+    $(document).on('change', '#slc_product_inventory_change_price', function ()
+    {
+        var slcProduct = $(this).val();
+        if (slcProduct == "")
+        {
+            document.getElementById("txtNewPrice").disabled = true;
+            document.getElementById("btnChangePrice").disabled = true;
+        }
+        else
+        {
+            document.getElementById("txtNewPrice").disabled = false;
+            document.getElementById("btnChangePrice").disabled = false;
+        }
+    });
+});
+
+$(document).ready(function()
+{
+    $(document).on('change', '#slc_product_inventory_add_or_remove_stock', function ()
+    {
+        var slcProduct = $(this).val();
+        if (slcProduct == "")
+        {
+            document.getElementById("txtAdd_Stock").disabled = true;
+            document.getElementById("btnAdd_Stock").disabled = true;
+            document.getElementById("btnMinus_Stock").disabled = true;
+        }
+        else
+        {
+            document.getElementById("txtAdd_Stock").disabled = false;
+            document.getElementById("btnAdd_Stock").disabled = false;
+            document.getElementById("btnMinus_Stock").disabled = false;
+        }
+    });
+});
+
+
+$(document).ready(function()
+{
     $(document).on('change', '#txtQty', function ()
     {
         var amount = document.getElementById("txtAmount").value;
@@ -335,5 +440,25 @@ $(document).ready(function()
             total = amount * quantity;
             document.getElementById("txtTotalAmount").value = total;
         }
+    });
+});
+
+function preventNumberInput(e){
+    var keyCode = (e.keyCode ? e.keyCode : e.which);
+    if (keyCode > 47 && keyCode < 58){
+        e.preventDefault();
+    }
+}
+
+$(document).ready(function(){
+    $('#txtFirst_name').keypress(function(e) {
+        preventNumberInput(e);
+        /*return (event.charCode > 64 &&
+         event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)*/
+    });
+    $('#txtLast_name').keypress(function(e) {
+        preventNumberInput(e);
+        /*return (event.charCode > 64 &&
+            event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)*/
     });
 });
