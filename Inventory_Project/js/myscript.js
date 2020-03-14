@@ -55,6 +55,7 @@ function showProduct(product_id)
         xmlhttp.send();
     }
 }
+//Inventory Table
 $(document).ready(function()
 {
     $('#table_Inventory').DataTable
@@ -94,7 +95,7 @@ $(document).ready(function()
         $this.addClass('btn btn-dark');
     });
 } );
-
+//Orders Table
 $(document).ready(function()
 {
     $('#table_orders').DataTable
@@ -135,6 +136,88 @@ $(document).ready(function()
     });
 } );
 
+$(document).ready(function(){
+
+    $('.input-daterange').datepicker({
+        todayBtn:'linked',
+        format: "yyyy-mm-dd",
+        autoclose: true
+    });
+
+    fetch_data('no');
+
+    function fetch_data(is_date_search, start_date, end_date)
+    {
+        var dataTable = $('#table_Transactions').DataTable({
+            "processing" : true,
+            "serverSide" : true,
+            "order" : [],
+            "ajax" : {
+                url:"fetch.php",
+                type:"POST",
+                data:{
+                    is_date_search:is_date_search, start_date:start_date, end_date:end_date
+                }
+            }
+        });
+    }
+
+    $('#search').click(function(){
+        var start_date = $('#start_date').val();
+        var end_date = $('#end_date').val();
+        if(start_date != '' && end_date !='')
+        {
+            $('#table_Transactions').DataTable().destroy();
+            fetch_data('yes', start_date, end_date);
+        }
+        else
+        {
+            alert("Both Date is Required");
+        }
+    });
+
+});
+//Transactions Table
+$(document).ready(function()
+{
+    $('#table_Transactions').DataTable
+    ({
+        responsive: true,
+        "pageLength": 5,
+        "lengthMenu": [[5, 10], [5, 10]],
+        "sPaginationType": "full_numbers",
+        language: {
+            paginate: {
+                next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',
+                previous: '<i class="fa fa-step-backward" data-toggle="tooltip" data-placement="left" title="Previous"></i>',
+                first: '<i class="fa fa-fast-backward" data-toggle="tooltip" data-placement="left" title="Start"></i>',
+                last: '<i class="fa fa-fast-forward" data-toggle="tooltip" data-placement="right" title="End"></i>'
+            }
+        }
+    } );
+    $('#table_Transactions_wrapper .dataTables_filter').find('input').each(function ()
+    {
+        const $this = $(this);
+        $this.addClass('form-control-sm');
+    });
+    $('#table_Transactions_wrapper .dataTables_filter').find('label').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "lblSearch_Transactions");
+    });
+    $('#table_Transactions_wrapper .dataTables_length').find('label').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "lblShow_Transactions");
+    });
+    $('#table_Transactions_wrapper .dataTables_length').find('select').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "slcEntries_Transactions");
+        $this.addClass('btn btn-dark');
+    });
+} );
+////////////////////////////////////////
 $(document).ready(function()
 {
     $('#table_Address').DataTable
@@ -174,6 +257,46 @@ $(document).ready(function()
         $this.addClass('btn btn-info');
     });
 } );
+//Expenses Table
+$(document).ready(function()
+{
+    $('#table_Expenses').DataTable
+    ({
+        responsive: true,
+        "pageLength": 5,
+        "lengthMenu": [[5, 10], [5, 10]],
+        "sPaginationType": "full_numbers",
+        language: {
+            paginate: {
+                next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',
+                previous: '<i class="fa fa-step-backward" data-toggle="tooltip" data-placement="left" title="Previous"></i>',
+                first: '<i class="fa fa-fast-backward" data-toggle="tooltip" data-placement="left" title="Start"></i>',
+                last: '<i class="fa fa-fast-forward" data-toggle="tooltip" data-placement="right" title="End"></i>'
+            }
+        }
+    } );
+    $('#table_Expenses_wrapper .dataTables_filter').find('input').each(function ()
+    {
+        const $this = $(this);
+        $this.addClass('form-control-sm');
+    });
+    $('#table_Expenses_wrapper .dataTables_filter').find('label').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "lblSearch_Expenses");
+    });
+    $('#table_Expenses_wrapper .dataTables_length').find('label').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "lblShow_Expenses");
+    });
+    $('#table_Expenses_wrapper .dataTables_length').find('select').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "slcEntries_Expenses");
+        $this.addClass('btn btn-dark');
+    });
+} );
 function AvoidSpace(event)
 {
     var k = event ? event.which : window.event.keyCode;
@@ -181,7 +304,7 @@ function AvoidSpace(event)
     {
         return false;
     }
-
+    table_Transactions
 }
 
 $(document).ready(function()
@@ -350,11 +473,13 @@ $(document).ready(function()
         {
             document.getElementById("txtQty").disabled = true;
             document.getElementById("txtQty").value = "";
+            document.getElementById("txtTotalAmount").value = "";
         }
         else
         {
             document.getElementById("txtQty").disabled = false;
-            document.getElementById("txtQty").value = "1";
+            document.getElementById("txtQty").value = "0";
+            document.getElementById("txtTotalAmount").value = "0";
         }
     });
 });
@@ -423,25 +548,22 @@ $(document).ready(function()
 });
 
 
-$(document).ready(function()
+function multiply_qty_amount()
 {
-    $(document).on('change', '#txtQty', function ()
-    {
-        var amount = document.getElementById("txtAmount").value;
-        var quantity = document.getElementById("txtQty").value;
-        var total = "";
+    var amount = document.getElementById("txtAmount").value;
+    var quantity = document.getElementById("txtQty").value;
+    var total = "";
 
-        if(amount == "")
-        {
-            document.getElementById("txtTotalAmount").value = "";
-        }
-        else
-        {
-            total = amount * quantity;
-            document.getElementById("txtTotalAmount").value = total;
-        }
-    });
-});
+    if(amount == "")
+    {
+        document.getElementById("txtTotalAmount").value = "";
+    }
+    else
+    {
+        total = amount * quantity;
+        document.getElementById("txtTotalAmount").value = total;
+    }
+}
 
 function preventNumberInput(e){
     var keyCode = (e.keyCode ? e.keyCode : e.which);

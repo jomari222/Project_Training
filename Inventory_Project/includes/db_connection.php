@@ -91,19 +91,34 @@ class db_connection
         $result = $sql_Select->get_result();
         while($row = $result->fetch_assoc())
         {
-            $sql_Select_product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
-            $sql_Select_product->bind_param('s', $row['product_id']);
-            $sql_Select_product->execute() or die('Query error'.$this->con->error);
+            if($row < 0)
+            {
+                include_once('message.php');
+                MessageBackMain('No records');
+            }
+            else
+            {
+                $sql_Select_product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+                $sql_Select_product->bind_param('s', $row['product_id']);
+                $sql_Select_product->execute() or die('Query error'.$this->con->error);
 
-            $result_product = $sql_Select_product->get_result();
-            $row_product = $result_product->fetch_assoc();
+                $result_product = $sql_Select_product->get_result();
+                $row_product = $result_product->fetch_assoc();
 
-            echo '<tr>
-                    <td class="linement">'.$row_product['product_name'].'</td>
-                    <td class="linement">'.$row['quantity'].'</td>
-                    <td class="linement">'.$row_product['price'].'</td>
-                    <td class="linement">'.$row['total_amount'].'</td>
+                echo '<tr>
+                    <td rowspan="2" class="linement">'.$row_product['product_name'].'</td>
+                    <td rowspan="2" class="linement">'.$row['quantity'].'</td>
+                    <td rowspan="2" class="linement">'.$row_product['price'].'</td>
+                    <td rowspan="2" class="linement">'.$row['discount'].'</td>
+                    <td rowspan="2" class="linement">'.$row['total_amount'].'</td>
+                    <td class="linement">'.$row['date_received'].'</td>
+                    <td class="linement">'.$row['payment_received'].'</td>
+                </tr>
+                <tr>
+                    <td class="linement"><a style="color: white" href="">Not yet delivered</a></td>
+                    <td class="linement"><a style="color: white" href="">Not yet paid</a></td>
                 </tr>';
+            }
         }
     }
 
@@ -119,6 +134,49 @@ class db_connection
             echo '<option value="'.$row['product_id'].'">'.$row['product_name'].'</option>';
         }
         $sql_Select->close();
+    }
+
+    public function db_select_order_table()
+    {
+        $sql_Select_order = $this->con->prepare('SELECT * FROM table_order');
+        $sql_Select_order ->execute() or die('Query error'.$this->con->error);
+
+        $result_order = $sql_Select_order ->get_result();
+        while($row_order = $result_order->fetch_assoc())
+        {
+            $sql_Select_product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+            $sql_Select_product->bind_param('s', $row_order['product_id']);
+            $sql_Select_product->execute() or die('Query error'.$this->con->error);
+
+            $result_product = $sql_Select_product->get_result();
+            $row_product = $result_product->fetch_assoc();
+
+            $sql_Select_customer = $this->con->prepare('SELECT * FROM customer WHERE customer_id = ?');
+            $sql_Select_customer->bind_param('s', $row_order['customer_id']);
+            $sql_Select_customer->execute() or die('Query error'.$this->con->error);
+
+            $result_customer = $sql_Select_customer->get_result();
+            $row_customer = $result_customer->fetch_assoc();
+
+            echo '<tr>
+                    <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
+                    <td class="linement">'.$row_customer['store_name'].'</td>
+                    <td class="linement">'.$row_product['product_name'].'</td>
+                    <td class="linement">'.$row_order['quantity'].'</td>
+                    <td class="linement">'.$row_order['total_amount'].'</td>
+                    <td class="linement">'.$row_order['date_ordered'].'</td>
+                </tr>';
+        }
+        $sql_Select_order ->close();
+    }
+
+    public function db_insert_order_customer_id($customer_id,$product_id,$quantity,$date_ordered,$date_received,$discount,$returns,$payment_date,$payment_received,$total_amount)
+    {
+        $sql_Insert = $this->con->prepare('INSERT INTO table_order (customer_id, product_id, quantity, date_ordered, date_received, discount, returns, payment_date, payment_received, total_amount)VALUES(?,?,?,?,?,?,?,?,?,?)');
+        $sql_Insert->bind_param('ssssssssss',$customer_id,$product_id,$quantity,$date_ordered,$date_received,$discount,$returns,$payment_date,$payment_received,$total_amount);
+        $sql_Insert->execute() or die('Query error'.$this->con->error);
+
+        $sql_Insert->close();
     }
 
     public function db_select_product_table()

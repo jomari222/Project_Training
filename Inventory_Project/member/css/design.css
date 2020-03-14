@@ -1,0 +1,110 @@
+#body
+{
+    background-color: whitesmoke;
+}
+#txtFirst_name, #txtLast_name, #txtStore_name
+{
+    text-transform: uppercase;
+}
+#card_body
+{
+    background-color: white;
+}
+#card_footer
+{
+    background-color: white;
+}
+#nav_bar
+{
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+hr
+{
+    background-color: #0c0c0c;
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+}
+#col_information, #col_products
+{
+    border-right: solid #343a40;
+}
+#col_product, #col_payment
+{
+    border-left: solid #343a40;
+}
+input[type=text]
+{
+    border-color: #343a40;
+}
+.tableheaders
+{
+    font-size: 130%;
+}
+.linement
+{
+    font-size: 90%;
+}
+.table-striped tbody tr:nth-child(odd) td, .table-striped tbody tr:nth-child(odd) th
+{
+    background-color: lightgray;
+
+    color: black;
+}
+.table-striped tbody tr:nth-child(even) td, .table-striped thead tr:nth-child(even) th
+{
+    background-color: darkgray;
+
+    color: black;
+}
+#lblShow_Address, #lblShow_orders, #lblSearch_orders, #lblSearch_Address, #lblShow_Transactions, #lblSearch_Transactions, #lblShow_Expenses, #lblSearch_Expenses
+{
+    color: black;
+}
+#table_Address_info, #table_orders, #table_Expenses
+{
+    color: white;
+}
+.paginate_button
+{
+    background-color: #343a40;
+}
+.paging_simple_numbers
+{
+    color: white;
+}
+#dropdrop
+{
+    color: lightgray;
+}
+.center
+{
+    margin: auto;
+    width: 60%;
+    border: 3px solid white;
+    padding: 10px;
+}
+#username_icon, #password_icon
+{
+    background-color: #343a40;
+    padding-right: 8%;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+#icon_username
+{
+    color: white;
+    margin-left: 65%;
+    margin-top: 50%;
+}
+#icon_password
+{
+    color: white;
+    margin-left: 65%;
+    margin-top: 40%;
+}

@@ -14,13 +14,13 @@ function MessageBackMainpage($msg)
 {
     echo '<script type="text/javascript">alert("'.$msg.'"); location.pathname = "jomari/member/mainpage_member.php"; setTimeout(window.location.pathname, 0);</script>';
 }
-function MessageBackRegistration($msg)
+function MessageBackMain($msg)
 {
-    echo '<script type="text/javascript">alert("'.$msg.'"); location.pathname = "jomari/member/registration.php"; setTimeout(window.location.pathname, 0);</script>';
+    echo '<script type="text/javascript">alert("'.$msg.'"); location.pathname = "Inventory_Project/index.php"; setTimeout(window.location.pathname, 0);</script>';
 }
-function MessageBackAddAccount($msg)
+function MessageBackAccount($msg)
 {
-    echo '<script type="text/javascript">alert("'.$msg.'"); location.pathname = "jomari/member/account.php"; setTimeout(window.location.pathname, 0);</script>';
+    echo '<script type="text/javascript">alert("'.$msg.'"); location.pathname = "Inventory_Project/account.php"; setTimeout(window.location.pathname, 0);</script>';
 }
 function MessageBackInventory($msg)
 {
