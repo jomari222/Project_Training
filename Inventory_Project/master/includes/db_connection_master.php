@@ -9,6 +9,9 @@
 class db_connection_master
 {
     public $product_id;
+    public $account_id;
+    public $date_min;
+    public $date_max;
 
     public function __construct()
     {
@@ -240,36 +243,73 @@ class db_connection_master
     //SELECT TABLE_ORDER FOR TABLE
     public function db_select_order_table()
     {
-        $sql_Select_order = $this->con->prepare('SELECT * FROM table_order');
-        $sql_Select_order ->execute() or die('Query error'.$this->con->error);
-
-        $result_order = $sql_Select_order ->get_result();
-        while($row_order = $result_order->fetch_assoc())
+        if($this->date_min == '' && $this->date_max == '')
         {
-            $sql_Select_product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
-            $sql_Select_product->bind_param('s', $row_order['product_id']);
-            $sql_Select_product->execute() or die('Query error'.$this->con->error);
+            $sql_Select_order = $this->con->prepare('SELECT * FROM table_order');
+            $sql_Select_order ->execute() or die('Query error'.$this->con->error);
 
-            $result_product = $sql_Select_product->get_result();
-            $row_product = $result_product->fetch_assoc();
+            $result_order = $sql_Select_order ->get_result();
+            while($row_order = $result_order->fetch_assoc())
+            {
+                $sql_Select_product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+                $sql_Select_product->bind_param('s', $row_order['product_id']);
+                $sql_Select_product->execute() or die('Query error'.$this->con->error);
 
-            $sql_Select_customer = $this->con->prepare('SELECT * FROM customer WHERE customer_id = ?');
-            $sql_Select_customer->bind_param('s', $row_order['customer_id']);
-            $sql_Select_customer->execute() or die('Query error'.$this->con->error);
+                $result_product = $sql_Select_product->get_result();
+                $row_product = $result_product->fetch_assoc();
 
-            $result_customer = $sql_Select_customer->get_result();
-            $row_customer = $result_customer->fetch_assoc();
+                $sql_Select_customer = $this->con->prepare('SELECT * FROM customer WHERE customer_id = ?');
+                $sql_Select_customer->bind_param('s', $row_order['customer_id']);
+                $sql_Select_customer->execute() or die('Query error'.$this->con->error);
 
-            echo '<tr>
+                $result_customer = $sql_Select_customer->get_result();
+                $row_customer = $result_customer->fetch_assoc();
+
+                echo '<tr>
                     <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
                     <td class="linement">'.$row_customer['store_name'].'</td>
                     <td class="linement">'.$row_product['product_name'].'</td>
                     <td class="linement">'.$row_order['quantity'].'</td>
-                    <td class="linement">'.$row_order['total_amount'].'</td>
+                    <td class="linement">'."₱".$row_order['total_amount'].'</td>
                     <td class="linement">'.$row_order['date_ordered'].'</td>
                 </tr>';
+            }
+            $sql_Select_order ->close();
         }
-        $sql_Select_order ->close();
+        else
+        {
+            $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE date_ordered BETWEEN ? AND ?');
+            $sql_Select->bind_param('ss', $this->date_min,$this->date_max);
+            $sql_Select ->execute() or die('Query error'.$this->con->error);
+
+            $result = $sql_Select ->get_result();
+            while($row = $result->fetch_assoc())
+            {
+                $sql_Select_product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+                $sql_Select_product->bind_param('s', $row['product_id']);
+                $sql_Select_product->execute() or die('Query error'.$this->con->error);
+
+                $result_product = $sql_Select_product->get_result();
+                $row_product = $result_product->fetch_assoc();
+
+                $sql_Select_customer = $this->con->prepare('SELECT * FROM customer WHERE customer_id = ?');
+                $sql_Select_customer->bind_param('s', $row['customer_id']);
+                $sql_Select_customer->execute() or die('Query error'.$this->con->error);
+
+                $result_customer = $sql_Select_customer->get_result();
+                $row_customer = $result_customer->fetch_assoc();
+
+                echo '<tr>
+                    <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
+                    <td class="linement">'.$row_customer['store_name'].'</td>
+                    <td class="linement">'.$row_product['product_name'].'</td>
+                    <td class="linement">'.$row['quantity'].'</td>
+                    <td class="linement">'."₱".$row['total_amount'].'</td>
+                    <td class="linement">'.$row['date_ordered'].'</td>
+                </tr>';
+            }
+            $sql_Select->close();
+        }
     }
     //INSERT INTO TABLE ORDER
     public function db_insert_order_customer_id($customer_id,$product_id,$quantity,$date_ordered,$date_received,$discount,$returns,$payment_date,$payment_received,$total_amount)
@@ -279,6 +319,40 @@ class db_connection_master
         $sql_Insert->execute() or die('Query error'.$this->con->error);
 
         $sql_Insert->close();
+    }
+    //INSERT INTO EXPENSE
+    public function db_insert_expense($amount,$remarks)
+    {
+        $sql_Insert = $this->con->prepare('INSERT INTO expense (account_id,amount, remarks)VALUES(?,?,?)');
+        $sql_Insert->bind_param('sss',$this->account_id,$amount,$remarks);
+        $sql_Insert->execute() or die('Query error'.$this->con->error);
+
+        $sql_Insert->close();
+    }
+    //SELECT EXPENSE FOR TABLE
+    public function db_select_expense_table()
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM expense');
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        while($row = $result->fetch_assoc())
+        {
+            $sql_Select_account = $this->con->prepare('SELECT * FROM account WHERE account_id = ?');
+            $sql_Select_account->bind_param('s', $row['account_id']);
+            $sql_Select_account->execute() or die('Query error'.$this->con->error);
+
+            $result_account = $sql_Select_account->get_result();
+            $row_account = $result_account->fetch_assoc();
+
+            echo '<tr>
+                    <td class="linement">'.$row['expense_id'].'</td>
+                    <td class="linement">'.$row_account['firstname'].' '.$row_account['lastname'].'</td>
+                    <td class="linement">'."₱".$row['amount'].'</td>
+                    <td class="linement">'.$row['remarks'].'</td>
+                </tr>';
+        }
+        $sql_Select->close();
     }
     //SELECT PRODUCT FOR TABLE
     public function db_select_product_table()
@@ -291,8 +365,27 @@ class db_connection_master
         {
             echo '<tr>
                     <td class="linement">'.$row['product_name'].'</td>
-                    <td class="linement">'.$row['price'].'</td>
+                    <td class="linement">'."₱".$row['price'].'</td>
                     <td class="linement">'.$row['stock'].'</td>
+                </tr>';
+        }
+        $sql_Select->close();
+    }
+    //SELECT PRODUCT FOR TABLE REPORT
+    public function db_select_product_report_table()
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM product');
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        while($row = $result->fetch_assoc())
+        {
+            $TotalPrice = $row['price']* $row['stock'];
+            echo '<tr>
+                    <td class="linement">'.$row['product_name'].'</td>
+                    <td class="linement">'."₱".$row['price'].'</td>
+                    <td class="linement">'.$row['stock'].'</td>
+                    <td class="linement">'."₱".$TotalPrice.'</td>
                 </tr>';
         }
         $sql_Select->close();
@@ -383,6 +476,69 @@ class db_connection_master
 
         $sql_Select->close();
         $sql_Update->close();
+    }
+
+    public function total_sales()
+    {
+        $total_sales = '';
+        $sql_Select_order = $this->con->prepare('SELECT * FROM table_order');
+        $sql_Select_order ->execute() or die('Query error'.$this->con->error);
+
+        $result_order = $sql_Select_order ->get_result();
+        while($row_order = $result_order->fetch_assoc())
+        {
+            if($row_order<0)
+            {
+                $total_sales = "0";
+            }
+            else
+            {
+                $total_sales += $row_order['total_amount'];
+            }
+        }
+        echo "₱".$total_sales;
+    }
+
+    public function total_expenses()
+    {
+        $total_expenses = '';
+        $sql_Select = $this->con->prepare('SELECT * FROM expense');
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        while($row = $result->fetch_assoc())
+        {
+            if($row<0)
+            {
+                $total_expenses = "0";
+            }
+            else
+            {
+                $total_expenses += $row['amount'];
+            }
+        }
+        echo "₱".$total_expenses;
+    }
+
+    public function total_ordered()
+    {
+        $total_order = '';
+        $sql_Select = $this->con->prepare('SELECT * FROM table_order');
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        while($row = $result->fetch_array())
+        {
+            if($row<0)
+            {
+                $total_order = "0";
+            }
+            else
+            {
+                $total_order += $row[1];
+            }
+        }
+        echo $total_order;
     }
 
     //GET DATA

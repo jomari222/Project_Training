@@ -129,7 +129,7 @@ $db->db_select_member($fUsername);
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
-        <form action="" method="POST" class="needs-validation" novalidate>
+        <form action="includes/add_expense.php" method="POST" class="needs-validation" novalidate>
             <div class="card bg-dark">
                 <div class="card-header bg-dark">
                     <h1 class="text-center text-white">New Expense</h1>

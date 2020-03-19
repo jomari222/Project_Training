@@ -22,6 +22,14 @@ function MessageGotoCustomerList($msg)
 {
     echo '<script type="text/javascript">alert("'.$msg.'"); location.pathname = "Inventory_Project/master/customer.php"; setTimeout(window.location.pathname, 0);</script>';
 }
+function MessageGotoExpenseList($msg)
+{
+    echo '<script type="text/javascript">alert("'.$msg.'"); location.pathname = "Inventory_Project/master/expenses.php"; setTimeout(window.location.pathname, 0);</script>';
+}
+function MessageGotoTransaction($msg)
+{
+    echo '<script type="text/javascript">alert("'.$msg.'"); location.pathname = "Inventory_Project/master/transaction.php"; setTimeout(window.location.pathname, 0);</script>';
+}
 function MessageBackAccount($msg)
 {
     echo '<script type="text/javascript">alert("'.$msg.'"); location.pathname = "Inventory_Project/master/account.php"; setTimeout(window.location.pathname, 0);</script>';

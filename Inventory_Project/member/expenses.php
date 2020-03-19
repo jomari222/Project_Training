@@ -138,7 +138,7 @@ $db->db_select_member($fUsername);
                         <th class="linement"> ID </th>
                         <th class="linement"> Name </th>
                         <th class="linement"> Amount </th>
-                        <th class="linement"> Note </th>
+                        <th class="linement"> Remarks </th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -146,11 +146,11 @@ $db->db_select_member($fUsername);
                         <th class="linement"> ID </th>
                         <th class="linement"> Name </th>
                         <th class="linement"> Amount </th>
-                        <th class="linement"> Note </th>
+                        <th class="linement"> Remarks </th>
                     </tr>
                     </tfoot>
                     <tbody>
-
+                        <?php $db->db_select_expense_table(); ?>
                     </tbody>
                 </table>
             </div>

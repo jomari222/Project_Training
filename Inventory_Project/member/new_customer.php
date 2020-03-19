@@ -129,7 +129,7 @@ $db->db_select_member($fUsername);
 <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
-        <form action="" method="POST" class="needs-validation" novalidate>
+        <form action="includes/add_customer.php" method="POST" class="needs-validation" novalidate>
             <div class="card bg-dark">
                 <div class="card-header bg-dark">
                     <h1 class="text-center text-white">New Customer</h1>
@@ -173,17 +173,17 @@ $db->db_select_member($fUsername);
                                 </select>
                             </label>
                             <label id="">Province:
-                                <select id="slc_province" name="select_province" class="btn btn-dark dropdown-toggle form-control" disabled required>
+                                <select name="select_province" id="slc_province" name="select_province" class="btn btn-dark dropdown-toggle form-control" disabled required>
 
                                 </select>
                             </label>
                             <label id="">Municipality:
-                                <select id="slc_citymun" class="btn btn-dark dropdown-toggle form-control" disabled required>
+                                <select name="select_city_mun" id="slc_citymun" class="btn btn-dark dropdown-toggle form-control" disabled required>
 
                                 </select>
                             </label>
                             <label id="">Barangay:
-                                <select id="slc_brgy" class="btn btn-dark dropdown-toggle form-control" disabled required>
+                                <select name="select_brgy" id="slc_brgy" class="btn btn-dark dropdown-toggle form-control" disabled required>
 
                                 </select>
                             </label>
@@ -203,7 +203,7 @@ $db->db_select_member($fUsername);
                     </div>
                 </div>
                 <div class="card-footer" id="card_footer">
-                    <button class="btn btn-block btn-dark" type="submit" id="btnInsert" name="buttonInsert">Insert</button>
+                    <button class="btn btn-block btn-dark" type="submit" id="btnInsert_customer" name="buttonInsert_customer">Insert</button>
                 </div>
             </div>
         </form>

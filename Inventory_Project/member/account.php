@@ -5,6 +5,28 @@
  * Date: 2/27/2020
  * Time: 10:59 AM
  */
+session_start();
+
+$fUsername = $_SESSION['username'];
+
+$inactive = 3600;
+
+if(isset($_SESSION['timeout']) )
+{
+    $session_life = time() - $_SESSION['timeout'];
+    if($session_life > $inactive)
+    {
+        session_destroy();
+        header("Location: login_member.php");
+    }
+}
+$_SESSION['timeout'] = time();
+
+if($fUsername == null)
+{
+    header('Location:login_member.php');
+}
+
 include_once('includes/db_connection_member.php');
 $db = new db_connection_member();
 

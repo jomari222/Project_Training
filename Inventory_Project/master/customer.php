@@ -116,9 +116,10 @@ $db->db_select_master($fUsername);
                         <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-list-alt fa-lg"></i>       Reports<span class="caret"></span>   </button>
                         <ul class="dropdown-menu dropdown-menu-right bg-dark">
                             <li class="nav-item active">
-                                <a class="nav-link text-white" href=""><i class="fa fa-clipboard-check fa-lg"></i> Today Sale</a>
-                                <a class="nav-link text-white" href=""><i class="fa fa-clipboard-check fa-lg"></i> Monthly Sale</a>
-                                <a class="nav-link text-white" href=""><i class="fa fa-clipboard-check fa-lg"></i> Total Sale</a>
+                                <a class="nav-link text-white" href="sales_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Sales Report</a>
+                                <a class="nav-link text-white" href="stock_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Stock Report</a>
+                                <a class="nav-link text-white" href="return_item_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Returned Item Report</a>
+                                <a class="nav-link text-white" href="delivery_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Delivery Report</a>
                             </li>
                         </ul>
                     </li>

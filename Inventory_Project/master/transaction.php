@@ -29,6 +29,28 @@ if($fUsername == null)
 include_once('includes/db_connection_master.php');
 $db = new db_connection_master();
 $db->db_select_master($fUsername);
+
+if(isset($_POST['buttonSearch_Date']))
+{
+    $Add_Min_Date = $_POST['name_min_date'];
+    $Add_Max_Date = $_POST['name_max_date'];
+
+    if($Add_Min_Date == "" && $Add_Max_Date == "")
+    {
+        include_once('includes/message.php');
+        MessageGotoTransaction('Please fill up the dates properly.');
+    }
+    elseif($Add_Min_Date == null && $Add_Max_Date == null)
+    {
+        include_once('includes/message.php');
+        MessageGotoTransaction('Please fill up the dates properly.');
+    }
+    else
+    {
+        $db->date_min = $Add_Min_Date;
+        $db->date_max = $Add_Max_Date;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -122,9 +144,10 @@ $db->db_select_master($fUsername);
                         <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-list-alt fa-lg"></i>       Reports<span class="caret"></span>   </button>
                         <ul class="dropdown-menu dropdown-menu-right bg-dark">
                             <li class="nav-item active">
-                                <a class="nav-link text-white" href=""><i class="fa fa-clipboard-check fa-lg"></i> Today Sale</a>
-                                <a class="nav-link text-white" href=""><i class="fa fa-clipboard-check fa-lg"></i> Monthly Sale</a>
-                                <a class="nav-link text-white" href=""><i class="fa fa-clipboard-check fa-lg"></i> Total Sale</a>
+                                <a class="nav-link text-white" href="sales_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Sales Report</a>
+                                <a class="nav-link text-white" href="stock_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Stock Report</a>
+                                <a class="nav-link text-white" href="return_item_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Returned Item Report</a>
+                                <a class="nav-link text-white" href="delivery_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Delivery Report</a>
                             </li>
                         </ul>
                     </li>
@@ -146,49 +169,44 @@ $db->db_select_master($fUsername);
 <br>
 <div class="row">
     <div class="col-md-12">
-        <form id="" action="" method="POST">
-            <h1 id="lblList">Transactions </h1>
-            <div class="table-responsive-md" id="table_div">
-                <input
-                        type="date"
-                        id="min-date"
-                        class="date-range-filter"
-                        placeholder="From: yyyy-mm-dd">
-
-                <input
-                        type="date"
-                        id="max-date"
-                        class="date-range-filter"
-                        placeholder="To: yyyy-mm-dd">
-                <br>
-                <br>
-                <table width="100%" class="table-bordered table-dark table-striped display" id="table_Transactions">
-                    <thead>
-                    <tr class="tableheaders">
-                        <th class="linement"> Name </th>
-                        <th class="linement"> Store name </th>
-                        <th class="linement"> Product </th>
-                        <th class="linement"> Quantity </th>
-                        <th class="linement"> Total </th>
-                        <th class="linement"> Date ordered</th>
-                    </tr>
-                    </thead>
-                    <tfoot>
-                    <tr class="tableheaders">
-                        <th class="linement"> Name </th>
-                        <th class="linement"> Store name </th>
-                        <th class="linement"> Product </th>
-                        <th class="linement"> Quantity </th>
-                        <th class="linement"> Total </th>
-                        <th class="linement"> Date ordered</th>
-                    </tr>
-                    </tfoot>
-                    <tbody>
-                    <?php $db->db_select_order_table(); ?>
-                    </tbody>
-                </table>
-            </div>
-        </form>
+        <h1 id="lblList">Transactions </h1>
+        <div class="table-responsive-md" id="table_div">
+            <label>Date:</label>
+            <br>
+            <form id="" action="" method="POST" class="form-inline">
+                <label>From:</label>
+                <input style="margin-left: 1%" type="date" id="min-date" class="date-range-filter" name="name_min_date" placeholder="From: yyyy-mm-dd">
+                <label style="margin-left: 1%" >To:</label>
+                <input style="margin-left: 1%" type="date" id="max-date" class="date-range-filter" name="name_max_date" placeholder="To: yyyy-mm-dd">
+                <button style="margin-left: 1%" class="btn btn-dark" type="submit" id="btnSearch_Date" name="buttonSearch_Date">Search</button>
+            </form>
+            <br>
+            <table width="100%" class="table-bordered table-dark table-striped display" id="table_Transactions">
+                <thead>
+                <tr class="tableheaders">
+                    <th class="linement"> Name </th>
+                    <th class="linement"> Store name </th>
+                    <th class="linement"> Product </th>
+                    <th class="linement"> Quantity </th>
+                    <th class="linement"> Total </th>
+                    <th class="linement"> Date ordered</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr class="tableheaders">
+                    <th class="linement"> Name </th>
+                    <th class="linement"> Store name </th>
+                    <th class="linement"> Product </th>
+                    <th class="linement"> Quantity </th>
+                    <th class="linement"> Total </th>
+                    <th class="linement"> Date ordered</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                <?php $db->db_select_order_table(); ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 </body>

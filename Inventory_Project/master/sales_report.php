@@ -2,12 +2,12 @@
 /**
  * Created by PhpStorm.
  * User: Jomari Garcia
- * Date: 3/6/2020
- * Time: 3:51 PM
+ * Date: 3/16/2020
+ * Time: 8:54 AM
  */
 session_start();
 
-$fUsername = $_SESSION['username'];
+$fUsername = $_SESSION['username_admin'];
 
 $inactive = 3600;
 
@@ -17,40 +17,18 @@ if(isset($_SESSION['timeout']) )
     if($session_life > $inactive)
     {
         session_destroy();
-        header("Location: login_member.php");
+        header("Location: login_master.php");
     }
 }
 $_SESSION['timeout'] = time();
 
 if($fUsername == null)
 {
-    header('Location:login_member.php');
+    header('Location:login_master.php');
 }
-include_once('includes/db_connection_member.php');
-$db = new db_connection_member();
-$db->db_select_member($fUsername);
-
-if(isset($_POST['buttonSearch_Date']))
-{
-    $Add_Min_Date = $_POST['name_min_date'];
-    $Add_Max_Date = $_POST['name_max_date'];
-
-    if($Add_Min_Date == "" && $Add_Max_Date == "")
-    {
-        include_once('includes/message.php');
-        MessageGotoTransaction('Please fill up the dates properly.');
-    }
-    elseif($Add_Min_Date == null && $Add_Max_Date == null)
-    {
-        include_once('includes/message.php');
-        MessageGotoTransaction('Please fill up the dates properly.');
-    }
-    else
-    {
-        $db->date_min = $Add_Min_Date;
-        $db->date_max = $Add_Max_Date;
-    }
-}
+include_once('includes/db_connection_master.php');
+$db = new db_connection_master();
+$db->db_select_master($fUsername);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -88,6 +66,20 @@ if(isset($_POST['buttonSearch_Date']))
                     </li>
                     <li class="nav-item">
                         <div class="dropdown">
+                            <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-users fa-lg"></i> Users<span class="caret"></span>   </button>
+                            <ul class="dropdown-menu dropdown-menu-right bg-dark">
+                                <li class="nav-item active">
+                                    <a class="nav-link text-white" href="new_user.php"><i class="fa fa-user-circle fa-lg"></i> New User</a>
+                                    <a class="nav-link text-white" href="user_list.php"><i class="fa fa-user-check fa-lg"></i> User List</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"></a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
                             <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-user-alt fa-lg"></i>       Customer<span class="caret"></span>   </button>
                             <ul class="dropdown-menu dropdown-menu-right bg-dark">
                                 <li class="nav-item active">
@@ -100,7 +92,13 @@ if(isset($_POST['buttonSearch_Date']))
                     <li class="nav-item">
                         <a class="nav-link"></a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
+                        <a class="nav-link" href="inventory.php"><i class="fa fa-warehouse fa-lg"></i> Inventory</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"></a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="transaction.php"><i class="fa fa-clipboard fa-lg"></i> Transactions</a>
                     </li>
                     <li class="nav-item">
@@ -120,17 +118,16 @@ if(isset($_POST['buttonSearch_Date']))
                     <li class="nav-item">
                         <a class="nav-link"></a>
                     </li>
-                    <li class="nav-item">
-                        <div class="dropdown">
-                            <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-list-alt fa-lg"></i>       Reports<span class="caret"></span>   </button>
-                            <ul class="dropdown-menu dropdown-menu-right bg-dark">
-                                <li class="nav-item active">
-                                    <a class="nav-link text-white" href=""><i class="fa fa-clipboard-check fa-lg"></i> Today Sale</a>
-                                    <a class="nav-link text-white" href=""><i class="fa fa-clipboard-check fa-lg"></i> Monthly Sale</a>
-                                    <a class="nav-link text-white" href=""><i class="fa fa-clipboard-check fa-lg"></i> Total Sale</a>
-                                </li>
-                            </ul>
-                        </div>
+                    <li class="dropdown">
+                        <button id="dropdrop" class="btn btn-dark dropdown-toggle text-white" type="button" data-toggle="dropdown"><i class="fa fa-list-alt fa-lg"></i>       Reports<span class="caret"></span>   </button>
+                        <ul class="dropdown-menu dropdown-menu-right bg-dark">
+                            <li class="nav-item active">
+                                <a class="nav-link text-white" href="sales_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Sales Report</a>
+                                <a class="nav-link text-white" href="stock_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Stock Report</a>
+                                <a class="nav-link text-white" href="return_item_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Returned Item Report</a>
+                                <a class="nav-link text-white" href="delivery_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Delivery Report</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
                 <div class="dropdown">
@@ -150,7 +147,7 @@ if(isset($_POST['buttonSearch_Date']))
 <br>
 <div class="row">
     <div class="col-md-12">
-        <h1 id="lblList">Transactions </h1>
+        <h1 id="lblList">Sales Report </h1>
         <div class="table-responsive-md" id="table_div">
             <label>Date:</label>
             <br>
@@ -180,7 +177,6 @@ if(isset($_POST['buttonSearch_Date']))
                     <th class="linement"> Product </th>
                     <th class="linement"> Quantity </th>
                     <th class="linement"> Total </th>
-                    <th class="linement"> Date ordered</th>
                 </tr>
                 </tfoot>
                 <tbody>

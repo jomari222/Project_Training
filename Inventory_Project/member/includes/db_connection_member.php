@@ -9,6 +9,8 @@
 class db_connection_member
 {
     public $product_id;
+    public $date_min;
+    public $date_max;
 
     public function __construct()
     {
@@ -21,6 +23,7 @@ class db_connection_member
         or die("Failed To Connect".$this->con->connect_error);
     }
 
+    //LOGIN USERNAME AND PASSWORD
     public function db_select_member_login($username,$password)
     {
         $sql_Select = $this->con->prepare('SELECT * FROM account WHERE BINARY username = ?');
@@ -41,7 +44,7 @@ class db_connection_member
             MessageBackLogin("Username or Password is invalid");
         }
     }
-
+    //SELECT USERNAME TO GET DATA
     public function db_select_member($username)
     {
         $sql_Select = $this->con->prepare('SELECT * FROM account WHERE username = ?');
@@ -57,7 +60,50 @@ class db_connection_member
 
         $sql_Select->close();
     }
+    //INSERT TO CUSTOMER FOR NEW CUSTOMER
+    public function db_insert_customer($firstname,$lastname,$store_name,$contact_number,$region,$province,$city,$brgy,$unit)
+    {
+        $sql_Insert = $this->con->prepare('INSERT INTO customer (firstname,lastname,store_name,contact_number,region,province,city,barangay,unit)VALUES(?,?,?,?,?,?,?,?,?)');
+        $sql_Insert->bind_param('sssssssss',$firstname,$lastname,$store_name,$contact_number,$region,$province,$city,$brgy,$unit);
+        $sql_Insert->execute() or die('Query error'.$this->con->error);
 
+        $sql_Insert->close();
+    }
+    //INSERT INTO EXPENSE
+    public function db_insert_expense($amount,$remarks)
+    {
+        $sql_Insert = $this->con->prepare('INSERT INTO expense (account_id,amount, remarks)VALUES(?,?,?)');
+        $sql_Insert->bind_param('sss',$this->account_id,$amount,$remarks);
+        $sql_Insert->execute() or die('Query error'.$this->con->error);
+
+        $sql_Insert->close();
+    }
+    //SELECT EXPENSE FOR TABLE
+    public function db_select_expense_table()
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM expense');
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        while($row = $result->fetch_assoc())
+        {
+            $sql_Select_account = $this->con->prepare('SELECT * FROM account WHERE account_id = ?');
+            $sql_Select_account->bind_param('s', $row['account_id']);
+            $sql_Select_account->execute() or die('Query error'.$this->con->error);
+
+            $result_account = $sql_Select_account->get_result();
+            $row_account = $result_account->fetch_assoc();
+
+            echo '<tr>
+                    <td class="linement">'.$row['expense_id'].'</td>
+                    <td class="linement">'.$row_account['firstname'].' '.$row_account['lastname'].'</td>
+                    <td class="linement">'.$row['amount'].'</td>
+                    <td class="linement">'.$row['remarks'].'</td>
+                </tr>';
+        }
+        $sql_Select->close();
+    }
+    //SELECT CUSTOMER FOR TABLE
     public function db_select_customer()
     {
         $sql_Select = $this->con->prepare('SELECT * FROM customer');
@@ -105,7 +151,7 @@ class db_connection_member
         }
         $sql_Select->close();
     }
-
+    //SELECT CUSTOMER FOR THE NAME
     public function db_select_customer_customer_id($customer_id)
     {
         $sql_Select = $this->con->prepare('SELECT * FROM customer WHERE customer_id = ?');
@@ -118,7 +164,7 @@ class db_connection_member
         $this->first_name = $row['firstname'];
         $this->last_name = $row['lastname'];
     }
-
+    //SELECT CUSTOMER FOR TABLE
     public function db_select_table_order_customer_id($customer_id)
     {
         $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE customer_id = ?');
@@ -158,7 +204,7 @@ class db_connection_member
             }
         }
     }
-
+    //SELECT PRODUCT FOR SELECT
     public function db_select_product()
     {
         $sql_Select = $this->con->prepare('SELECT * FROM product');
@@ -172,30 +218,32 @@ class db_connection_member
         }
         $sql_Select->close();
     }
-
+    //SELECT TABLE_ORDER FOR TABLE
     public function db_select_order_table()
     {
-        $sql_Select_order = $this->con->prepare('SELECT * FROM table_order');
-        $sql_Select_order ->execute() or die('Query error'.$this->con->error);
-
-        $result_order = $sql_Select_order ->get_result();
-        while($row_order = $result_order->fetch_assoc())
+        if($this->date_min == '' && $this->date_max == '')
         {
-            $sql_Select_product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
-            $sql_Select_product->bind_param('s', $row_order['product_id']);
-            $sql_Select_product->execute() or die('Query error'.$this->con->error);
+            $sql_Select_order = $this->con->prepare('SELECT * FROM table_order');
+            $sql_Select_order ->execute() or die('Query error'.$this->con->error);
 
-            $result_product = $sql_Select_product->get_result();
-            $row_product = $result_product->fetch_assoc();
+            $result_order = $sql_Select_order ->get_result();
+            while($row_order = $result_order->fetch_assoc())
+            {
+                $sql_Select_product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+                $sql_Select_product->bind_param('s', $row_order['product_id']);
+                $sql_Select_product->execute() or die('Query error'.$this->con->error);
 
-            $sql_Select_customer = $this->con->prepare('SELECT * FROM customer WHERE customer_id = ?');
-            $sql_Select_customer->bind_param('s', $row_order['customer_id']);
-            $sql_Select_customer->execute() or die('Query error'.$this->con->error);
+                $result_product = $sql_Select_product->get_result();
+                $row_product = $result_product->fetch_assoc();
 
-            $result_customer = $sql_Select_customer->get_result();
-            $row_customer = $result_customer->fetch_assoc();
+                $sql_Select_customer = $this->con->prepare('SELECT * FROM customer WHERE customer_id = ?');
+                $sql_Select_customer->bind_param('s', $row_order['customer_id']);
+                $sql_Select_customer->execute() or die('Query error'.$this->con->error);
 
-            echo '<tr>
+                $result_customer = $sql_Select_customer->get_result();
+                $row_customer = $result_customer->fetch_assoc();
+
+                echo '<tr>
                     <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
                     <td class="linement">'.$row_customer['store_name'].'</td>
                     <td class="linement">'.$row_product['product_name'].'</td>
@@ -203,10 +251,44 @@ class db_connection_member
                     <td class="linement">'.$row_order['total_amount'].'</td>
                     <td class="linement">'.$row_order['date_ordered'].'</td>
                 </tr>';
+            }
+            $sql_Select_order ->close();
         }
-        $sql_Select_order ->close();
-    }
+        else
+        {
+            $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE date_ordered BETWEEN ? AND ?');
+            $sql_Select->bind_param('ss', $this->date_min, $this->date_max);
+            $sql_Select->execute() or die('Query error' . $this->con->error);
 
+            $result = $sql_Select->get_result();
+            while ($row = $result->fetch_assoc()) {
+                $sql_Select_product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+                $sql_Select_product->bind_param('s', $row['product_id']);
+                $sql_Select_product->execute() or die('Query error' . $this->con->error);
+
+                $result_product = $sql_Select_product->get_result();
+                $row_product = $result_product->fetch_assoc();
+
+                $sql_Select_customer = $this->con->prepare('SELECT * FROM customer WHERE customer_id = ?');
+                $sql_Select_customer->bind_param('s', $row['customer_id']);
+                $sql_Select_customer->execute() or die('Query error' . $this->con->error);
+
+                $result_customer = $sql_Select_customer->get_result();
+                $row_customer = $result_customer->fetch_assoc();
+
+                echo '<tr>
+                    <td class="linement">' . $row_customer['firstname'] . " " . $row_customer['lastname'] . '</td>
+                    <td class="linement">' . $row_customer['store_name'] . '</td>
+                    <td class="linement">' . $row_product['product_name'] . '</td>
+                    <td class="linement">' . $row['quantity'] . '</td>
+                    <td class="linement">' . $row['total_amount'] . '</td>
+                    <td class="linement">' . $row['date_ordered'] . '</td>
+                </tr>';
+            }
+            $sql_Select->close();
+        }
+    }
+    //INSERT INTO TABLE ORDER
     public function db_insert_order_customer_id($customer_id,$product_id,$quantity,$date_ordered,$date_received,$discount,$returns,$payment_date,$payment_received,$total_amount)
     {
         $sql_Insert = $this->con->prepare('INSERT INTO table_order (customer_id, product_id, quantity, date_ordered, date_received, discount, returns, payment_date, payment_received, total_amount)VALUES(?,?,?,?,?,?,?,?,?,?)');
@@ -215,7 +297,7 @@ class db_connection_member
 
         $sql_Insert->close();
     }
-
+    //SELECT PRODUCT FOR TABLE
     public function db_select_product_table()
     {
         $sql_Select = $this->con->prepare('SELECT * FROM product');
@@ -232,7 +314,7 @@ class db_connection_member
         }
         $sql_Select->close();
     }
-
+    //SELECT PRODUCT FOR THE AMOUNT
     public function db_select_product_amount($product_id)
     {
         $sql_Select = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
@@ -248,7 +330,7 @@ class db_connection_member
         }
         $sql_Select->close();
     }
-
+    //SELECT PRODUCT FOR PRICE
     public function db_select_product_price($product_id)
     {
         $sql_Select = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
@@ -264,7 +346,7 @@ class db_connection_member
         }
         $sql_Select->close();
     }
-
+    //UPDATE PRODUCT PRICE
     public function db_update_product_price($product_id,$new_price)
     {
         $sql_Select = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
@@ -281,7 +363,7 @@ class db_connection_member
         $sql_Select->close();
         $sql_Update->close();
     }
-
+    //SELECT AND UPDATE STOCKS (ADD)
     public function db_select_Add_product_stock($product_id,$addStock)
     {
         $sql_Select = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
@@ -300,7 +382,7 @@ class db_connection_member
         $sql_Select->close();
         $sql_Update->close();
     }
-
+    //SELECT AND UPDATE STOCKS (MINUS)
     public function db_select_Minus_product_stock($product_id,$minusStock)
     {
         $sql_Select = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
