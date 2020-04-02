@@ -62,7 +62,7 @@ $db = new db_connection();
         <form id="" action="" method="POST">
             <h1 id="lblList">Customer List</h1>
             <div class="table-responsive-md">
-                <table width="100%" class="table-bordered table-dark table-striped display" id="table_List">
+                <table width="100%" class="table-bordered table-dark table-striped display" id="table_orders">
                     <thead>
                     <tr class="tableheaders">
                         <th class="linement"> ID </th>

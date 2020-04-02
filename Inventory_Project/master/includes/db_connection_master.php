@@ -9,6 +9,7 @@
 class db_connection_master
 {
     public $product_id;
+    public $product_id_modify;
     public $account_id;
     public $date_min;
     public $date_max;
@@ -168,7 +169,7 @@ class db_connection_master
                     <td class="linement">'.$row['store_name'].'</td>
                     <td class="linement">'.$row['unit']." ".$row_barangay['brgyDesc'].", ".$row_city_mun['citymunDesc']." ".$row_province['provDesc'].'</td>
                     <td class="linement">'.$row['contact_number'].'</td>
-                    <td class="linement"><a href="account.php?ID='.$row['customer_id'].'">Order</a></td>
+                    <td class="linement"><a class="btn btn-dark btn-sm" href="account.php?ID='.$row['customer_id'].'">Order</a></td>
                 </tr>';
         }
         $sql_Select->close();
@@ -367,6 +368,7 @@ class db_connection_master
                     <td class="linement">'.$row['product_name'].'</td>
                     <td class="linement">'."₱".$row['price'].'</td>
                     <td class="linement">'.$row['stock'].'</td>
+                    <td class="linement"><a class="btn btn-dark btn-sm" href="modify_product.php?ID='.$row['product_id'].'">Edit</a></td>
                 </tr>';
         }
         $sql_Select->close();
@@ -383,8 +385,8 @@ class db_connection_master
             $TotalPrice = $row['price']* $row['stock'];
             echo '<tr>
                     <td class="linement">'.$row['product_name'].'</td>
-                    <td class="linement">'."₱".$row['price'].'</td>
                     <td class="linement">'.$row['stock'].'</td>
+                    <td class="linement">'."₱".$row['price'].'</td>
                     <td class="linement">'."₱".$TotalPrice.'</td>
                 </tr>';
         }
@@ -477,6 +479,18 @@ class db_connection_master
         $sql_Select->close();
         $sql_Update->close();
     }
+    //SELECT PRODUCT FOR MODIFY
+    public function db_select_product_product_id($product_id)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+        $sql_Select->bind_param('s', $product_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        $this->product_name = $row['product_name'];
+    }
 
     public function total_sales()
     {
@@ -542,6 +556,11 @@ class db_connection_master
     }
 
     //GET DATA
+    function get_product_name()
+    {
+        echo $this->product_name."";
+    }
+
     function get_fullname()
     {
         echo $this->first_name." ".$this->last_name;

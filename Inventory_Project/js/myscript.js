@@ -24,6 +24,7 @@
         });
     }, false);
 })();
+
 //Show Product
 function showProduct(product_id)
 {
@@ -95,6 +96,48 @@ $(document).ready(function()
         $this.addClass('btn btn-dark');
     });
 } );
+
+//Inventory Table
+$(document).ready(function()
+{
+    $('#table_Customer').DataTable
+    ({
+        responsive: true,
+        "pageLength": 5,
+        "lengthMenu": [[5, 10], [5, 10]],
+        "sPaginationType": "full_numbers",
+        language: {
+            paginate: {
+                next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',
+                previous: '<i class="fa fa-step-backward" data-toggle="tooltip" data-placement="left" title="Previous"></i>',
+                first: '<i class="fa fa-fast-backward" data-toggle="tooltip" data-placement="left" title="Start"></i>',
+                last: '<i class="fa fa-fast-forward" data-toggle="tooltip" data-placement="right" title="End"></i>'
+            }
+        }
+    } );
+    $('#table_Customer_wrapper .dataTables_filter').find('input').each(function ()
+    {
+        const $this = $(this);
+        $this.addClass('form-control-sm');
+    });
+    $('#table_Customer_wrapper .dataTables_filter').find('label').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "lblSearch_Customer");
+    });
+    $('#table_Customer_wrapper .dataTables_length').find('label').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "lblShow_Customer");
+    });
+    $('#table_Customer_wrapper .dataTables_length').find('select').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "slcEntries_Customer");
+        $this.addClass('btn btn-dark');
+    });
+} );
+
 //Orders Table
 $(document).ready(function()
 {
@@ -217,46 +260,6 @@ $(document).ready(function()
         $this.addClass('btn btn-dark');
     });
 } );
-////////////////////////////////////////
-$(document).ready(function()
-{
-    $('#table_Address').DataTable
-    ({
-        responsive: true,
-        "pageLength": 5,
-        "lengthMenu": [[5, 10], [5, 10]],
-        "sPaginationType": "full_numbers",
-        language: {
-            paginate: {
-                next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',
-                previous: '<i class="fa fa-step-backward" data-toggle="tooltip" data-placement="left" title="Previous"></i>',
-                first: '<i class="fa fa-fast-backward" data-toggle="tooltip" data-placement="left" title="Start"></i>',
-                last: '<i class="fa fa-fast-forward" data-toggle="tooltip" data-placement="right" title="End"></i>'
-            }
-        }
-    } );
-    $('#table_Address_wrapper .dataTables_filter').find('input').each(function ()
-    {
-        const $this = $(this);
-        $this.addClass('form-control-sm');
-    });
-    $('#table_Address_wrapper .dataTables_filter').find('label').each(function ()
-    {
-        const $this = $(this);
-        $this.attr("id", "lblSearch_Address");
-    });
-    $('#table_Address_wrapper .dataTables_length').find('label').each(function ()
-    {
-        const $this = $(this);
-        $this.attr("id", "lblShow_Address");
-    });
-    $('#table_Address_wrapper .dataTables_length').find('select').each(function ()
-    {
-        const $this = $(this);
-        $this.attr("id", "slcEntries_Address");
-        $this.addClass('btn btn-info');
-    });
-} );
 //Expenses Table
 $(document).ready(function()
 {
@@ -296,7 +299,8 @@ $(document).ready(function()
         $this.attr("id", "slcEntries_Expenses");
         $this.addClass('btn btn-dark');
     });
-} );
+});
+
 function AvoidSpace(event)
 {
     var k = event ? event.which : window.event.keyCode;
@@ -304,7 +308,6 @@ function AvoidSpace(event)
     {
         return false;
     }
-    table_Transactions
 }
 
 $(document).ready(function()
@@ -546,7 +549,6 @@ $(document).ready(function()
         }
     });
 });
-
 
 function multiply_qty_amount()
 {

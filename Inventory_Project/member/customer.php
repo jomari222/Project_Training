@@ -73,6 +73,12 @@ $db->db_select_member($fUsername);
                         <a class="nav-link"></a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="inventory.php"><i class="fa fa-warehouse fa-lg"></i> Inventory</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"></a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="transaction.php"><i class="fa fa-clipboard fa-lg"></i> Transactions</a>
                     </li>
                     <li class="nav-item">
@@ -92,17 +98,15 @@ $db->db_select_member($fUsername);
                     <li class="nav-item">
                         <a class="nav-link"></a>
                     </li>
-                    <li class="nav-item">
-                        <div class="dropdown">
-                            <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-list-alt fa-lg"></i>       Reports<span class="caret"></span>   </button>
-                            <ul class="dropdown-menu dropdown-menu-right bg-dark">
-                                <li class="nav-item active">
-                                    <a class="nav-link text-white" href=""><i class="fa fa-clipboard-check fa-lg"></i> Today Sale</a>
-                                    <a class="nav-link text-white" href=""><i class="fa fa-clipboard-check fa-lg"></i> Monthly Sale</a>
-                                    <a class="nav-link text-white" href=""><i class="fa fa-clipboard-check fa-lg"></i> Total Sale</a>
-                                </li>
-                            </ul>
-                        </div>
+                    <li class="dropdown">
+                        <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-list-alt fa-lg"></i>       Reports<span class="caret"></span>   </button>
+                        <ul class="dropdown-menu dropdown-menu-right bg-dark">
+                            <li class="nav-item active">
+                                <a class="nav-link text-white" href="sales_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Sales Report</a>
+                                <a class="nav-link text-white" href="stock_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Stock Report</a>
+                                <a class="nav-link text-white" href="delivery_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Delivery Report</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
                 <div class="dropdown">
@@ -125,7 +129,7 @@ $db->db_select_member($fUsername);
         <form id="" action="" method="POST">
             <h1 id="lblList">Customer List</h1>
             <div class="table-responsive-md">
-                <table width="100%" class="table-bordered table-dark table-striped display" id="table_List">
+                <table width="100%" class="table-bordered table-dark table-striped display" id="table_orders">
                     <thead>
                     <tr class="tableheaders">
                         <th class="linement"> ID </th>

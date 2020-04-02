@@ -5,8 +5,30 @@
  * Date: 2/27/2020
  * Time: 10:59 AM
  */
+session_start();
+
+$fUsername = $_SESSION['username_admin'];
+
+$inactive = 3600;
+
+if(isset($_SESSION['timeout']) )
+{
+    $session_life = time() - $_SESSION['timeout'];
+    if($session_life > $inactive)
+    {
+        session_destroy();
+        header("Location: login_master.php");
+    }
+}
+$_SESSION['timeout'] = time();
+
+if($fUsername == null)
+{
+    header('Location:login_master.php');
+}
 include_once('includes/db_connection_master.php');
 $db = new db_connection_master();
+$db->db_select_master($fUsername);
 
 $ID = $_GET['ID'];
 

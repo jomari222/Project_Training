@@ -2,12 +2,12 @@
 /**
  * Created by PhpStorm.
  * User: Jomari Garcia
- * Date: 3/8/2020
- * Time: 6:30 PM
+ * Date: 2/27/2020
+ * Time: 9:25 AM
  */
 session_start();
 
-$fUsername = $_SESSION['username_admin'];
+$fUsername = $_SESSION['username'];
 
 $inactive = 3600;
 
@@ -17,18 +17,18 @@ if(isset($_SESSION['timeout']) )
     if($session_life > $inactive)
     {
         session_destroy();
-        header("Location: login_master.php");
+        header("Location:login_member.php");
     }
 }
 $_SESSION['timeout'] = time();
 
 if($fUsername == null)
 {
-    header('Location:login_master.php');
+    header('Location:login_member.php');
 }
-include_once('includes/db_connection_master.php');
-$db = new db_connection_master();
-$db->db_select_master($fUsername);
+include_once('includes/db_connection_member.php');
+$db = new db_connection_member();
+$db->db_select_member($fUsername);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,20 +66,6 @@ $db->db_select_master($fUsername);
                     </li>
                     <li class="nav-item">
                         <div class="dropdown">
-                            <button id="dropdrop" class="btn btn-dark dropdown-toggle text-white" type="button" data-toggle="dropdown"><i class="fa fa-users fa-lg"></i> Users<span class="caret"></span>   </button>
-                            <ul class="dropdown-menu dropdown-menu-right bg-dark">
-                                <li class="nav-item active">
-                                    <a class="nav-link text-white" href="new_user.php"><i class="fa fa-user-circle fa-lg"></i> New User</a>
-                                    <a class="nav-link text-white" href="user_list.php"><i class="fa fa-user-check fa-lg"></i> User List</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"></a>
-                    </li>
-                    <li class="nav-item">
-                        <div class="dropdown">
                             <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-user-alt fa-lg"></i>       Customer<span class="caret"></span>   </button>
                             <ul class="dropdown-menu dropdown-menu-right bg-dark">
                                 <li class="nav-item active">
@@ -92,7 +78,7 @@ $db->db_select_master($fUsername);
                     <li class="nav-item">
                         <a class="nav-link"></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="inventory.php"><i class="fa fa-warehouse fa-lg"></i> Inventory</a>
                     </li>
                     <li class="nav-item">
@@ -145,74 +131,61 @@ $db->db_select_master($fUsername);
 <br>
 <br>
 <div class="row">
-    <div class="col-md-1"></div>
-    <div class="col-md-10">
-        <form action="includes/add_user.php" method="POST" class="needs-validation" novalidate>
+    <div class="col-md-4">
+        <br>
+        <br>
+        <form action="includes/add_product.php" method="POST" class="needs-validation" novalidate>
             <div class="card bg-dark">
-                <div class="card-header bg-dark">
-                    <h1 class="text-center text-white">New User</h1>
+                <div class="card-header text-center text-white bg-dark">
+                    <h3 class="">New Product</h3>
                 </div>
                 <div class="card-body" id="card_body">
-                    <div class="row">
-                        <div class="col-md-6" id="col_information">
-                            <div class="form-group">
-                                <h3 class="">Information</h3>
-                                <hr>
-                                <label id="lbl_first_name">First name: </label>
-                                <input type="text" class="form-control" id="txtFirst_name" name="fFirst_name" pattern="[^\s][a-zA-Z]+( [a-zA-Z]+)*[^\s]+" placeholder="Enter First name" onkeypress="" required/>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                                <br>
-                                <label id="lbl_first_name">Last name: </label>
-                                <input type="text" class="form-control" id="txtLast_name" name="fLast_name" pattern="[^\s][a-zA-Z]+( [a-zA-Z]+)*[^\s]+" placeholder="Enter Last name" onkeypress="" required/>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                                <br>
-                                <div class="form-group">
-                                    <label id="lblPhone_number">Phone number: </label>
-                                    <input type="text" class="form-control" id="txtPhone_number" name="fPhone_number_registration" placeholder="Enter Phone number" pattern="[0]{1}[9]{1}[0-9]{9}" onkeypress="return AvoidSpace()" maxlength="11" required/>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
-                                    <div class="text-muted">Ex: 09123456789</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h3 class="">Account</h3>
-                            <hr>
-                            <div class="form-group">
-                                <label id="lblUsername">Username: </label>
-                                <input type="text" class="form-control" id="txtUsername" name="fUsername" onkeypress="return AvoidSpace()" placeholder="Enter Username" maxlength="60" required/>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                            </div>
-                            <div class="form-group">
-                                <label id="lblPassword">Password: </label>
-                                <input type="password" class="form-control" id="txtPassword" name="fPassword" onkeypress="return AvoidSpace()" placeholder="Enter Password" maxlength="60" required/>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                            </div>
-                            <div class="form-group form-check">
-                                <label id="lblshowpassword">
-                                    <input type="checkbox" class="form-check-input" id="chkShowPass" onclick="togglePassword()"/> Show Password
-                                </label>
-                            </div>
-                            <label id="">Position:
-                                <select id="slc_position" name="select_position" class="btn btn-dark dropdown-toggle form-control" required>
-                                    <?php $db->db_select_position(); ?>
-                                </select>
-                            </label>
-                        </div>
-                    </div>
+                    <label id="lbl_ProductName">Product Name: </label>
+                    <input type="text" class="form-control" id="txtProductName" name="fProductName" placeholder="Enter Product Name" onkeypress="" required/>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                    <br>
+                    <label id="lbl_ProductName">Price: </label>
+                    <input type="text" class="form-control" id="txtNewProductPrice" name="fNewProductPrice" min="0" placeholder="Enter Price" onkeypress="" required/>
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                    <br>
+                    <label style="width: 100%" id="lbl_Add_Stock">Add Stock:</label>
+                    <input type="number" class="form-control" id="txtAddNewProduct_Stock" name="fAddNewProduct_Stock" placeholder="" min="0" max="9999" value="" required/>
                 </div>
                 <div class="card-footer" id="card_footer">
-                    <button class="btn btn-block btn-dark" type="submit" id="btnInsert_User" name="buttonInsert_User">Add User</button>
+                    <button class="btn btn-block btn-dark" type="submit" id="btnAddNewProduct" name="buttonAddNewProduct">Add New Product</button>
                 </div>
             </div>
         </form>
     </div>
-    <div class="col-md-1">
-
+    <div class="col-md-8 text-center">
+        <form id="" action="" method="POST">
+            <h1 id="lblList">STOCKS</h1>
+            <div class="table-responsive-md" id="table_div">
+                <table width="100%" class="table-bordered table-dark table-striped display" id="table_Inventory">
+                    <thead>
+                    <tr class="tableheaders">
+                        <th class="linement"> Product Name </th>
+                        <th class="linement"> Price </th>
+                        <th class="linement"> Stock </th>
+                        <th class="linement"> Modify </th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr class="tableheaders">
+                        <th class="linement"> Product Name </th>
+                        <th class="linement"> Price </th>
+                        <th class="linement"> Stock </th>
+                        <th class="linement"> Modify </th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    <?php $db->db_select_product_table(); ?>
+                    </tbody>
+                </table>
+            </div>
+        </form>
     </div>
 </div>
 <br>

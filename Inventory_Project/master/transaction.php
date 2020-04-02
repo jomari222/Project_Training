@@ -146,7 +146,6 @@ if(isset($_POST['buttonSearch_Date']))
                             <li class="nav-item active">
                                 <a class="nav-link text-white" href="sales_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Sales Report</a>
                                 <a class="nav-link text-white" href="stock_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Stock Report</a>
-                                <a class="nav-link text-white" href="return_item_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Returned Item Report</a>
                                 <a class="nav-link text-white" href="delivery_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Delivery Report</a>
                             </li>
                         </ul>

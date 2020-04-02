@@ -118,7 +118,6 @@ $db->db_select_master($fUsername);
                             <li class="nav-item active">
                                 <a class="nav-link text-white" href="sales_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Sales Report</a>
                                 <a class="nav-link text-white" href="stock_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Stock Report</a>
-                                <a class="nav-link text-white" href="return_item_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Returned Item Report</a>
                                 <a class="nav-link text-white" href="delivery_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Delivery Report</a>
                             </li>
                         </ul>
@@ -144,7 +143,7 @@ $db->db_select_master($fUsername);
         <form id="" action="" method="POST">
             <h1 id="lblList">Customer List</h1>
             <div class="table-responsive-md">
-                <table width="100%" class="table-bordered table-dark table-striped display" id="table_List">
+                <table width="100%" class="table-bordered table-dark table-striped display" id="table_orders">
                     <thead>
                     <tr class="tableheaders">
                         <th class="linement"> ID </th>
