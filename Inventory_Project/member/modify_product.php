@@ -118,13 +118,14 @@ if($ID == null)
                 <div class="row">
                     <div class="col-md-6" id="col_change_price">
                         <h2 class="text-center">Change Price</h2>
+                        <h2 class="text-center"><?php $db->get_product_price(); ?></h2>
                         <hr>
                         <form action="" method="POST" class="needs-validation" novalidate>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-7">
                                         <label id="lbl_Price">Price:
-                                            <input type="number" class="form-control" id="txtNewPrice" name="fNewPrice" placeholder="Amount" min="0" value="" required/>
+                                            <input type="number" class="form-control" id="txtNewPrice" name="fNewPrice" placeholder="Amount" min="0.00" step="any" value="" required/>
                                         </label>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
@@ -142,6 +143,7 @@ if($ID == null)
                             <div class="row">
                                 <div class="col-md-12">
                                     <h2 class="text-center">Add/Remove Stock</h2>
+                                    <h2 class="text-center"><?php $db->get_product_stock(); ?></h2>
                                     <hr>
                                 </div>
                             </div>

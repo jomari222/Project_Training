@@ -1,6 +1,7 @@
 /**
  * Created by Jomari Garcia on 1/25/2020.
  */
+
 // Disable form submissions if there are invalid fields
 (function()
 {
@@ -101,9 +102,10 @@ $(document).ready(function()
     $('#table_orders').DataTable
     ({
         responsive: true,
-        "pageLength": 5,
-        "lengthMenu": [[5, 10], [5, 10]],
+        "pageLength": 10,
+        "lengthMenu": [[10, 20], [10, 20]],
         "sPaginationType": "full_numbers",
+        "order": [[ 5, "desc" ]],
         language: {
             paginate: {
                 next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',
@@ -141,9 +143,10 @@ $(document).ready(function()
     $('#table_Transactions').DataTable
     ({
         responsive: true,
-        "pageLength": 5,
-        "lengthMenu": [[5, 10], [5, 10]],
+        "pageLength": 10,
+        "lengthMenu": [[10, 20], [10, 20]],
         "sPaginationType": "full_numbers",
+        "order": [[ 5, "desc" ]],
         language: {
             paginate: {
                 next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',
@@ -224,6 +227,7 @@ $(document).ready(function()
         "pageLength": 5,
         "lengthMenu": [[5, 10], [5, 10]],
         "sPaginationType": "full_numbers",
+        "order": [[ 3, "desc" ]],
         language: {
             paginate: {
                 next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',
@@ -262,7 +266,6 @@ function AvoidSpace(event)
     {
         return false;
     }
-    table_Transactions
 }
 //Users Table
 $(document).ready(function()

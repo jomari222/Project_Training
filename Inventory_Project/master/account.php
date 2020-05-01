@@ -28,11 +28,33 @@ if($fUsername == null)
 }
 include_once('includes/db_connection_master.php');
 $db = new db_connection_master();
-$db->db_select_master($fUsername);
+
+if (empty($_GET['ID'])):
+    header("Location: customer.php");
+    die();
+endif;
 
 $ID = $_GET['ID'];
 
 $db->db_select_customer_customer_id($ID);
+
+if(isset($_POST['buttonInsertProduct']))
+{
+    date_default_timezone_set('Asia/Manila');
+    $date_ordered = date("Y-m-d H:i:s");
+
+    $Add_Customer_ID = $_POST['fCustomer_ID'];
+    $Add_Product_ID = $_POST['select_product'];
+    $Add_Product_amount = $_POST['fAmount'];
+    $Add_Quantity= $_POST['fQty'];
+    $Add_Discount = $_POST['fDiscount'];
+    $Add_Total_amount = $_POST['fTotalAmount'];
+
+    $db->db_insert_order_customer_id($Add_Customer_ID,$Add_Product_ID,$Add_Quantity,$date_ordered,'',$Add_Discount,'','','',$Add_Total_amount);
+
+    include_once('includes/message.php');
+    MessageBackAccountID('Order has been added.');
+}
 ?>
 <html lang="en">
 <head>
@@ -66,6 +88,45 @@ $db->db_select_customer_customer_id($ID);
     </div>
 </div>
 <div class="row">
+    <div class="col-md-12 text-center">
+            <h1 id="lblList"><?php $db->get_fullname(); ?></h1>
+            <h1 id="lblList">Order List</h1>
+            <div class="table-responsive-md" id="table_div">
+                <table width="100%" class="table-bordered table-dark table-striped display text-center" id="table_orders">
+                    <thead>
+                    <tr class="tableheaders">
+                        <th class="linement"> Product Name </th>
+                        <th class="linement"> Quantity </th>
+                        <th class="linement"> Price </th>
+                        <th class="linement"> Discount </th>
+                        <th class="linement"> Total </th>
+                        <th class="linement"> Date Ordered </th>
+                        <th class="linement"> Date Delivered </th>
+                        <th class="linement"> Date Paid </th>
+                        <th class="linement"> Action </th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr class="tableheaders">
+                        <th class="linement"> Product Name </th>
+                        <th class="linement"> Quantity </th>
+                        <th class="linement"> Price </th>
+                        <th class="linement"> Discount </th>
+                        <th class="linement"> Total </th>
+                        <th class="linement"> Date Ordered </th>
+                        <th class="linement"> Date Delivered </th>
+                        <th class="linement"> Date Paid </th>
+                        <th class="linement"> Action </th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    <?php $db->db_select_table_order_customer_id($ID); ?>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-md-12">
         <br>
         <div class="card bg-dark">
@@ -83,10 +144,13 @@ $db->db_select_customer_customer_id($ID);
                 </div>
             </div>
             <div class="card-body" id="card_body">
+                <form id="" action="" method="POST">
                 <div class="row">
                     <div class="col-md-4" id="col_products">
-                        <form id="" action="includes/order.php" method="POST">
                             <hr>
+                            <label id="" hidden>Customer ID:
+                                <input type="text" class="form-control" id="txtCustomer_ID" name="fCustomer_ID" placeholder="" value="<?php echo $ID; ?>" readonly hidden required/>
+                            </label>
                             <div class="row">
                                 <div class="col-md-12">
                                     <form>
@@ -137,160 +201,77 @@ $db->db_select_customer_customer_id($ID);
                                 </div>
                             </div>
                             <button class="btn btn-block btn-dark" type="submit" id="btnInsertProduct" name="buttonInsertProduct">Insert</button>
-                        </form>
-                    </div>
-                    <div class="col-md-4">
-                        <form id="" action="includes/order.php" method="POST">
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <form>
-                                        <label id="">Product name:
-                                            <select name="select_product" id="slc_product" onchange="showProduct(this.value)" class="btn btn-dark dropdown-toggle form-control" required>
-                                                <?php $db->db_select_product(); ?>
-                                            </select>
-                                        </label>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <div id="txt_Amount">
-                                            <label id="lbl_Amount">Amount:
-                                                <input type="text" class="form-control" id="txtAmount" name="fAmount" placeholder="Amount" value="" readonly required/>
-                                            </label>
-                                        </div>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label style="width: 100%" id="lblQty">Quantity:
-                                            <input type="number" class="form-control" id="txtQty" onkeypress="multiply_qty_amount()" oninput="multiply_qty_amount()" name="fQty" placeholder="Quantity" value="" max="100" min="1" disabled required/>
-                                        </label>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <div id="txt_TotalAmount">
-                                            <label id="lbl_Amount">Total amount:
-                                                <input type="text" class="form-control" id="txtTotalAmount" name="fTotalAmount" placeholder="Total amount" value="" readonly required/>
-                                            </label>
-                                        </div>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label id="lblDiscount">Discount:
-                                            <input type="text" class="form-control" id="txtDiscount" name="fDiscount" placeholder="Discount" required/>
-                                        </label>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn btn-block btn-dark" type="submit" id="btnInsertProduct" name="buttonInsertProduct">Insert</button>
-                        </form>
-                    </div>
-                    <div class="col-md-4" id="col_payment">
-                        <form id="" action="includes/order.php" method="POST">
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <form>
-                                        <label id="">Product name:
-                                            <select name="select_product" id="slc_product" onchange="showProduct(this.value)" class="btn btn-dark dropdown-toggle form-control" required>
-                                                <?php $db->db_select_product(); ?>
-                                            </select>
-                                        </label>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <div id="txt_Amount">
-                                            <label id="lbl_Amount">Amount:
-                                                <input type="text" class="form-control" id="txtAmount" name="fAmount" placeholder="Amount" value="" readonly required/>
-                                            </label>
-                                        </div>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label style="width: 100%" id="lblQty">Quantity:
-                                            <input type="number" class="form-control" id="txtQty" onkeypress="multiply_qty_amount()" oninput="multiply_qty_amount()" name="fQty" placeholder="Quantity" value="" max="100" min="1" disabled required/>
-                                        </label>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <div id="txt_TotalAmount">
-                                            <label id="lbl_Amount">Total amount:
-                                                <input type="text" class="form-control" id="txtTotalAmount" name="fTotalAmount" placeholder="Total amount" value="" readonly required/>
-                                            </label>
-                                        </div>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label id="lblDiscount">Discount:
-                                            <input type="text" class="form-control" id="txtDiscount" name="fDiscount" placeholder="Discount" required/>
-                                        </label>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn btn-block btn-dark" type="submit" id="btnInsertProduct" name="buttonInsertProduct">Insert</button>
-                        </form>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 <br>
-<div class="row">
-    <div class="col-md-12 text-center">
-        <form id="" action="" method="POST">
-            <h1 id="lblList"><?php $db->get_fullname(); ?></h1>
-            <h1 id="lblList">Order List</h1>
-            <div class="table-responsive-md" id="table_div">
-                <table width="100%" class="table-bordered table-dark table-striped display text-center" id="table_orders">
-                    <thead>
-                    <tr class="tableheaders">
-                        <th class="linement"> Product Name </th>
-                        <th class="linement"> Quantity </th>
-                        <th class="linement"> Price </th>
-                        <th class="linement"> Discount </th>
-                        <th class="linement"> Total </th>
-                        <th class="linement"> Delivered </th>
-                        <th class="linement"> Paid </th>
-                    </tr>
-                    </thead>
-                    <tfoot>
-                    <tr class="tableheaders">
-                        <th class="linement"> Product Name </th>
-                        <th class="linement"> Quantity </th>
-                        <th class="linement"> Price </th>
-                        <th class="linement"> Discount </th>
-                        <th class="linement"> Total </th>
-                        <th class="linement"> Delivered </th>
-                        <th class="linement"> Paid </th>
-                    </tr>
-                    </tfoot>
-                    <tbody>
-                    <?php $db->db_select_table_order_customer_id($ID); ?>
-                    </tbody>
-                </table>
-            </div>
-        </form>
+
+<div id="frmpopup_modify" class="modal">
+    <div class="row">
+        <span onclick="document.getElementById('frmpopup_modify').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-4">
+            <form class="modal-content" action="">
+                <div class="container">
+                    <h1>Delivery</h1>
+                    <hr>
+                    <label><b>Date Delivered</b></label>
+                    <input type="date" placeholder="Enter Date" name="txtDateDelivery" required>
+
+                    <div class="clearfix">
+                        <button name="buttonDeliveryDone" type="submit" class="signupbtn">Done</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4">
+            <form class="modal-content" action="">
+                <div class="container">
+                    <h1>Payment</h1>
+                    <hr>
+                    <label><b>Date Paid</b></label>
+                    <input type="date" placeholder="Enter Date" name="txtDatePaid" required>
+
+                    <label><b>Amount</b></label>
+                    <input type="text" class="form-control" placeholder="Enter Amount" name="txtAmountPaid" required>
+
+                    <div class="clearfix">
+                        <button name="buttonPaymentDone" type="submit" class="signupbtn">Done</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-2">
+
+        </div>
     </div>
 </div>
 </body>
 </html>
+<script>
+    // Get the modal
+    var modal = document.getElementById('frmpopup_modify');
+
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    $('#frmpopup_modify').on('hidden.bs.modal', function ()
+    {
+        var order_id = document.getElementById('order_id');
+        if(order_id == 15)
+        {
+            $('#frmpopup_modify').modal('shown');
+        }
+    })
+</script>

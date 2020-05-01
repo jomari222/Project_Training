@@ -34,6 +34,10 @@ function MessageBackAccount($msg)
 {
     echo '<script type="text/javascript">alert("'.$msg.'"); location.pathname = "Inventory_Project/master/account.php"; setTimeout(window.location.pathname, 0);</script>';
 }
+function MessageBackAccountID($msg)
+{
+    echo '<script type="text/javascript">alert("'.$msg.'"); setTimeout(window.location.pathname, 0);</script>';
+}
 function MessageBackInventory($msg)
 {
     echo '<script type="text/javascript">alert("'.$msg.'"); location.pathname = "Inventory_Project/master/inventory.php"; setTimeout(window.location.pathname, 0);</script>';

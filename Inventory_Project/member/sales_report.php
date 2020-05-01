@@ -162,6 +162,7 @@ $db->db_select_member($fUsername);
                     <th class="linement"> Product </th>
                     <th class="linement"> Quantity </th>
                     <th class="linement"> Total </th>
+                    <th class="linement"> Date ordered</th>
                 </tr>
                 </tfoot>
                 <tbody>

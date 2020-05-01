@@ -159,7 +159,7 @@ $db->db_select_master($fUsername);
                                 <h3 class="">Expense</h3>
                                 <hr>
                                 <label id="lbl_Amount">Amount: </label>
-                                <input type="number" class="form-control" id="txtAmount" name="fAmount" placeholder="Enter Amount" onkeypress="" required/>
+                                <input type="number" class="form-control" id="txtAmount" name="fAmount" placeholder="Enter Amount" min="0.00" step="any" onkeypress="" required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                                 <br>

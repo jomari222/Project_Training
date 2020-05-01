@@ -34,4 +34,8 @@ function MessageGotoTransaction($msg)
 {
     echo '<script type="text/javascript">alert("'.$msg.'"); location.pathname = "Inventory_Project/member/transaction.php"; setTimeout(window.location.pathname, 0);</script>';
 }
+function MessageGotoAccount($msg,$ID)
+{
+    echo '<script type="text/javascript">alert("'.$msg.'"); location.pathname = "Inventory_Project/member/account.php?ID='.$ID.'"; setTimeout(window.location.pathname, 0);</script>';
+}
 ?>

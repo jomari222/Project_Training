@@ -166,7 +166,7 @@ $db->db_select_master($fUsername);
                     <th class="linement"> Product </th>
                     <th class="linement"> Quantity </th>
                     <th class="linement"> Total </th>
-                    <th class="linement"> Date ordered</th>
+                    <th class="linement"> Date Paid</th>
                 </tr>
                 </thead>
                 <tfoot>
@@ -176,10 +176,11 @@ $db->db_select_master($fUsername);
                     <th class="linement"> Product </th>
                     <th class="linement"> Quantity </th>
                     <th class="linement"> Total </th>
+                    <th class="linement"> Date Paid</th>
                 </tr>
                 </tfoot>
                 <tbody>
-                <?php $db->db_select_order_table(); ?>
+                    <?php $db->db_select_order_table_Paid(); ?>
                 </tbody>
             </table>
         </div>

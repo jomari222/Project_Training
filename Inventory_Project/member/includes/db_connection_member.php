@@ -11,6 +11,12 @@ class db_connection_member
     public $product_id;
     public $date_min;
     public $date_max;
+    public $order_id_delivery_date;
+    public $order_id_payment_date;
+    public $paid_amount;
+    public $total_amount_to_be_paid;
+    public $price_bought;
+    public $payment_received;
 
     public function __construct()
     {
@@ -94,11 +100,13 @@ class db_connection_member
             $result_account = $sql_Select_account->get_result();
             $row_account = $result_account->fetch_assoc();
 
+            $amount = number_format($row['amount'], 2, '.', ',');
+
             echo '<tr>
-                    <td class="linement">'.$row['expense_id'].'</td>
                     <td class="linement">'.$row_account['firstname'].' '.$row_account['lastname'].'</td>
-                    <td class="linement">'.$row['amount'].'</td>
+                    <td class="linement">'."₱".$amount.'</td>
                     <td class="linement">'.$row['remarks'].'</td>
+                    <td class="linement">'.$row['date_expense'].'</td>
                 </tr>';
         }
         $sql_Select->close();
@@ -188,18 +196,40 @@ class db_connection_member
                 $result_product = $sql_Select_product->get_result();
                 $row_product = $result_product->fetch_assoc();
 
+                $price = number_format($row_product['price'], 2, '.', ',');
+                $total_amount = number_format($row['total_amount'], 2, '.', ',');
+
+                if($row['delivered_status'] == "0")
+                {
+                    $delivered_status = "Not yet delivered";
+                    $delivery_date = '<td style="background-color: darkgray; color: white" class="linement">'.$delivered_status.'</td>';
+                }
+                else
+                {
+                    $delivery_date = '<td class="linement">'.$row['date_received'].'</td>';
+
+                }
+
+                if($row['payment_status'] == "0")
+                {
+                    $payment_status = "Unpaid";
+                    $payment_date = '<td style="background-color: darkgray; color: white" class="linement">'.$payment_status.'</td>';
+                }
+                else
+                {
+                    $payment_date = '<td class="linement">'.$row['payment_date'].'</td>';
+                }
+
                 echo '<tr>
-                    <td rowspan="2" class="linement">'.$row_product['product_name'].'</td>
-                    <td rowspan="2" class="linement">'.$row['quantity'].'</td>
-                    <td rowspan="2" class="linement">'.$row_product['price'].'</td>
-                    <td rowspan="2" class="linement">'.$row['discount'].'</td>
-                    <td rowspan="2" class="linement">'.$row['total_amount'].'</td>
-                    <td class="linement">'.$row['date_received'].'</td>
-                    <td class="linement">'.$row['payment_received'].'</td>
-                </tr>
-                <tr>
-                    <td class="linement"><a style="color: white" href="">Not yet delivered</a></td>
-                    <td class="linement"><a style="color: white" href="">Not yet paid</a></td>
+                    <td class="linement">'.$row_product['product_name'].'</td>
+                    <td class="linement">'.$row['quantity'].'</td>
+                    <td class="linement">'."₱".$price.'</td>
+                    <td class="linement">'.$row['discount'].'</td>
+                    <td class="linement">'."₱".$total_amount.'</td>
+                    <td class="linement">'.$row['date_ordered'].'</td>
+                    '.$delivery_date.'
+                    '.$payment_date.'
+                    <td class="linement"><a class="btn btn-dark" role="button" style="width:auto;" style="color: white" href="modify_order.php?ID='.$row['customer_id'].'&order_id='.$row['order_id'].'">Modify</a></td>
                 </tr>';
             }
         }
@@ -243,12 +273,14 @@ class db_connection_member
                 $result_customer = $sql_Select_customer->get_result();
                 $row_customer = $result_customer->fetch_assoc();
 
+                $total_amount = number_format($row_order['total_amount'], 2, '.', ',');
+
                 echo '<tr>
                     <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
                     <td class="linement">'.$row_customer['store_name'].'</td>
                     <td class="linement">'.$row_product['product_name'].'</td>
                     <td class="linement">'.$row_order['quantity'].'</td>
-                    <td class="linement">'."₱".$row_order['total_amount'].'</td>
+                    <td class="linement">'."₱".$total_amount.'</td>
                     <td class="linement">'.$row_order['date_ordered'].'</td>
                 </tr>';
             }
@@ -276,12 +308,14 @@ class db_connection_member
                 $result_customer = $sql_Select_customer->get_result();
                 $row_customer = $result_customer->fetch_assoc();
 
+                $total_amount = number_format($row['total_amount'], 2, '.', ',');
+
                 echo '<tr>
                     <td class="linement">' . $row_customer['firstname'] . " " . $row_customer['lastname'] . '</td>
                     <td class="linement">' . $row_customer['store_name'] . '</td>
                     <td class="linement">' . $row_product['product_name'] . '</td>
                     <td class="linement">' . $row['quantity'] . '</td>
-                    <td class="linement">' . $row['total_amount'] . '</td>
+                    <td class="linement">' ."₱".$total_amount . '</td>
                     <td class="linement">' . $row['date_ordered'] . '</td>
                 </tr>';
             }
@@ -306,9 +340,11 @@ class db_connection_member
         $result = $sql_Select->get_result();
         while($row = $result->fetch_assoc())
         {
+            $price = number_format($row['price'], 2, '.', ',');
+
             echo '<tr>
                     <td class="linement">'.$row['product_name'].'</td>
-                    <td class="linement">'."₱".$row['price'].'</td>
+                    <td class="linement">'."₱".$price.'</td>
                     <td class="linement">'.$row['stock'].'</td>
                     <td class="linement"><a class="btn btn-dark btn-sm" href="modify_product.php?ID='.$row['product_id'].'">Edit</a></td>
                 </tr>';
@@ -325,11 +361,15 @@ class db_connection_member
         while($row = $result->fetch_assoc())
         {
             $TotalPrice = $row['price']* $row['stock'];
+
+            $price = number_format($row['price'], 2, '.', ',');
+            $TTotalPrice = number_format($TotalPrice, 2, '.', ',');
+
             echo '<tr>
                     <td class="linement">'.$row['product_name'].'</td>
                     <td class="linement">'.$row['stock'].'</td>
-                    <td class="linement">'."₱".$row['price'].'</td>
-                    <td class="linement">'."₱".$TotalPrice.'</td>
+                    <td class="linement">'."₱".$price.'</td>
+                    <td class="linement">'."₱".$TTotalPrice.'</td>
                 </tr>';
         }
         $sql_Select->close();
@@ -378,6 +418,80 @@ class db_connection_member
 
         $sql_Update = $this->con->prepare('UPDATE product SET price = ? WHERE product_id = ?');
         $sql_Update->bind_param('ss', $new_price,$product_id);
+        $sql_Update->execute() or die('Query error'.$this->con->error);
+
+        $sql_Select->close();
+        $sql_Update->close();
+    }
+    //SELECT TO MODIFY IF
+    public function db_select_table_order_for_checking($order_id)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE order_id = ?');
+        $sql_Select->bind_param('s', $order_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        $sql_Select_product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+        $sql_Select_product->bind_param('s', $row['product_id']);
+        $sql_Select_product->execute() or die('Query error'.$this->con->error);
+
+        $result_product = $sql_Select_product->get_result();
+        $row_product = $result_product->fetch_assoc();
+
+        $price = number_format($row['total_amount'], 2, '.', ',');
+
+        $this->order_id_delivery_date = $row['date_received'];
+        $this->order_id_payment_date = $row['payment_date'];
+        $this->paid_amount = "₱".$row['payment_received'];
+        $this->total_amount_to_be_paid = "₱".$price;
+        $this->order_id_product_name = $row_product['product_name'];
+        $this->price_bought = $row['total_amount'];
+        $this->payment_received = $row['payment_received'];
+        $this->credit = $row['credit'];
+    }
+    //UPDATE ORDER DELIVERY
+    public function db_update_order_delivery($order_id,$delivery_date)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE order_id = ?');
+        $sql_Select->bind_param('s', $order_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        $sql_Update = $this->con->prepare('UPDATE table_order SET date_received = ?,delivered_status = 1 WHERE order_id = ?');
+        $sql_Update->bind_param('ss', $delivery_date,$order_id);
+        $sql_Update->execute() or die('Query error'.$this->con->error);
+
+        $sql_Select->close();
+        $sql_Update->close();
+    }
+    //UPDATE ORDER PAYMENT
+    public function db_update_order_payment($order_id,$payment_date,$amount)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE order_id = ?');
+        $sql_Select->bind_param('s', $order_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        $amount_sum = $row['payment_received'] + $amount;
+
+        if($row['credit'] == '0.00')
+        {
+            $credit = $row['total_amount'] - $amount;
+        }
+        else
+        {
+            $credit = $row['credit'] - $amount;
+        }
+
+
+        $sql_Update = $this->con->prepare('UPDATE table_order SET payment_date = ?,payment_received = ?,credit = ?,payment_status = 1 WHERE order_id = ?');
+        $sql_Update->bind_param('ssss', $payment_date,$amount_sum,$credit,$order_id);
         $sql_Update->execute() or die('Query error'.$this->con->error);
 
         $sql_Select->close();
@@ -432,6 +546,8 @@ class db_connection_member
         $row = $result->fetch_assoc();
 
         $this->product_name = $row['product_name'];
+        $this->current_price = $row['price'];
+        $this->current_stock = $row['stock'];
     }
 
     public function total_sales()
@@ -452,7 +568,8 @@ class db_connection_member
                 $total_sales += $row_order['total_amount'];
             }
         }
-        echo "₱".$total_sales;
+        $TTotalSales = number_format($total_sales, 2, '.', ',');
+        echo "₱".$TTotalSales;
     }
 
     public function total_expenses()
@@ -473,7 +590,8 @@ class db_connection_member
                 $total_expenses += $row['amount'];
             }
         }
-        echo "₱".$total_expenses;
+        $TTotalExpenses = number_format($total_expenses, 2, '.', ',');
+        echo "₱".$TTotalExpenses;
     }
 
     public function total_ordered()
@@ -503,9 +621,37 @@ class db_connection_member
         echo $this->product_name."";
     }
 
+    function get_product_price()
+    {
+        $price = number_format($this->current_price, 2, '.', ',');
+        echo "Price: ₱".$price."";
+    }
+
+    function get_product_stock()
+    {
+        echo "Stock: ".$this->current_stock."";
+    }
+
+    function get_order_id_product_name()
+    {
+        echo $this->order_id_product_name."";
+    }
+
+    function price_bought()
+    {
+        $price = number_format($this->price_bought, 2, '.', ',');
+        echo "₱".$price."";
+    }
+
     function get_fullname()
     {
         echo $this->first_name." ".$this->last_name;
+    }
+
+    function get_credit()
+    {
+        $price = number_format($this->credit, 2, '.', ',');
+        echo "₱".$price."";
     }
 
     function get_fullname_login()

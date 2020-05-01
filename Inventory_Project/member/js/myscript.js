@@ -101,9 +101,10 @@ $(document).ready(function()
     $('#table_orders').DataTable
     ({
         responsive: true,
-        "pageLength": 5,
-        "lengthMenu": [[5, 10], [5, 10]],
+        "pageLength": 10,
+        "lengthMenu": [[10, 20], [10, 20]],
         "sPaginationType": "full_numbers",
+        "order": [[ 5, "desc" ]],
         language: {
             paginate: {
                 next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',
@@ -136,15 +137,57 @@ $(document).ready(function()
     });
 } );
 
+//Orders Table
+$(document).ready(function()
+{
+    $('#table_orders1').DataTable
+    ({
+        responsive: true,
+        "pageLength": 5,
+        "lengthMenu": [[5, 10], [5, 10]],
+        "sPaginationType": "full_numbers",
+        language: {
+            paginate: {
+                next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',
+                previous: '<i class="fa fa-step-backward" data-toggle="tooltip" data-placement="left" title="Previous"></i>',
+                first: '<i class="fa fa-fast-backward" data-toggle="tooltip" data-placement="left" title="Start"></i>',
+                last: '<i class="fa fa-fast-forward" data-toggle="tooltip" data-placement="right" title="End"></i>'
+            }
+        }
+    } );
+    $('#table_orders1_wrapper .dataTables_filter').find('input').each(function ()
+    {
+        const $this = $(this);
+        $this.addClass('form-control-sm');
+    });
+    $('#table_orders1_wrapper .dataTables_filter').find('label').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "lblSearch_orders1");
+    });
+    $('#table_orders1_wrapper .dataTables_length').find('label').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "lblShow_orders1");
+    });
+    $('#table_orders1_wrapper .dataTables_length').find('select').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "slcEntries_orders1");
+        $this.addClass('btn btn-dark');
+    });
+} );
+
 //Transactions Table
 $(document).ready(function()
 {
     $('#table_Transactions').DataTable
     ({
         responsive: true,
-        "pageLength": 5,
-        "lengthMenu": [[5, 10], [5, 10]],
+        "pageLength": 10,
+        "lengthMenu": [[10, 20], [10, 20]],
         "sPaginationType": "full_numbers",
+        "order": [[ 5, "desc" ]],
         language: {
             paginate: {
                 next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',

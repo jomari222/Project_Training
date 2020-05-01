@@ -153,18 +153,18 @@ $db->db_select_master($fUsername);
                 <table width="100%" class="table-bordered table-dark table-striped display" id="table_Expenses">
                     <thead>
                     <tr class="tableheaders">
-                        <th class="linement"> ID </th>
                         <th class="linement"> Name </th>
                         <th class="linement"> Amount </th>
                         <th class="linement"> Remarks </th>
+                        <th class="linement"> Date Expense </th>
                     </tr>
                     </thead>
                     <tfoot>
                     <tr class="tableheaders">
-                        <th class="linement"> ID </th>
                         <th class="linement"> Name </th>
                         <th class="linement"> Amount </th>
                         <th class="linement"> Remarks </th>
+                        <th class="linement"> Date Expense </th>
                     </tr>
                     </tfoot>
                     <tbody>
