@@ -19,6 +19,8 @@ class db_connection_master
     public $total_amount_to_be_paid;
     public $price_bought;
     public $payment_received;
+    public $product_stock_order;
+    public $total_payment_of_order;
 
     public function __construct()
     {
@@ -231,7 +233,12 @@ class db_connection_master
 
                 }
 
-                if($row['payment_status'] == "0")
+                if($row['payment_status'] == "0" && $row['payment_received'] != $row['total_amount'])
+                {
+                    $payment_status = "Unpaid";
+                    $payment_date = '<td style="background-color: darkgray; color: white" class="linement">'.$payment_status.'</td>';
+                }
+                else if($row['payment_status'] == "1" && $row['payment_received'] != $row['total_amount'])
                 {
                     $payment_status = "Unpaid";
                     $payment_date = '<td style="background-color: darkgray; color: white" class="linement">'.$payment_status.'</td>';
@@ -371,14 +378,17 @@ class db_connection_master
 
                 $total_amount = number_format($row_order['total_amount'], 2, '.', ',');
 
-                echo '<tr>
-                    <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
-                    <td class="linement">'.$row_customer['store_name'].'</td>
-                    <td class="linement">'.$row_product['product_name'].'</td>
-                    <td class="linement">'.$row_order['quantity'].'</td>
-                    <td class="linement">'."₱".$total_amount.'</td>
-                    <td class="linement">'.$row_order['payment_date'].'</td>
-                </tr>';
+                if($row_order['payment_received'] == $row_order['total_amount'])
+                {
+                    echo '<tr>
+                            <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
+                            <td class="linement">'.$row_customer['store_name'].'</td>
+                            <td class="linement">'.$row_product['product_name'].'</td>
+                            <td class="linement">'.$row_order['quantity'].'</td>
+                            <td class="linement">'."₱".$total_amount.'</td>
+                            <td class="linement">'.$row_order['payment_date'].'</td>
+                        </tr>';
+                }
             }
             $sql_Select_order ->close();
         }
@@ -407,24 +417,27 @@ class db_connection_master
 
                 $total_amount = number_format($row['total_amount'], 2, '.', ',');
 
-                echo '<tr>
-                    <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
-                    <td class="linement">'.$row_customer['store_name'].'</td>
-                    <td class="linement">'.$row_product['product_name'].'</td>
-                    <td class="linement">'.$row['quantity'].'</td>
-                    <td class="linement">'."₱".$total_amount.'</td>
-                    <td class="linement">'.$row['date_ordered'].'</td>
-                </tr>';
+                if($row['payment_received'] == $row['total_amount'])
+                {
+                    echo '<tr>
+                            <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
+                            <td class="linement">'.$row_customer['store_name'].'</td>
+                            <td class="linement">'.$row_product['product_name'].'</td>
+                            <td class="linement">'.$row['quantity'].'</td>
+                            <td class="linement">'."₱".$total_amount.'</td>
+                            <td class="linement">'.$row['date_ordered'].'</td>
+                        </tr>';
+                }
             }
             $sql_Select->close();
         }
     }
-    //SELECT TABLE_ORDER FOR TABLE Delivered
+    //SELECT TABLE_ORDER FOR TABLE DELIVERED
     public function db_select_order_table_Delivered()
     {
         if($this->date_min == '' && $this->date_max == '')
         {
-            $sql_Select_order = $this->con->prepare('SELECT * FROM table_order WHERE delivered_status = 1');
+            $sql_Select_order = $this->con->prepare('SELECT * FROM table_order WHERE payment_status = 1');
             $sql_Select_order ->execute() or die('Query error'.$this->con->error);
 
             $result_order = $sql_Select_order ->get_result();
@@ -446,20 +459,23 @@ class db_connection_master
 
                 $total_amount = number_format($row_order['total_amount'], 2, '.', ',');
 
-                echo '<tr>
-                    <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
-                    <td class="linement">'.$row_customer['store_name'].'</td>
-                    <td class="linement">'.$row_product['product_name'].'</td>
-                    <td class="linement">'.$row_order['quantity'].'</td>
-                    <td class="linement">'."₱".$total_amount.'</td>
-                    <td class="linement">'.$row_order['date_received'].'</td>
-                </tr>';
+                if($row_order['delivered_status'] == 1)
+                {
+                    echo '<tr>
+                            <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
+                            <td class="linement">'.$row_customer['store_name'].'</td>
+                            <td class="linement">'.$row_product['product_name'].'</td>
+                            <td class="linement">'.$row_order['quantity'].'</td>
+                            <td class="linement">'."₱".$total_amount.'</td>
+                            <td class="linement">'.$row_order['payment_date'].'</td>
+                        </tr>';
+                }
             }
             $sql_Select_order ->close();
         }
         else
         {
-            $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE date_ordered BETWEEN ? AND ? WHERE delivered_status = 1');
+            $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE date_ordered BETWEEN ? AND ? WHERE payment_status = 1');
             $sql_Select->bind_param('ss', $this->date_min,$this->date_max);
             $sql_Select ->execute() or die('Query error'.$this->con->error);
 
@@ -482,17 +498,34 @@ class db_connection_master
 
                 $total_amount = number_format($row['total_amount'], 2, '.', ',');
 
-                echo '<tr>
-                    <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
-                    <td class="linement">'.$row_customer['store_name'].'</td>
-                    <td class="linement">'.$row_product['product_name'].'</td>
-                    <td class="linement">'.$row['quantity'].'</td>
-                    <td class="linement">'."₱".$total_amount.'</td>
-                    <td class="linement">'.$row['date_ordered'].'</td>
-                </tr>';
+                if($row['delivered_status'] == 1)
+                {
+                    echo '<tr>
+                            <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
+                            <td class="linement">'.$row_customer['store_name'].'</td>
+                            <td class="linement">'.$row_product['product_name'].'</td>
+                            <td class="linement">'.$row['quantity'].'</td>
+                            <td class="linement">'."₱".$total_amount.'</td>
+                            <td class="linement">'.$row['date_ordered'].'</td>
+                        </tr>';
+                }
             }
             $sql_Select->close();
         }
+    }
+    //Checking product
+    public function check_product($product_id)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+        $sql_Select->bind_param('s', $product_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        $this->product_stock_order = $row['stock'];
+
+        $sql_Select->close();
     }
     //INSERT INTO TABLE ORDER
     public function db_insert_order_customer_id($customer_id,$product_id,$quantity,$date_ordered,$date_received,$discount,$returns,$payment_date,$payment_received,$total_amount)
@@ -502,6 +535,25 @@ class db_connection_master
         $sql_Insert->execute() or die('Query error'.$this->con->error);
 
         $sql_Insert->close();
+    }
+    //Buying of products
+    public function db_update_produce_order_remove($product_id,$quantity)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+        $sql_Select->bind_param('s', $product_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        $new_stock = $row['stock'] - $quantity;
+
+        $sql_Update = $this->con->prepare('UPDATE product SET stock = ? WHERE product_id = ?');
+        $sql_Update->bind_param('ss', $new_stock,$product_id);
+        $sql_Update->execute() or die('Query error'.$this->con->error);
+
+        $sql_Select->close();
+        $sql_Update->close();
     }
     //INSERT INTO EXPENSE
     public function db_insert_expense($amount,$remarks,$date_expense)
@@ -710,6 +762,7 @@ class db_connection_master
         $this->price_bought = $row['total_amount'];
         $this->payment_received = $row['payment_received'];
         $this->credit = $row['credit'];
+        $this->date_paid = $row['payment_date'];
     }
     //UPDATE ORDER DELIVERY
     public function db_update_order_delivery($order_id,$delivery_date)
@@ -727,6 +780,18 @@ class db_connection_master
 
         $sql_Select->close();
         $sql_Update->close();
+    }
+    //ORDER PAYMENT CHECKING
+    public function db_order_payment_checking($order_id)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE order_id = ?');
+        $sql_Select->bind_param('s', $order_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        $this->total_payment_of_order = $row['total_amount'];
     }
     //UPDATE ORDER PAYMENT
     public function db_update_order_payment($order_id,$payment_date,$amount)
@@ -770,6 +835,10 @@ class db_connection_master
             if($row_order<0)
             {
                 $total_sales = "0";
+            }
+            else if($row_order['payment_received'] != $row_order['total_amount'])
+            {
+
             }
             else
             {
@@ -817,10 +886,10 @@ class db_connection_master
             }
             else
             {
-                $total_order += $row[1];
+                $total_order = mysqli_num_rows($result);
             }
         }
-        echo $total_order-1;
+        echo $total_order;
     }
 
     //GET DATA
@@ -859,6 +928,11 @@ class db_connection_master
     {
         $price = number_format($this->credit, 2, '.', ',');
         echo "₱".$price."";
+    }
+
+    function get_last_date()
+    {
+        echo $this->date_paid."";
     }
 
     function price_bought()

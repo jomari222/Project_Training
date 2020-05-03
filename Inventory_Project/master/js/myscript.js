@@ -105,7 +105,6 @@ $(document).ready(function()
         "pageLength": 10,
         "lengthMenu": [[10, 20], [10, 20]],
         "sPaginationType": "full_numbers",
-        "order": [[ 5, "desc" ]],
         language: {
             paginate: {
                 next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',
@@ -131,6 +130,47 @@ $(document).ready(function()
         $this.attr("id", "lblShow_orders");
     });
     $('#table_orders_wrapper .dataTables_length').find('select').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "slcEntries_orders");
+        $this.addClass('btn btn-dark');
+    });
+} );
+//Customer Orders Table
+$(document).ready(function()
+{
+    $('#table_customer_orders').DataTable
+    ({
+        responsive: true,
+        "pageLength": 10,
+        "lengthMenu": [[10, 20], [10, 20]],
+        "sPaginationType": "full_numbers",
+        "order": [[ 5, "desc" ]],
+        language: {
+            paginate: {
+                next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',
+                previous: '<i class="fa fa-step-backward" data-toggle="tooltip" data-placement="left" title="Previous"></i>',
+                first: '<i class="fa fa-fast-backward" data-toggle="tooltip" data-placement="left" title="Start"></i>',
+                last: '<i class="fa fa-fast-forward" data-toggle="tooltip" data-placement="right" title="End"></i>'
+            }
+        }
+    } );
+    $('#table_customer_orders_wrapper .dataTables_filter').find('input').each(function ()
+    {
+        const $this = $(this);
+        $this.addClass('form-control-sm');
+    });
+    $('#table_customer_orders_wrapper .dataTables_filter').find('label').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "lblSearch_orders");
+    });
+    $('#table_customer_orders_wrapper .dataTables_length').find('label').each(function ()
+    {
+        const $this = $(this);
+        $this.attr("id", "lblShow_orders");
+    });
+    $('#table_customer_orders_wrapper .dataTables_length').find('select').each(function ()
     {
         const $this = $(this);
         $this.attr("id", "slcEntries_orders");

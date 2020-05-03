@@ -51,10 +51,19 @@ if(isset($_POST['buttonPaymentDone']))
     $date_payment = $_POST['txtDatePaid'];
     $amount = $_POST['txtAmountPaid'];
 
-    $db->db_update_order_payment($order_id,$date_payment,$amount);
+    $db->db_order_payment_checking($order_id);
+    if($amount > $db->total_payment_of_order)
+    {
+        include_once('includes/message.php');
+        MessageBackAccountID('Your payment exceeds to the order bought.');
+    }
+    else
+    {
+        $db->db_update_order_payment($order_id,$date_payment,$amount);
 
-    header("Location: account.php?ID=" . $ID);
-    die();
+        header("Location: account.php?ID=" . $ID);
+        die();
+    }
 }
 ?>
 <html lang="en">
@@ -93,6 +102,7 @@ if(isset($_POST['buttonPaymentDone']))
     <h1><?php $db->get_order_id_product_name(); ?></h1>
     <h1>Total: <?php $db->price_bought(); ?></h1>
     <h1>Credit: <?php $db->get_credit(); ?></h1>
+    <h1>Last Paid: <?php $db->get_last_date(); ?></h1>
 </div>
 <hr>
 <div id="frmpopup_modify">
@@ -126,7 +136,7 @@ if(isset($_POST['buttonPaymentDone']))
                     <h1>Payment</h1>
                     <hr>
                     <label><b>Date Paid</b></label>
-                    <?php if($db->order_id_delivery_date != '0000-00-00' && $db->order_id_payment_date == '0000-00-00' || $db->payment_received != $db->price_bought) { ?>
+                    <?php if($db->order_id_delivery_date != '0000-00-00' && $db->payment_received != $db->price_bought) { ?>
                         <input type="date" placeholder="Enter Date" name="txtDatePaid" required>
 
                         <label><b>Amount</b></label>

@@ -38,6 +38,34 @@ endif;
 $ID = $_GET['ID'];
 
 $db->db_select_customer_customer_id($ID);
+
+if(isset($_POST['buttonInsertProduct']))
+{
+    date_default_timezone_set('Asia/Manila');
+    $date_ordered = date("Y-m-d H:i:s");
+
+    $Add_Customer_ID = $_POST['fCustomer_ID'];
+    $Add_Product_ID = $_POST['select_product'];
+    $Add_Product_amount = $_POST['fAmount'];
+    $Add_Quantity= $_POST['fQty'];
+    $Add_Discount = $_POST['fDiscount'];
+    $Add_Total_amount = $_POST['fTotalAmount'];
+
+    $db->check_product($Add_Product_ID);
+    if($Add_Quantity > $db->product_stock_order)
+    {
+        include_once('includes/message.php');
+        MessageBackAccountID('Not enough stock.');
+    }
+    else
+    {
+        $db->db_insert_order_customer_id($Add_Customer_ID,$Add_Product_ID,$Add_Quantity,$date_ordered,'',$Add_Discount,'','','',$Add_Total_amount);
+        $db->db_update_produce_order_remove($Add_Product_ID,$Add_Quantity);
+
+        include_once('includes/message.php');
+        MessageBackAccountID('Order has been added.');
+    }
+}
 ?>
 <html lang="en">
 <head>
@@ -112,26 +140,20 @@ $db->db_select_customer_customer_id($ID);
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-4">
         <br>
         <div class="card bg-dark">
             <div class="card-header text-center text-white bg-dark">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <h3 class="">Product</h3>
-                    </div>
-                    <div class="col-md-4">
-                        <h3 class="">Delivered</h3>
-                    </div>
-                    <div class="col-md-4">
-                        <h3 class="">Payment</h3>
                     </div>
                 </div>
             </div>
             <div class="card-body" id="card_body">
                 <div class="row">
-                    <div class="col-md-4" id="col_products">
-                        <form id="" action="includes/order.php" method="POST">
+                    <div class="col-md-12" id="">
+                        <form id="" action="" method="POST">
                             <hr>
                             <div class="row">
                                 <div class="col-md-12">
@@ -157,7 +179,7 @@ $db->db_select_customer_customer_id($ID);
                                     </div>
                                     <div class="col-md-5">
                                         <label style="width: 100%" id="lblQty">Quantity:
-                                            <input type="number" class="form-control" id="txtQty" onkeypress="multiply_qty_amount()" oninput="multiply_qty_amount()" name="fQty" placeholder="Quantity" value="" max="100" min="1" disabled required/>
+                                            <input type="number" class="form-control" id="txtQty" onkeypress="multiply_qty_amount()" oninput="multiply_qty_amount()" name="fQty" placeholder="Quantity" value="" max="9999" min="1" disabled required/>
                                         </label>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
@@ -184,12 +206,6 @@ $db->db_select_customer_customer_id($ID);
                             </div>
                             <button class="btn btn-block btn-dark" type="submit" id="btnInsertProduct" name="buttonInsertProduct">Insert</button>
                         </form>
-                    </div>
-                    <div class="col-md-4">
-
-                    </div>
-                    <div class="col-md-4" id="col_payment">
-
                     </div>
                 </div>
             </div>

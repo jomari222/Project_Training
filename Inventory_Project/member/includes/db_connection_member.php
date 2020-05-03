@@ -17,6 +17,8 @@ class db_connection_member
     public $total_amount_to_be_paid;
     public $price_bought;
     public $payment_received;
+    public $product_stock_order;
+    public $total_payment_of_order;
 
     public function __construct()
     {
@@ -210,7 +212,12 @@ class db_connection_member
 
                 }
 
-                if($row['payment_status'] == "0")
+                if($row['payment_status'] == "0" && $row['payment_received'] != $row['total_amount'])
+                {
+                    $payment_status = "Unpaid";
+                    $payment_date = '<td style="background-color: darkgray; color: white" class="linement">'.$payment_status.'</td>';
+                }
+                else if($row['payment_status'] == "1" && $row['payment_received'] != $row['total_amount'])
                 {
                     $payment_status = "Unpaid";
                     $payment_date = '<td style="background-color: darkgray; color: white" class="linement">'.$payment_status.'</td>';
@@ -322,6 +329,182 @@ class db_connection_member
             $sql_Select->close();
         }
     }
+    //SELECT TABLE_ORDER FOR TABLE PAID
+    public function db_select_order_table_Paid()
+    {
+        if($this->date_min == '' && $this->date_max == '')
+        {
+            $sql_Select_order = $this->con->prepare('SELECT * FROM table_order WHERE payment_status = 1');
+            $sql_Select_order ->execute() or die('Query error'.$this->con->error);
+
+            $result_order = $sql_Select_order ->get_result();
+            while($row_order = $result_order->fetch_assoc())
+            {
+                $sql_Select_product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+                $sql_Select_product->bind_param('s', $row_order['product_id']);
+                $sql_Select_product->execute() or die('Query error'.$this->con->error);
+
+                $result_product = $sql_Select_product->get_result();
+                $row_product = $result_product->fetch_assoc();
+
+                $sql_Select_customer = $this->con->prepare('SELECT * FROM customer WHERE customer_id = ?');
+                $sql_Select_customer->bind_param('s', $row_order['customer_id']);
+                $sql_Select_customer->execute() or die('Query error'.$this->con->error);
+
+                $result_customer = $sql_Select_customer->get_result();
+                $row_customer = $result_customer->fetch_assoc();
+
+                $total_amount = number_format($row_order['total_amount'], 2, '.', ',');
+
+                if($row_order['payment_received'] == $row_order['total_amount'])
+                {
+                    echo '<tr>
+                            <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
+                            <td class="linement">'.$row_customer['store_name'].'</td>
+                            <td class="linement">'.$row_product['product_name'].'</td>
+                            <td class="linement">'.$row_order['quantity'].'</td>
+                            <td class="linement">'."₱".$total_amount.'</td>
+                            <td class="linement">'.$row_order['payment_date'].'</td>
+                        </tr>';
+                }
+            }
+            $sql_Select_order ->close();
+        }
+        else
+        {
+            $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE date_ordered BETWEEN ? AND ? WHERE payment_status = 1');
+            $sql_Select->bind_param('ss', $this->date_min,$this->date_max);
+            $sql_Select ->execute() or die('Query error'.$this->con->error);
+
+            $result = $sql_Select ->get_result();
+            while($row = $result->fetch_assoc())
+            {
+                $sql_Select_product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+                $sql_Select_product->bind_param('s', $row['product_id']);
+                $sql_Select_product->execute() or die('Query error'.$this->con->error);
+
+                $result_product = $sql_Select_product->get_result();
+                $row_product = $result_product->fetch_assoc();
+
+                $sql_Select_customer = $this->con->prepare('SELECT * FROM customer WHERE customer_id = ?');
+                $sql_Select_customer->bind_param('s', $row['customer_id']);
+                $sql_Select_customer->execute() or die('Query error'.$this->con->error);
+
+                $result_customer = $sql_Select_customer->get_result();
+                $row_customer = $result_customer->fetch_assoc();
+
+                $total_amount = number_format($row['total_amount'], 2, '.', ',');
+
+                if($row['payment_received'] == $row['total_amount'])
+                {
+                    echo '<tr>
+                            <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
+                            <td class="linement">'.$row_customer['store_name'].'</td>
+                            <td class="linement">'.$row_product['product_name'].'</td>
+                            <td class="linement">'.$row['quantity'].'</td>
+                            <td class="linement">'."₱".$total_amount.'</td>
+                            <td class="linement">'.$row['date_ordered'].'</td>
+                        </tr>';
+                }
+            }
+            $sql_Select->close();
+        }
+    }
+    //SELECT TABLE_ORDER FOR TABLE DELIVERED
+    public function db_select_order_table_Delivered()
+    {
+        if($this->date_min == '' && $this->date_max == '')
+        {
+            $sql_Select_order = $this->con->prepare('SELECT * FROM table_order WHERE payment_status = 1');
+            $sql_Select_order ->execute() or die('Query error'.$this->con->error);
+
+            $result_order = $sql_Select_order ->get_result();
+            while($row_order = $result_order->fetch_assoc())
+            {
+                $sql_Select_product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+                $sql_Select_product->bind_param('s', $row_order['product_id']);
+                $sql_Select_product->execute() or die('Query error'.$this->con->error);
+
+                $result_product = $sql_Select_product->get_result();
+                $row_product = $result_product->fetch_assoc();
+
+                $sql_Select_customer = $this->con->prepare('SELECT * FROM customer WHERE customer_id = ?');
+                $sql_Select_customer->bind_param('s', $row_order['customer_id']);
+                $sql_Select_customer->execute() or die('Query error'.$this->con->error);
+
+                $result_customer = $sql_Select_customer->get_result();
+                $row_customer = $result_customer->fetch_assoc();
+
+                $total_amount = number_format($row_order['total_amount'], 2, '.', ',');
+
+                if($row_order['delivered_status'] == 1)
+                {
+                    echo '<tr>
+                            <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
+                            <td class="linement">'.$row_customer['store_name'].'</td>
+                            <td class="linement">'.$row_product['product_name'].'</td>
+                            <td class="linement">'.$row_order['quantity'].'</td>
+                            <td class="linement">'."₱".$total_amount.'</td>
+                            <td class="linement">'.$row_order['payment_date'].'</td>
+                        </tr>';
+                }
+            }
+            $sql_Select_order ->close();
+        }
+        else
+        {
+            $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE date_ordered BETWEEN ? AND ? WHERE payment_status = 1');
+            $sql_Select->bind_param('ss', $this->date_min,$this->date_max);
+            $sql_Select ->execute() or die('Query error'.$this->con->error);
+
+            $result = $sql_Select ->get_result();
+            while($row = $result->fetch_assoc())
+            {
+                $sql_Select_product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+                $sql_Select_product->bind_param('s', $row['product_id']);
+                $sql_Select_product->execute() or die('Query error'.$this->con->error);
+
+                $result_product = $sql_Select_product->get_result();
+                $row_product = $result_product->fetch_assoc();
+
+                $sql_Select_customer = $this->con->prepare('SELECT * FROM customer WHERE customer_id = ?');
+                $sql_Select_customer->bind_param('s', $row['customer_id']);
+                $sql_Select_customer->execute() or die('Query error'.$this->con->error);
+
+                $result_customer = $sql_Select_customer->get_result();
+                $row_customer = $result_customer->fetch_assoc();
+
+                $total_amount = number_format($row['total_amount'], 2, '.', ',');
+
+                if($row['delivered_status'] == 1)
+                {
+                    echo '<tr>
+                            <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
+                            <td class="linement">'.$row_customer['store_name'].'</td>
+                            <td class="linement">'.$row_product['product_name'].'</td>
+                            <td class="linement">'.$row['quantity'].'</td>
+                            <td class="linement">'."₱".$total_amount.'</td>
+                            <td class="linement">'.$row['date_ordered'].'</td>
+                        </tr>';
+                }
+            }
+            $sql_Select->close();
+        }
+    }
+    //Checking product
+    public function check_product($product_id)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+        $sql_Select->bind_param('s', $product_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        $this->product_stock_order = $row['stock'];
+
+        $sql_Select->close();
+    }
     //INSERT INTO TABLE ORDER
     public function db_insert_order_customer_id($customer_id,$product_id,$quantity,$date_ordered,$date_received,$discount,$returns,$payment_date,$payment_received,$total_amount)
     {
@@ -330,6 +513,25 @@ class db_connection_member
         $sql_Insert->execute() or die('Query error'.$this->con->error);
 
         $sql_Insert->close();
+    }
+    //Buying of products
+    public function db_update_produce_order_remove($product_id,$quantity)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+        $sql_Select->bind_param('s', $product_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        $new_stock = $row['stock'] - $quantity;
+
+        $sql_Update = $this->con->prepare('UPDATE product SET stock = ? WHERE product_id = ?');
+        $sql_Update->bind_param('ss', $new_stock,$product_id);
+        $sql_Update->execute() or die('Query error'.$this->con->error);
+
+        $sql_Select->close();
+        $sql_Update->close();
     }
     //SELECT PRODUCT FOR TABLE
     public function db_select_product_table()
@@ -450,6 +652,7 @@ class db_connection_member
         $this->price_bought = $row['total_amount'];
         $this->payment_received = $row['payment_received'];
         $this->credit = $row['credit'];
+        $this->date_paid = $row['payment_date'];
     }
     //UPDATE ORDER DELIVERY
     public function db_update_order_delivery($order_id,$delivery_date)
@@ -467,6 +670,18 @@ class db_connection_member
 
         $sql_Select->close();
         $sql_Update->close();
+    }
+    //ORDER PAYMENT CHECKING
+    public function db_order_payment_checking($order_id)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE order_id = ?');
+        $sql_Select->bind_param('s', $order_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        $this->total_payment_of_order = $row['total_amount'];
     }
     //UPDATE ORDER PAYMENT
     public function db_update_order_payment($order_id,$payment_date,$amount)
@@ -563,6 +778,10 @@ class db_connection_member
             {
                 $total_sales = "0";
             }
+            else if($row_order['payment_received'] != $row_order['total_amount'])
+            {
+
+            }
             else
             {
                 $total_sales += $row_order['total_amount'];
@@ -609,7 +828,7 @@ class db_connection_member
             }
             else
             {
-                $total_order += $row[1];
+                $total_order = mysqli_num_rows($result);
             }
         }
         echo $total_order;
@@ -652,6 +871,11 @@ class db_connection_member
     {
         $price = number_format($this->credit, 2, '.', ',');
         echo "₱".$price."";
+    }
+
+    function get_last_date()
+    {
+        echo $this->date_paid."";
     }
 
     function get_fullname_login()

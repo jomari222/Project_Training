@@ -50,10 +50,20 @@ if(isset($_POST['buttonInsertProduct']))
     $Add_Discount = $_POST['fDiscount'];
     $Add_Total_amount = $_POST['fTotalAmount'];
 
-    $db->db_insert_order_customer_id($Add_Customer_ID,$Add_Product_ID,$Add_Quantity,$date_ordered,'',$Add_Discount,'','','',$Add_Total_amount);
+    $db->check_product($Add_Product_ID);
+    if($Add_Quantity > $db->product_stock_order)
+    {
+        include_once('includes/message.php');
+        MessageBackAccountID('Not enough stock.');
+    }
+    else
+    {
+        $db->db_insert_order_customer_id($Add_Customer_ID,$Add_Product_ID,$Add_Quantity,$date_ordered,'',$Add_Discount,'','','',$Add_Total_amount);
+        $db->db_update_produce_order_remove($Add_Product_ID,$Add_Quantity);
 
-    include_once('includes/message.php');
-    MessageBackAccountID('Order has been added.');
+        include_once('includes/message.php');
+        MessageBackAccountID('Order has been added.');
+    }
 }
 ?>
 <html lang="en">
@@ -92,7 +102,7 @@ if(isset($_POST['buttonInsertProduct']))
             <h1 id="lblList"><?php $db->get_fullname(); ?></h1>
             <h1 id="lblList">Order List</h1>
             <div class="table-responsive-md" id="table_div">
-                <table width="100%" class="table-bordered table-dark table-striped display text-center" id="table_orders">
+                <table width="100%" class="table-bordered table-dark table-striped display text-center" id="table_customer_orders">
                     <thead>
                     <tr class="tableheaders">
                         <th class="linement"> Product Name </th>
@@ -127,26 +137,20 @@ if(isset($_POST['buttonInsertProduct']))
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-4">
         <br>
         <div class="card bg-dark">
             <div class="card-header text-center text-white bg-dark">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <h3 class="">Product</h3>
-                    </div>
-                    <div class="col-md-4">
-                        <h3 class="">Delivered</h3>
-                    </div>
-                    <div class="col-md-4">
-                        <h3 class="">Payment</h3>
                     </div>
                 </div>
             </div>
             <div class="card-body" id="card_body">
                 <form id="" action="" method="POST">
                 <div class="row">
-                    <div class="col-md-4" id="col_products">
+                    <div class="col-md-12" id="">
                             <hr>
                             <label id="" hidden>Customer ID:
                                 <input type="text" class="form-control" id="txtCustomer_ID" name="fCustomer_ID" placeholder="" value="<?php echo $ID; ?>" readonly hidden required/>
@@ -175,7 +179,7 @@ if(isset($_POST['buttonInsertProduct']))
                                     </div>
                                     <div class="col-md-5">
                                         <label style="width: 100%" id="lblQty">Quantity:
-                                            <input type="number" class="form-control" id="txtQty" onkeypress="multiply_qty_amount()" oninput="multiply_qty_amount()" name="fQty" placeholder="Quantity" value="" max="100" min="1" disabled required/>
+                                            <input type="number" class="form-control" id="txtQty" onkeypress="multiply_qty_amount()" oninput="multiply_qty_amount()" name="fQty" placeholder="Quantity" value="" max="9999" min="1" disabled required/>
                                         </label>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>
@@ -209,69 +213,5 @@ if(isset($_POST['buttonInsertProduct']))
     </div>
 </div>
 <br>
-
-<div id="frmpopup_modify" class="modal">
-    <div class="row">
-        <span onclick="document.getElementById('frmpopup_modify').style.display='none'" class="close" title="Close Modal">&times;</span>
-        <div class="col-md-2">
-
-        </div>
-        <div class="col-md-4">
-            <form class="modal-content" action="">
-                <div class="container">
-                    <h1>Delivery</h1>
-                    <hr>
-                    <label><b>Date Delivered</b></label>
-                    <input type="date" placeholder="Enter Date" name="txtDateDelivery" required>
-
-                    <div class="clearfix">
-                        <button name="buttonDeliveryDone" type="submit" class="signupbtn">Done</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-4">
-            <form class="modal-content" action="">
-                <div class="container">
-                    <h1>Payment</h1>
-                    <hr>
-                    <label><b>Date Paid</b></label>
-                    <input type="date" placeholder="Enter Date" name="txtDatePaid" required>
-
-                    <label><b>Amount</b></label>
-                    <input type="text" class="form-control" placeholder="Enter Amount" name="txtAmountPaid" required>
-
-                    <div class="clearfix">
-                        <button name="buttonPaymentDone" type="submit" class="signupbtn">Done</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="col-md-2">
-
-        </div>
-    </div>
-</div>
 </body>
 </html>
-<script>
-    // Get the modal
-    var modal = document.getElementById('frmpopup_modify');
-
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-
-    $('#frmpopup_modify').on('hidden.bs.modal', function ()
-    {
-        var order_id = document.getElementById('order_id');
-        if(order_id == 15)
-        {
-            $('#frmpopup_modify').modal('shown');
-        }
-    })
-</script>

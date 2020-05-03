@@ -166,7 +166,7 @@ $db->db_select_member($fUsername);
                 </tr>
                 </tfoot>
                 <tbody>
-                <?php $db->db_select_order_table(); ?>
+                <?php $db->db_select_order_table_Delivered(); ?>
                 </tbody>
             </table>
         </div>
