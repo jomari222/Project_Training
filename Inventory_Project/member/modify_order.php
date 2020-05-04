@@ -30,8 +30,18 @@ if($fUsername == null)
 include_once('includes/db_connection_member.php');
 $db = new db_connection_member();
 
-$ID = $_GET['ID'];
-$order_id = $_GET['order_id'];
+if (empty($_GET['ID'])):
+    header("Location: customer.php");
+    die();
+endif;
+
+if (empty($_GET['order_id'])):
+    header("Location: customer.php");
+    die();
+endif;
+
+$ID = $db->base64_url_decode($_GET['ID']);
+$order_id = $db->base64_url_decode($_GET['order_id']);
 
 $db->db_select_customer_customer_id($ID);
 $db->db_select_table_order_for_checking($order_id);

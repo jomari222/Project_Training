@@ -150,13 +150,15 @@ class db_connection_member
             $result_barangay= $sql_Select_barangay->get_result();
             $row_barangay = $result_barangay->fetch_assoc();
 
+            $customer_id_id = $this->base64_url_encode($row['customer_id']);
+
             echo '<tr>
                     <td class="linement">'.$row['customer_id'].'</td>
                     <td class="linement">'.$row['firstname']." ".$row['lastname'].'</td>
                     <td class="linement">'.$row['store_name'].'</td>
                     <td class="linement">'.$row['unit']." ".$row_barangay['brgyDesc'].", ".$row_city_mun['citymunDesc']." ".$row_province['provDesc'].'</td>
                     <td class="linement">'.$row['contact_number'].'</td>
-                    <td class="linement"><a class="btn btn-dark btn-sm" href="account.php?ID='.$row['customer_id'].'">Order</a></td>
+                    <td class="linement"><a class="btn btn-dark btn-sm" href="account.php?ID='.$customer_id_id.'">Order</a></td>
                 </tr>';
         }
         $sql_Select->close();
@@ -227,6 +229,9 @@ class db_connection_member
                     $payment_date = '<td class="linement">'.$row['payment_date'].'</td>';
                 }
 
+                $customer_id_id = $this->base64_url_encode($row['customer_id']);
+                $order_id_id = $this->base64_url_encode($row['order_id']);
+
                 echo '<tr>
                     <td class="linement">'.$row_product['product_name'].'</td>
                     <td class="linement">'.$row['quantity'].'</td>
@@ -236,7 +241,7 @@ class db_connection_member
                     <td class="linement">'.$row['date_ordered'].'</td>
                     '.$delivery_date.'
                     '.$payment_date.'
-                    <td class="linement"><a class="btn btn-dark" role="button" style="width:auto;" style="color: white" href="modify_order.php?ID='.$row['customer_id'].'&order_id='.$row['order_id'].'">Modify</a></td>
+                    <td class="linement"><a class="btn btn-dark" role="button" style="width:auto;" style="color: white" href="modify_order.php?ID='.$customer_id_id.'&order_id='.$order_id_id.'">Modify</a></td>
                 </tr>';
             }
         }
@@ -881,6 +886,16 @@ class db_connection_member
     function get_fullname_login()
     {
         echo $this->first_name_login." ".$this->last_name_login;
+    }
+
+    function base64_url_encode($input)
+    {
+        return strtr(base64_encode($input), '+/=', '-_,');
+    }
+
+    function base64_url_decode($input)
+    {
+        return base64_decode(strtr($input, '-_,', '+/='));
     }
 
     public function __destruct()

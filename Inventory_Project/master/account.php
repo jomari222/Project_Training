@@ -34,7 +34,7 @@ if (empty($_GET['ID'])):
     die();
 endif;
 
-$ID = $_GET['ID'];
+$ID = $db->base64_url_decode($_GET['ID']);
 
 $db->db_select_customer_customer_id($ID);
 
