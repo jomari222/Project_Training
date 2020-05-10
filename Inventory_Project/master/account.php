@@ -43,7 +43,7 @@ if(isset($_POST['buttonInsertProduct']))
     date_default_timezone_set('Asia/Manila');
     $date_ordered = date("Y-m-d H:i:s");
 
-    $Add_Customer_ID = $_POST['fCustomer_ID'];
+    $Add_Customer_ID = $ID;
     $Add_Product_ID = $_POST['select_product'];
     $Add_Product_amount = $_POST['fAmount'];
     $Add_Quantity= $_POST['fQty'];
@@ -152,9 +152,6 @@ if(isset($_POST['buttonInsertProduct']))
                 <div class="row">
                     <div class="col-md-12" id="">
                             <hr>
-                            <label id="" hidden>Customer ID:
-                                <input type="text" class="form-control" id="txtCustomer_ID" name="fCustomer_ID" placeholder="" value="<?php echo $ID; ?>" readonly hidden required/>
-                            </label>
                             <div class="row">
                                 <div class="col-md-12">
                                     <form>

@@ -29,6 +29,28 @@ if($fUsername == null)
 include_once('includes/db_connection_member.php');
 $db = new db_connection_member();
 $db->db_select_member($fUsername);
+
+if(isset($_POST['buttonSearch_Date']))
+{
+    $Add_Min_Date = $_POST['name_min_date'];
+    $Add_Max_Date = $_POST['name_max_date'];
+
+    if($Add_Min_Date == "" && $Add_Max_Date == "")
+    {
+        include_once('includes/message.php');
+        header('Location:delivery_report.php');
+    }
+    elseif($Add_Min_Date == null && $Add_Max_Date == null)
+    {
+        include_once('includes/message.php');
+        header('Location:delivery_report.php');
+    }
+    else
+    {
+        $db->date_min = $Add_Min_Date;
+        $db->date_max = $Add_Max_Date;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -169,6 +191,7 @@ $db->db_select_member($fUsername);
                 <?php $db->db_select_order_table_Delivered(); ?>
                 </tbody>
             </table>
+            <br>
         </div>
     </div>
 </div>

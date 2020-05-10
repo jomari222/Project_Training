@@ -21,6 +21,23 @@ class db_connection_master
     public $payment_received;
     public $product_stock_order;
     public $total_payment_of_order;
+    public $total_sales_modified;
+    public $total_orders_modified;
+    //Product
+    public $Benz_4in1_MALUNGAY_Healthy_Cof;
+    public $Benz_4in1_Mangosteen_Healthy_C;
+    public $Benz_5in1_Healthy_Coffee_Mix;
+    public $Benz_8in1_Healthy_Coffee_Mix;
+    public $Benz_8in1_Healthy_CHOCO_Mix;
+    //Sale each product
+    public $Benz_4in1_MALUNGAY_Healthy_Cof_Sale;
+    public $Benz_4in1_Mangosteen_Healthy_C_Sale;
+    public $Benz_5in1_Healthy_Coffee_Mix_Sale;
+    public $Benz_8in1_Healthy_Coffee_Mix_Sale;
+    public $Benz_8in1_Healthy_CHOCO_Mix_Sale;
+    //Dates
+    public $date_ordered;
+    public $date_delivered;
 
     public function __construct()
     {
@@ -359,9 +376,9 @@ class db_connection_master
     //SELECT TABLE_ORDER FOR TABLE PAID
     public function db_select_order_table_Paid()
     {
-        if($this->date_min == '' && $this->date_max == '')
+        if($this->date_min == '' && $this->date_max== '')
         {
-            $sql_Select_order = $this->con->prepare('SELECT * FROM table_order WHERE payment_status = 1');
+            $sql_Select_order = $this->con->prepare('SELECT * FROM table_order');
             $sql_Select_order ->execute() or die('Query error'.$this->con->error);
 
             $result_order = $sql_Select_order ->get_result();
@@ -393,13 +410,42 @@ class db_connection_master
                             <td class="linement">'."₱".$total_amount.'</td>
                             <td class="linement">'.$row_order['payment_date'].'</td>
                         </tr>';
+
+                    $this->total_sales_modified += $row_order['total_amount'];
+                    $this->total_orders_modified += $row_order['quantity'];
+
+                    if($row_order['product_id'] == 1)
+                    {
+                        $this->Benz_4in1_MALUNGAY_Healthy_Cof += $row_order['quantity'];
+                        $this->Benz_4in1_MALUNGAY_Healthy_Cof_Sale += $row_order['total_amount'];
+                    }
+                    if($row_order['product_id'] == 2)
+                    {
+                        $this->Benz_4in1_Mangosteen_Healthy_C += $row_order['quantity'];
+                        $this->Benz_4in1_Mangosteen_Healthy_C_Sale += $row_order['total_amount'];
+                    }
+                    if($row_order['product_id'] == 3)
+                    {
+                        $this->Benz_5in1_Healthy_Coffee_Mix += $row_order['quantity'];
+                        $this->Benz_5in1_Healthy_Coffee_Mix_Sale += $row_order['total_amount'];
+                    }
+                    if($row_order['product_id'] == 4)
+                    {
+                        $this->Benz_8in1_Healthy_Coffee_Mix += $row_order['quantity'];
+                        $this->Benz_8in1_Healthy_Coffee_Mix_Sale += $row_order['total_amount'];
+                    }
+                    if($row_order['product_id'] == 5)
+                    {
+                        $this->Benz_8in1_Healthy_CHOCO_Mix += $row_order['quantity'];
+                        $this->Benz_8in1_Healthy_CHOCO_Mix_Sale += $row_order['total_amount'];
+                    }
                 }
             }
             $sql_Select_order ->close();
         }
         else
         {
-            $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE date_ordered BETWEEN ? AND ? WHERE payment_status = 1');
+            $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE payment_date BETWEEN ? AND ?');
             $sql_Select->bind_param('ss', $this->date_min,$this->date_max);
             $sql_Select ->execute() or die('Query error'.$this->con->error);
 
@@ -430,8 +476,37 @@ class db_connection_master
                             <td class="linement">'.$row_product['product_name'].'</td>
                             <td class="linement">'.$row['quantity'].'</td>
                             <td class="linement">'."₱".$total_amount.'</td>
-                            <td class="linement">'.$row['date_ordered'].'</td>
+                            <td class="linement">'.$row['payment_date'].'</td>
                         </tr>';
+
+                    $this->total_sales_modified += $row['total_amount'];
+                    $this->total_orders_modified += $row['quantity'];
+
+                    if($row['product_id'] == 1)
+                    {
+                        $this->Benz_4in1_MALUNGAY_Healthy_Cof += $row['quantity'];
+                        $this->Benz_4in1_MALUNGAY_Healthy_Cof_Sale += $row['total_amount'];
+                    }
+                    if($row['product_id'] == 2)
+                    {
+                        $this->Benz_4in1_Mangosteen_Healthy_C += $row['quantity'];
+                        $this->Benz_4in1_Mangosteen_Healthy_C_Sale += $row['total_amount'];
+                    }
+                    if($row['product_id'] == 3)
+                    {
+                        $this->Benz_5in1_Healthy_Coffee_Mix += $row['quantity'];
+                        $this->Benz_5in1_Healthy_Coffee_Mix_Sale += $row['total_amount'];
+                    }
+                    if($row['product_id'] == 4)
+                    {
+                        $this->Benz_8in1_Healthy_Coffee_Mix += $row['quantity'];
+                        $this->Benz_8in1_Healthy_Coffee_Mix_Sale += $row['total_amount'];
+                    }
+                    if($row['product_id'] == 5)
+                    {
+                        $this->Benz_8in1_Healthy_CHOCO_Mix += $row['quantity'];
+                        $this->Benz_8in1_Healthy_CHOCO_Mix_Sale += $row['total_amount'];
+                    }
                 }
             }
             $sql_Select->close();
@@ -442,7 +517,7 @@ class db_connection_master
     {
         if($this->date_min == '' && $this->date_max == '')
         {
-            $sql_Select_order = $this->con->prepare('SELECT * FROM table_order WHERE payment_status = 1');
+            $sql_Select_order = $this->con->prepare('SELECT * FROM table_order');
             $sql_Select_order ->execute() or die('Query error'.$this->con->error);
 
             $result_order = $sql_Select_order ->get_result();
@@ -480,7 +555,7 @@ class db_connection_master
         }
         else
         {
-            $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE date_ordered BETWEEN ? AND ? WHERE payment_status = 1');
+            $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE date_received BETWEEN ? AND ?');
             $sql_Select->bind_param('ss', $this->date_min,$this->date_max);
             $sql_Select ->execute() or die('Query error'.$this->con->error);
 
@@ -511,7 +586,7 @@ class db_connection_master
                             <td class="linement">'.$row_product['product_name'].'</td>
                             <td class="linement">'.$row['quantity'].'</td>
                             <td class="linement">'."₱".$total_amount.'</td>
-                            <td class="linement">'.$row['date_ordered'].'</td>
+                            <td class="linement">'.$row['date_received'].'</td>
                         </tr>';
                 }
             }
@@ -796,7 +871,12 @@ class db_connection_master
         $result = $sql_Select->get_result();
         $row = $result->fetch_assoc();
 
-        $this->total_payment_of_order = $row['total_amount'];
+        $dt_o = new DateTime($row['date_ordered']);
+        $dt_d = new DateTime($row['date_received']);
+
+        $this->total_payment_of_order = $row['total_amount'] - $row['payment_received'];
+        $this->date_ordered = $dt_o->format('Y-m-d');
+        $this->date_delivered = $dt_d->format('Y-m-d');
     }
     //UPDATE ORDER PAYMENT
     public function db_update_order_payment($order_id,$payment_date,$amount)

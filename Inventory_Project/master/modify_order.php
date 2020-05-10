@@ -48,12 +48,21 @@ $db->db_select_table_order_for_checking($order_id);
 
 if(isset($_POST['buttonDeliveryDone']))
 {
-$date_delivered = $_POST['txtDateDelivery'];
+    $date_delivered = $_POST['txtDateDelivery'];
+    $db->db_order_payment_checking($order_id);
 
-$db->db_update_order_delivery($order_id,$date_delivered);
+    if($date_delivered >= $db->date_ordered)
+    {
+        $db->db_update_order_delivery($order_id,$date_delivered);
 
-header("Location: account.php?ID=" .$ID);
-die();
+        header("Location: account.php?ID=" . $_GET['ID']);
+        die();
+    }
+    else
+    {
+        include_once('includes/message.php');
+        MessageBackAccountID('Your date entry is invalid.');
+    }
 }
 
 if(isset($_POST['buttonPaymentDone']))
@@ -67,11 +76,16 @@ if(isset($_POST['buttonPaymentDone']))
         include_once('includes/message.php');
         MessageBackAccountID('Your payment exceeds to the order bought.');
     }
+    elseif($date_payment < $db->date_delivered)
+    {
+        include_once('includes/message.php');
+        MessageBackAccountID('Your date entry is invalid.');
+    }
     else
     {
         $db->db_update_order_payment($order_id,$date_payment,$amount);
 
-        header("Location: account.php?ID=" . $ID);
+        header("Location: account.php?ID=" . $_GET['ID']);
         die();
     }
 }

@@ -29,6 +29,28 @@ if($fUsername == null)
 include_once('includes/db_connection_member.php');
 $db = new db_connection_member();
 $db->db_select_member($fUsername);
+
+if(isset($_POST['buttonSearch_Date']))
+{
+    $Add_Min_Date = $_POST['name_min_date'];
+    $Add_Max_Date = $_POST['name_max_date'];
+
+    if($Add_Min_Date == "" && $Add_Max_Date == "")
+    {
+        include_once('includes/message.php');
+        header('Location:sales_report.php');
+    }
+    elseif($Add_Min_Date == null && $Add_Max_Date == null)
+    {
+        include_once('includes/message.php');
+        header('Location:sales_report.php');
+    }
+    else
+    {
+        $db->date_min = $Add_Min_Date;
+        $db->date_max = $Add_Max_Date;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -169,6 +191,105 @@ $db->db_select_member($fUsername);
                 <?php $db->db_select_order_table_Paid(); ?>
                 </tbody>
             </table>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-md-6" id="col_change_price">
+                    <hr>
+                    <h5 class="center">Benz 4in1 MALUNGAY Healthy Cof:</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 id="">Quantity: </h4>
+                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php if($db->Benz_4in1_MALUNGAY_Healthy_Cof == NULL) { $db->Benz_4in1_MALUNGAY_Healthy_Cof = 0; } echo $db->Benz_4in1_MALUNGAY_Healthy_Cof; ?>" readonly/>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 id="">Sales: </h4>
+                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $Benz_4in1_MALUNGAY_Healthy_Cof_Sale = number_format($db->Benz_4in1_MALUNGAY_Healthy_Cof_Sale, 2, '.', ','); echo "₱".$Benz_4in1_MALUNGAY_Healthy_Cof_Sale; ?>" readonly/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <hr>
+                    <h5 class="center">Benz 4in1 Mangosteen Healthy C: </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 id="">Quantity: </h4>
+                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php if($db->Benz_4in1_Mangosteen_Healthy_C == NULL) { $db->Benz_4in1_Mangosteen_Healthy_C = 0; } echo $db->Benz_4in1_Mangosteen_Healthy_C; ?>" readonly/>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 id="">Sales: </h4>
+                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $Benz_4in1_Mangosteen_Healthy_C_Sale = number_format($db->Benz_4in1_Mangosteen_Healthy_C_Sale, 2, '.', ','); echo "₱".$Benz_4in1_Mangosteen_Healthy_C_Sale; ?>" readonly/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6" id="col_change_price">
+                    <hr>
+                    <h5 class="center">Benz 5in1 Healthy Coffee Mix: </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 id="">Quantity: </h4>
+                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php if($db->Benz_5in1_Healthy_Coffee_Mix == NULL) { $db->Benz_5in1_Healthy_Coffee_Mix = 0; } echo $db->Benz_5in1_Healthy_Coffee_Mix; ?>" readonly/>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 id="">Sales: </h4>
+                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $Benz_5in1_Healthy_Coffee_Mix = number_format($db->Benz_5in1_Healthy_Coffee_Mix_Sale, 2, '.', ','); echo "₱".$Benz_5in1_Healthy_Coffee_Mix; ?>" readonly/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <hr>
+                    <h5 class="center">Benz 8in1 Healthy Coffee Mix: </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 id="">Quantity: </h4>
+                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php if($db->Benz_8in1_Healthy_Coffee_Mix == NULL) { $db->Benz_8in1_Healthy_Coffee_Mix = 0; } echo $db->Benz_8in1_Healthy_Coffee_Mix; ?>" readonly/>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 id="">Sales: </h4>
+                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $Benz_8in1_Healthy_Coffee_Mix = number_format($db->Benz_8in1_Healthy_Coffee_Mix_Sale, 2, '.', ','); echo "₱".$Benz_8in1_Healthy_Coffee_Mix; ?>" readonly/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6" id="col_change_price">
+                    <hr>
+                    <h5 class="center">Benz 8in1 Healthy CHOCO Mix: </h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 id="">Quantity: </h4>
+                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php if($db->Benz_8in1_Healthy_CHOCO_Mix == NULL) { $db->Benz_8in1_Healthy_CHOCO_Mix = 0; } echo $db->Benz_8in1_Healthy_CHOCO_Mix; ?>" readonly/>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 id="">Sales: </h4>
+                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $Benz_8in1_Healthy_CHOCO_Mix = number_format($db->Benz_8in1_Healthy_CHOCO_Mix_Sale, 2, '.', ','); echo "₱".$Benz_8in1_Healthy_CHOCO_Mix; ?>" readonly/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <hr>
+
+                </div>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+
+                </div>
+                <div class="col-md-3">
+                    <h2 id="">Total Quantity: </h2>
+                    <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php echo $db->total_orders_modified; ?>" readonly/>
+                </div>
+                <div class="col-md-3">
+                    <h2 id="">Total Sales: </h2>
+                    <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $TTotalSales = number_format($db->total_sales_modified, 2, '.', ','); echo "₱".$TTotalSales; ?>" readonly/>
+                </div>
+            </div>
+            <br>
         </div>
     </div>
 </div>

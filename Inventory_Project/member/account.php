@@ -44,7 +44,7 @@ if(isset($_POST['buttonInsertProduct']))
     date_default_timezone_set('Asia/Manila');
     $date_ordered = date("Y-m-d H:i:s");
 
-    $Add_Customer_ID = $_POST['fCustomer_ID'];
+    $Add_Customer_ID = $ID;
     $Add_Product_ID = $_POST['select_product'];
     $Add_Product_amount = $_POST['fAmount'];
     $Add_Quantity= $_POST['fQty'];
@@ -152,8 +152,8 @@ if(isset($_POST['buttonInsertProduct']))
             </div>
             <div class="card-body" id="card_body">
                 <div class="row">
-                    <div class="col-md-12" id="">
-                        <form id="" action="" method="POST">
+                    <form id="" action="" method="POST">
+                        <div class="col-md-12" id="">
                             <hr>
                             <div class="row">
                                 <div class="col-md-12">
@@ -205,8 +205,8 @@ if(isset($_POST['buttonInsertProduct']))
                                 </div>
                             </div>
                             <button class="btn btn-block btn-dark" type="submit" id="btnInsertProduct" name="buttonInsertProduct">Insert</button>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

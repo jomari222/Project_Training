@@ -191,6 +191,7 @@ if(isset($_POST['buttonSearch_Date']))
                 <?php $db->db_select_order_table(); ?>
                 </tbody>
             </table>
+            <br>
         </div>
     </div>
 </div>

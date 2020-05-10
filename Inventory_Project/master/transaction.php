@@ -38,12 +38,12 @@ if(isset($_POST['buttonSearch_Date']))
     if($Add_Min_Date == "" && $Add_Max_Date == "")
     {
         include_once('includes/message.php');
-        MessageGotoTransaction('Please fill up the dates properly.');
+        header('Location:transaction.php');
     }
     elseif($Add_Min_Date == null && $Add_Max_Date == null)
     {
         include_once('includes/message.php');
-        MessageGotoTransaction('Please fill up the dates properly.');
+        header('Location:transaction.php');
     }
     else
     {
@@ -205,6 +205,7 @@ if(isset($_POST['buttonSearch_Date']))
                 <?php $db->db_select_order_table(); ?>
                 </tbody>
             </table>
+            <br>
         </div>
     </div>
 </div>
