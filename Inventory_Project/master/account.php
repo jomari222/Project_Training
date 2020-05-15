@@ -46,7 +46,7 @@ if(isset($_POST['buttonInsertProduct']))
     $Add_Customer_ID = $ID;
     $Add_Product_ID = $_POST['select_product'];
     $Add_Product_amount = $_POST['fAmount'];
-    $Add_Quantity= $_POST['fQty'];
+    $Add_Quantity = $_POST['fQty'];
     $Add_Discount = $_POST['fDiscount'];
     $Add_Total_amount = $_POST['fTotalAmount'];
 
@@ -55,6 +55,11 @@ if(isset($_POST['buttonInsertProduct']))
     {
         include_once('includes/message.php');
         MessageBackAccountID('Not enough stock.');
+    }
+    elseif($Add_Discount > $Add_Total_amount)
+    {
+        include_once('includes/message.php');
+        MessageBackAccountID('Discount is not valid.');
     }
     else
     {
@@ -194,7 +199,7 @@ if(isset($_POST['buttonInsertProduct']))
                                     </div>
                                     <div class="col-md-5">
                                         <label id="lblDiscount">Discount:
-                                            <input type="text" class="form-control" id="txtDiscount" name="fDiscount" placeholder="Discount" required/>
+                                            <input type="text" class="form-control" id="txtDiscount" onkeypress="subtract_discount_amount()" oninput="subtract_discount_amount()" name="fDiscount" placeholder="Discount" required/>
                                         </label>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>

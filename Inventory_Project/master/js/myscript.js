@@ -514,12 +514,14 @@ $(document).ready(function()
             document.getElementById("txtQty").disabled = true;
             document.getElementById("txtQty").value = "";
             document.getElementById("txtTotalAmount").value = "";
+            document.getElementById("txtDiscount").value = "";
         }
         else
         {
             document.getElementById("txtQty").disabled = false;
             document.getElementById("txtQty").value = "0";
             document.getElementById("txtTotalAmount").value = "0";
+            document.getElementById("txtDiscount").value = "0";
         }
     });
 });
@@ -592,16 +594,39 @@ function multiply_qty_amount()
 {
     var amount = document.getElementById("txtAmount").value;
     var quantity = document.getElementById("txtQty").value;
+    var discount = document.getElementById("txtDiscount").value;
     var total = "";
 
     if(amount == "")
     {
         document.getElementById("txtTotalAmount").value = "";
+        document.getElementById("txtDiscount").value = "";
     }
     else
     {
         total = amount * quantity;
         document.getElementById("txtTotalAmount").value = total;
+        document.getElementById("txtDiscount").value = "0";
+    }
+}
+
+function subtract_discount_amount()
+{
+    var amount = document.getElementById("txtAmount").value;
+    var quantity = document.getElementById("txtQty").value;
+    var discount = document.getElementById("txtDiscount").value;
+    var total = "";
+    var totaltotal = "";
+
+    if(quantity == "0")
+    {
+
+    }
+    else
+    {
+        total = amount * quantity;
+        totaltotal = total - discount;
+        document.getElementById("txtTotalAmount").value = totaltotal;
     }
 }
 
