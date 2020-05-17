@@ -176,6 +176,7 @@ class db_connection_member
                     <td class="linement">'.$row['unit']." ".$row_barangay['brgyDesc'].", ".$row_city_mun['citymunDesc']." ".$row_province['provDesc'].'</td>
                     <td class="linement">'.$row['contact_number'].'</td>
                     <td class="linement"><a class="btn btn-dark btn-sm" href="account.php?ID='.$customer_id_id.'">Order</a></td>
+                    <td class="linement"><a class="btn btn-dark" role="button" style="width:auto;" style="color: white" href="modify_customer.php?ID='.$customer_id_id.'">Modify</a></td>
                 </tr>';
         }
         $sql_Select->close();
@@ -848,6 +849,40 @@ class db_connection_member
         $this->product_name = $row['product_name'];
         $this->current_price = $row['price'];
         $this->current_stock = $row['stock'];
+    }
+    //UPDATE PHONE NUMBER
+    public function db_update_customer_phone_number($customer_id,$phone_number)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM customer WHERE customer_id = ?');
+        $sql_Select->bind_param('s', $customer_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        $sql_Update = $this->con->prepare('UPDATE customer SET contact_number = ? WHERE customer_id = ?');
+        $sql_Update->bind_param('ss', $phone_number,$customer_id);
+        $sql_Update->execute() or die('Query error'.$this->con->error);
+
+        $sql_Select->close();
+        $sql_Update->close();
+    }
+    //UPDATE ADDRESS
+    public function db_update_customer_address($customer_id,$region,$province,$city,$barangay,$unit)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM customer WHERE customer_id = ?');
+        $sql_Select->bind_param('s', $customer_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        $sql_Update = $this->con->prepare('UPDATE customer SET region = ?,province = ?,city = ?,barangay = ?,unit = ? WHERE customer_id = ?');
+        $sql_Update->bind_param('ssssss', $region,$province,$city,$barangay,$unit,$customer_id);
+        $sql_Update->execute() or die('Query error'.$this->con->error);
+
+        $sql_Select->close();
+        $sql_Update->close();
     }
 
     public function total_sales()

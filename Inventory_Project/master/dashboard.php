@@ -29,14 +29,6 @@ if($fUsername == null)
 include_once('includes/db_connection_master.php');
 $db = new db_connection_master();
 $db->db_select_master($fUsername);
-
-$dataPoints = array(
-    array("y" => 7,"label" => "March" ),
-    array("y" => 12,"label" => "April" ),
-    array("y" => 28,"label" => "May" ),
-    array("y" => 18,"label" => "June" ),
-    array("y" => 41,"label" => "July" )
-);
 ?>
 <!DOCTYPE html>
 <html lang="en">

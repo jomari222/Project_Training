@@ -57,6 +57,11 @@ if(isset($_POST['buttonInsertProduct']))
         include_once('includes/message.php');
         MessageBackAccountID('Not enough stock.');
     }
+    elseif($Add_Discount > $Add_Total_amount)
+    {
+        include_once('includes/message.php');
+        MessageBackAccountID('Discount is not valid.');
+    }
     else
     {
         $db->db_insert_order_customer_id($Add_Customer_ID,$Add_Product_ID,$Add_Quantity,$date_ordered,'',$Add_Discount,'','','',$Add_Total_amount);
@@ -215,3 +220,8 @@ if(isset($_POST['buttonInsertProduct']))
 <br>
 </body>
 </html>
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>

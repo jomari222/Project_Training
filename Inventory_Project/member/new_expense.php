@@ -171,3 +171,8 @@ $db->db_select_member($fUsername);
 <br>
 </body>
 </html>
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>

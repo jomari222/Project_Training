@@ -661,4 +661,8 @@ function togglePassword()
         passtype.type = "password";
     }
 }
+function submitForm()
+{
+    document.getElementById("form").submit();
+}
 

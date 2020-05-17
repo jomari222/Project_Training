@@ -137,7 +137,8 @@ $db->db_select_member($fUsername);
                         <th class="linement"> Store Name </th>
                         <th class="linement"> Address </th>
                         <th class="linement"> Contact no. </th>
-                        <th class="linement"> Action </th>
+                        <th class="linement"> Order </th>
+                        <th class="linement"> Modify </th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -147,7 +148,8 @@ $db->db_select_member($fUsername);
                         <th class="linement"> Store Name </th>
                         <th class="linement"> Address </th>
                         <th class="linement"> Contact no. </th>
-                        <th class="linement"> Action </th>
+                        <th class="linement"> Order </th>
+                        <th class="linement"> Modify </th>
                     </tr>
                     </tfoot>
                     <tbody>
