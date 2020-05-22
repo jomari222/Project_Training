@@ -170,14 +170,10 @@ $db->db_select_master($fUsername);
                                 <br>
                                 <label id="lbl_store_name">Store name: </label>
                                 <input type="text" class="form-control" id="txtStore_name" name="fStore_name" placeholder="Enter Store name" onkeypress=""/>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
                                 <br>
                                 <div class="form-group">
                                     <label id="lblPhone_number">Phone number: </label>
                                     <input type="text" class="form-control" id="txtPhone_number" name="fPhone_number_registration" placeholder="Enter Phone number" pattern="[0]{1}[9]{1}[0-9]{9}" onkeypress="return AvoidSpace()" maxlength="11"/>
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Please fill out this field.</div>
                                     <div class="text-muted">Ex: 09123456789</div>
                                 </div>
                             </div>
