@@ -26,6 +26,7 @@ if($fUsername == null)
 {
     header('Location:login_master.php');
 }
+
 include_once('includes/db_connection_master.php');
 $db = new db_connection_master();
 
@@ -35,6 +36,14 @@ if (empty($_GET['ID'])):
 endif;
 
 $ID = $db->base64_url_decode($_GET['ID']);
+
+$db->db_select_id($ID);
+
+if(!filter_var($ID, FILTER_VALIDATE_INT))
+{
+    header('Location:customer.php');
+    die();
+}
 
 $db->db_select_customer_customer_id($ID);
 

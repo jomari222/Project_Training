@@ -31,6 +31,14 @@ $db = new db_connection_master();
 $db->db_select_master($fUsername);
 
 $ID = $_GET['ID'];
+$db->db_select_product_id($ID);
+
+if(!filter_var($_GET['ID'], FILTER_VALIDATE_INT))
+{
+    header('Location:inventory.php');
+    die();
+}
+
 $db->db_select_product_product_id($ID);
 
 if(isset($_POST['buttonChangePrice']))

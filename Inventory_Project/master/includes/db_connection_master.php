@@ -23,6 +23,7 @@ class db_connection_master
     public $total_payment_of_order;
     public $total_sales_modified;
     public $total_orders_modified;
+    public $cancelled;
     //Product
     public $Benz_4in1_MALUNGAY_Healthy_Cof;
     public $Benz_4in1_Mangosteen_Healthy_C;
@@ -69,6 +70,54 @@ class db_connection_master
         {
             include_once('message.php');
             MessageBackLogin("Username or Password is invalid");
+        }
+    }
+    //Check Order ID
+    public function db_select_order_id($order_id,$ID)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE BINARY order_id = ?');
+        $sql_Select->bind_param('s',$order_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        if(!$row['order_id'] == $order_id)
+        {
+            header('Location:customer.php?ID='.$ID.'');
+            die();
+        }
+    }
+    //Check ID
+    public function db_select_id($customer_id)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM customer WHERE customer_id = ?');
+        $sql_Select->bind_param('s',$customer_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        if(!$row['customer_id'] == $customer_id)
+        {
+            header('Location:customer.php');
+            die();
+        }
+    }
+    //Check Product ID
+    public function db_select_product_id($product_id)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+        $sql_Select->bind_param('s',$product_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        if(!$row['product_id'] == $product_id)
+        {
+            header('Location:inventory.php');
+            die();
         }
     }
     //SELECT USERNAME TO GET DATA
@@ -244,13 +293,20 @@ class db_connection_master
 
                 if($row['delivered_status'] == "0")
                 {
-                    $delivered_status = "Not yet delivered";
-                    $delivery_date = '<td style="background-color: darkgray; color: white" class="linement">'.$delivered_status.'</td>';
+                    if($row['cancelled'] == 0)
+                    {
+                        $delivered_status = "Not yet delivered";
+                        $delivery_date = '<td style="background-color: darkgray; color: white" class="linement">'.$delivered_status.'</td>';
+                    }
+                    else
+                    {
+                        $cancelled_status = "CANCELLED";
+                        $delivery_date = '<td style="background-color: darkgray; color: white" class="linement">'.$cancelled_status.'</td>';
+                    }
                 }
                 else
                 {
                     $delivery_date = '<td class="linement">'.$row['date_received'].'</td>';
-
                 }
 
                 if($row['payment_status'] == "0" && $row['payment_received'] != $row['total_amount'])
@@ -929,6 +985,39 @@ class db_connection_master
         $this->payment_received = $row['payment_received'];
         $this->credit = $row['credit'];
         $this->date_paid = $row['payment_date'];
+        $this->cancelled = $row['cancelled'];
+    }
+    //ORDER CANCELLED
+    public function db_update_order_cancel($order_id)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE order_id = ?');
+        $sql_Select->bind_param('s', $order_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        $sql_Update = $this->con->prepare('UPDATE table_order SET cancelled = 1 WHERE order_id = ?');
+        $sql_Update->bind_param('s', $order_id);
+        $sql_Update->execute() or die('Query error'.$this->con->error);
+
+        $sql_Select_Product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+        $sql_Select_Product->bind_param('s', $row['product_id']);
+        $sql_Select_Product->execute() or die('Query error'.$this->con->error);
+
+        $result_Product = $sql_Select_Product->get_result();
+        $row_Product = $result_Product->fetch_assoc();
+
+        $newStock = $row_Product['stock'] + $row['quantity'];
+
+        $sql_Update_Product = $this->con->prepare('UPDATE product SET stock = ? WHERE product_id = ?');
+        $sql_Update_Product->bind_param('ss', $newStock,$row['product_id']);
+        $sql_Update_Product->execute() or die('Query error'.$this->con->error);
+
+        $sql_Update_Product->close();
+        $sql_Select_Product->close();
+        $sql_Update->close();
+        $sql_Select->close();
     }
     //UPDATE ORDER DELIVERY
     public function db_update_order_delivery($order_id,$delivery_date)

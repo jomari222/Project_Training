@@ -35,13 +35,28 @@ if (empty($_GET['ID'])):
     die();
 endif;
 
+$ID = $db->base64_url_decode($_GET['ID']);
+$db->db_select_id($ID);
+
+if(!filter_var($ID, FILTER_VALIDATE_INT))
+{
+    header('Location:customer.php');
+    die();
+}
+
 if (empty($_GET['order_id'])):
     header("Location: customer.php");
     die();
 endif;
 
-$ID = $db->base64_url_decode($_GET['ID']);
 $order_id = $db->base64_url_decode($_GET['order_id']);
+$db->db_select_order_id($order_id,$ID);
+
+if(!filter_var($order_id, FILTER_VALIDATE_INT))
+{
+    header('Location:customer.php');
+    die();
+}
 
 $db->db_select_customer_customer_id($ID);
 $db->db_select_table_order_for_checking($order_id);
@@ -89,6 +104,12 @@ if(isset($_POST['buttonPaymentDone']))
         die();
     }
 }
+
+if(isset($_POST['buttonCancelOrder']))
+{
+    include_once('includes/message.php');
+    MessageCancelOrder("Are you sure?",$order_id) ;
+}
 ?>
 <html lang="en">
 <head>
@@ -135,12 +156,24 @@ if(isset($_POST['buttonPaymentDone']))
 
         </div>
         <div class="col-md-4">
-            <form class="modal-content" action="" method="post">
-                <div class="container">
+            <div class="container modal-content">
+                <form class="" action="" method="post">
+                    <?php if($db->order_id_delivery_date == '0000-00-00' && $db->cancelled == 0) { ?>
+                        <div class="clearfix">
+                            <button name="buttonCancelOrder" type="submit" class="signupbtn">Cancel Order</button>
+                        </div>
+                    <?php } else { ?>
+                        <div class="clearfix">
+                            <button name="buttonCancelOrder" type="submit" class="signupbtn" disabled>Cancel Order</button>
+                        </div>
+                    <?php } ?>
+                    <hr style="width: 100%">
                     <h1>Delivery</h1>
                     <hr>
+                </form>
+                <form class="" action="" method="post">
                     <label><b>Date Delivered</b></label>
-                    <?php if($db->order_id_delivery_date == '0000-00-00') { ?>
+                    <?php if($db->order_id_delivery_date == '0000-00-00' && $db->cancelled == 0) { ?>
                         <input type="date" placeholder="Enter Date" name="txtDateDelivery" required>
                         <div class="clearfix">
                             <button name="buttonDeliveryDone" type="submit" class="signupbtn">Done</button>
@@ -151,8 +184,8 @@ if(isset($_POST['buttonPaymentDone']))
                             <button name="buttonDeliveryDone" type="submit" class="signupbtn" disabled>Done</button>
                         </div>
                     <?php } ?>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
         <div class="col-md-4">
             <form class="modal-content" action="" method="post">

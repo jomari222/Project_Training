@@ -37,6 +37,15 @@ endif;
 
 $ID = $db->base64_url_decode($_GET['ID']);
 
+
+$db->db_select_id($ID);
+
+if(!filter_var($ID, FILTER_VALIDATE_INT))
+{
+    header('Location:customer.php');
+    die();
+}
+
 $db->db_select_customer_customer_id($ID);
 
 if(isset($_POST['buttonInsertProduct']))
