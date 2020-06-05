@@ -111,6 +111,8 @@ class db_connection_master
         $sql_Select->bind_param('s',$product_id);
         $sql_Select->execute() or die('Query error'.$this->con->error);
 
+
+
         $result = $sql_Select->get_result();
         $row = $result->fetch_assoc();
 
@@ -595,16 +597,18 @@ class db_connection_master
                 $row_customer = $result_customer->fetch_assoc();
 
                 $total_amount = number_format($row_order['total_amount'], 2, '.', ',');
+                $paid_payment = number_format($row_order['payment_received'], 2, '.', ',');
                 $credit = number_format($row_order['credit'], 2, '.', ',');
 
-                if($row_order['payment_received'] != $row_order['total_amount'])
+                if($row_order['payment_received'] != $row_order['total_amount'] && $row_order['cancelled'] == 0)
                 {
                     echo '<tr>
                             <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
-                            <td class="linement">'.$row_customer['store_name'].'</td>
                             <td class="linement">'.$row_product['product_name'].'</td>
                             <td class="linement">'.$row_order['quantity'].'</td>
                             <td class="linement">'."₱".$total_amount.'</td>
+                            <td class="linement">'.$row_order['date_ordered'].'</td>
+                            <td class="linement">'."₱".$paid_payment.'</td>
                             <td class="linement">'."₱".$credit.'</td>
                             <td class="linement">'.$row_order['payment_date'].'</td>
                         </tr>';
@@ -636,16 +640,18 @@ class db_connection_master
                 $row_customer = $result_customer->fetch_assoc();
 
                 $total_amount = number_format($row['total_amount'], 2, '.', ',');
+                $paid_payment = number_format($row['credit'], 2, '.', ',');
                 $credit = number_format($row['credit'], 2, '.', ',');
 
-                if($row['payment_received'] != $row['total_amount'])
+                if($row['payment_received'] != $row['total_amount'] && $row['cancelled'] == 0)
                 {
                     echo '<tr>
                             <td class="linement">'.$row_customer['firstname']." ".$row_customer['lastname'].'</td>
-                            <td class="linement">'.$row_customer['store_name'].'</td>
                             <td class="linement">'.$row_product['product_name'].'</td>
                             <td class="linement">'.$row['quantity'].'</td>
                             <td class="linement">'."₱".$total_amount.'</td>
+                            <td class="linement">'.$row['date_ordered'].'</td>
+                            <td class="linement">'."₱".$paid_payment.'</td>
                             <td class="linement">'."₱".$credit.'</td>
                             <td class="linement">'.$row['payment_date'].'</td>
                         </tr>';

@@ -51,6 +51,11 @@ if(isset($_POST['buttonSearch_Date']))
         $db->date_max = $Add_Max_Date;
     }
 }
+
+if(isset($_POST['buttonDebt_list']))
+{
+    header('Location:debt_list.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -158,13 +163,24 @@ if(isset($_POST['buttonSearch_Date']))
         <div class="table-responsive-md" id="table_div">
             <label>Date:</label>
             <br>
-            <form id="" action="" method="POST" class="form-inline">
-                <label>From:</label>
-                <input style="margin-left: 1%" type="date" id="min-date" class="date-range-filter" name="name_min_date" placeholder="From: yyyy-mm-dd">
-                <label style="margin-left: 1%" >To:</label>
-                <input style="margin-left: 1%" type="date" id="max-date" class="date-range-filter" name="name_max_date" placeholder="To: yyyy-mm-dd">
-                <button style="margin-left: 1%" class="btn btn-dark" type="submit" id="btnSearch_Date" name="buttonSearch_Date">Search</button>
-            </form>
+            <div class="row">
+                <div class="col-md-8">
+                    <form id="" action="" method="POST" class="form-inline">
+                        <label>From:</label>
+                        <input style="margin-left: 1%" type="date" id="min-date" class="date-range-filter" name="name_min_date" placeholder="From: yyyy-mm-dd">
+                        <label style="margin-left: 1%" >To:</label>
+                        <input style="margin-left: 1%" type="date" id="max-date" class="date-range-filter" name="name_max_date" placeholder="To: yyyy-mm-dd">
+                        <button style="margin-left: 1%" class="btn btn-dark" type="submit" id="btnSearch_Date" name="buttonSearch_Date">Search</button>
+                    </form>
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                    <form id="" action="" method="POST" class="">
+                        <button style="margin-left: 30%" class="btn btn-dark" type="submit" id="btnDebt_list" name="buttonDebt_list">DEBT LIST >></button>
+                    </form>
+                </div>
+            </div>
             <br>
             <table width="100%" class="table-bordered table-dark table-striped display" id="table_Transactions">
                 <thead>
@@ -174,7 +190,7 @@ if(isset($_POST['buttonSearch_Date']))
                     <th class="linement"> Product </th>
                     <th class="linement"> Quantity </th>
                     <th class="linement"> Total </th>
-                    <th class="linement"> Date ordered</th>
+                    <th class="linement"> Date Paid</th>
                 </tr>
                 </thead>
                 <tfoot>
@@ -184,7 +200,7 @@ if(isset($_POST['buttonSearch_Date']))
                     <th class="linement"> Product </th>
                     <th class="linement"> Quantity </th>
                     <th class="linement"> Total </th>
-                    <th class="linement"> Date ordered</th>
+                    <th class="linement"> Date Paid</th>
                 </tr>
                 </tfoot>
                 <tbody>
