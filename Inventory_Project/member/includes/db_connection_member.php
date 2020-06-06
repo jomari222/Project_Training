@@ -269,6 +269,7 @@ class db_connection_member
 
                 $price = number_format($row_product['price'], 2, '.', ',');
                 $total_amount = number_format($row['total_amount'], 2, '.', ',');
+                $discount = number_format($row['discount'], 2,'.',',');
 
                 if($row['delivered_status'] == "0")
                 {
@@ -310,7 +311,7 @@ class db_connection_member
                     <td class="linement">'.$row_product['product_name'].'</td>
                     <td class="linement">'.$row['quantity'].'</td>
                     <td class="linement">'."₱".$price.'</td>
-                    <td class="linement">'.$row['discount'].'</td>
+                    <td class="linement">'."₱".$discount.'</td>
                     <td class="linement">'."₱".$total_amount.'</td>
                     <td class="linement">'.$row['date_ordered'].'</td>
                     '.$delivery_date.'
