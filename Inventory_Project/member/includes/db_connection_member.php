@@ -248,6 +248,7 @@ class db_connection_member
     {
         $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE customer_id = ?');
         $sql_Select->bind_param('s', $customer_id);
+
         $sql_Select->execute() or die('Query error'.$this->con->error);
 
         $result = $sql_Select->get_result();
@@ -446,6 +447,7 @@ class db_connection_member
                             <td class="linement">'.$row_order['quantity'].'</td>
                             <td class="linement">'."₱".$total_amount.'</td>
                             <td class="linement">'.$row_order['date_ordered'].'</td>
+                            <td class="linement">'.$row_order['date_received'].'</td>
                             <td class="linement">'."₱".$paid_payment.'</td>
                             <td class="linement">'."₱".$credit.'</td>
                             <td class="linement">'.$row_order['payment_date'].'</td>
@@ -489,6 +491,7 @@ class db_connection_member
                             <td class="linement">'.$row['quantity'].'</td>
                             <td class="linement">'."₱".$total_amount.'</td>
                             <td class="linement">'.$row['date_ordered'].'</td>
+                            <td class="linement">'.$row['date_received'].'</td>
                             <td class="linement">'."₱".$paid_payment.'</td>
                             <td class="linement">'."₱".$credit.'</td>
                             <td class="linement">'.$row['payment_date'].'</td>

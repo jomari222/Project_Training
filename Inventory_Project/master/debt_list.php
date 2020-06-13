@@ -110,6 +110,7 @@ if(isset($_POST['buttonSearch_Date']))
                     <th class="linement"> Quantity </th>
                     <th class="linement"> Total </th>
                     <th class="linement"> Date Ordered</th>
+                    <th class="linement"> Date Delivered</th>
                     <th class="linement"> Paid Payment </th>
                     <th class="linement"> Credit </th>
                     <th class="linement"> Last Payment</th>
@@ -122,6 +123,7 @@ if(isset($_POST['buttonSearch_Date']))
                     <th class="linement"> Quantity </th>
                     <th class="linement"> Total </th>
                     <th class="linement"> Date Ordered</th>
+                    <th class="linement"> Date Delivered</th>
                     <th class="linement"> Paid Payment </th>
                     <th class="linement"> Credit </th>
                     <th class="linement"> Last Payment</th>
