@@ -182,13 +182,13 @@ $db->db_select_master($fUsername);
                             <hr>
                             <div class="form-group">
                                 <label id="lblUsername">Username: </label>
-                                <input type="text" class="form-control" id="txtUsername" name="fUsername" onkeypress="return AvoidSpace()" placeholder="Enter Username" maxlength="60" required/>
+                                <input type="text" class="form-control" id="txtUsername" name="fUsername" pattern="^[a-zA-Z0-9]+([a-zA-Z0-9]+)*[^\s]+" onkeypress="" placeholder="Enter Username" maxlength="60" required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                             <div class="form-group">
                                 <label id="lblPassword">Password: </label>
-                                <input type="password" class="form-control" id="txtPassword" name="fPassword" onkeypress="return AvoidSpace()" placeholder="Enter Password" maxlength="60" required/>
+                                <input type="password" class="form-control" id="txtPassword" name="fPassword" pattern="^[a-zA-Z0-9]+" onkeypress="return AvoidSpace()" placeholder="Enter Password" maxlength="60" required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>

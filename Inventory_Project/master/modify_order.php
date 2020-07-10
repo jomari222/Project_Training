@@ -64,19 +64,31 @@ $db->db_select_table_order_for_checking($order_id);
 if(isset($_POST['buttonDeliveryDone']))
 {
     $date_delivered = $_POST['txtDateDelivery'];
-    $db->db_order_payment_checking($order_id);
 
-    if($date_delivered >= $db->date_ordered)
+    $value_date_delivered = preg_match("/^\d{2}-\d{2}-\d{4}$/", $date_delivered);
+
+    if($value_date_delivered == 1)
     {
-        $db->db_update_order_delivery($order_id,$date_delivered);
+        $db->db_order_payment_checking($order_id);
 
-        header("Location: account.php?ID=" . $_GET['ID']);
-        die();
+        if($date_delivered >= $db->date_ordered)
+        {
+            $db->db_update_order_delivery($order_id,$date_delivered);
+
+            header("Location: account.php?ID=" . $_GET['ID']);
+            die();
+        }
+        else
+        {
+            include_once('includes/message.php');
+            MessageBackAccountID('Your date entry is invalid.');
+        }
     }
     else
     {
-        include_once('includes/message.php');
-        MessageBackAccountID('Your date entry is invalid.');
+        session_start();
+        session_destroy();
+        header('Location: login_master.php');
     }
 }
 
@@ -85,23 +97,35 @@ if(isset($_POST['buttonPaymentDone']))
     $date_payment = $_POST['txtDatePaid'];
     $amount = $_POST['txtAmountPaid'];
 
-    $db->db_order_payment_checking($order_id);
-    if($amount > $db->total_payment_of_order)
+    $value_date_payment = preg_match("/^\d{2}-\d{2}-\d{4}$/", $date_payment);
+    $value_amount = filter_var($amount, FILTER_VALIDATE_FLOAT);
+
+    if($value_date_payment == 1 && $value_amount == 1)
     {
-        include_once('includes/message.php');
-        MessageBackAccountID('Your payment exceeds to the order bought.');
-    }
-    elseif($date_payment < $db->date_delivered)
-    {
-        include_once('includes/message.php');
-        MessageBackAccountID('Your date entry is invalid.');
+        $db->db_order_payment_checking($order_id);
+        if($amount > $db->total_payment_of_order)
+        {
+            include_once('includes/message.php');
+            MessageBackAccountID('Your payment exceeds to the order bought.');
+        }
+        elseif($date_payment < $db->date_delivered)
+        {
+            include_once('includes/message.php');
+            MessageBackAccountID('Your date entry is invalid.');
+        }
+        else
+        {
+            $db->db_update_order_payment($order_id,$date_payment,$amount);
+
+            header("Location: account.php?ID=" . $_GET['ID']);
+            die();
+        }
     }
     else
     {
-        $db->db_update_order_payment($order_id,$date_payment,$amount);
-
-        header("Location: account.php?ID=" . $_GET['ID']);
-        die();
+        session_start();
+        session_destroy();
+        header('Location: login_master.php');
     }
 }
 
@@ -197,7 +221,7 @@ if(isset($_POST['buttonCancelOrder']))
                         <input type="date" placeholder="Enter Date" name="txtDatePaid" required>
 
                         <label><b>Amount</b></label>
-                        <input type="text" class="form-control" placeholder="Enter Amount" name="txtAmountPaid" required>
+                        <input type="number" class="form-control" placeholder="Enter Amount" name="txtAmountPaid" min="1" step="any" required>
 
                         <div class="clearfix">
                             <button name="buttonPaymentDone" type="submit" class="signupbtn">Done</button>
@@ -206,7 +230,7 @@ if(isset($_POST['buttonCancelOrder']))
                         <input type="date" placeholder="Enter Date" name="txtDatePaid" value="<?php echo $db->order_id_payment_date; ?>" readonly>
 
                         <label><b>Amount</b></label>
-                        <input type="text" class="form-control" placeholder="Enter Amount" name="txtAmountPaid" value="<?php echo $db->paid_amount; ?>" readonly>
+                        <input type="number" class="form-control" placeholder="Enter Amount" name="txtAmountPaid" min="1" step="any" value="<?php echo $db->paid_amount; ?>" readonly>
 
                         <div class="clearfix">
                             <button name="buttonPaymentDone" type="submit" class="signupbtn" disabled>Done</button>

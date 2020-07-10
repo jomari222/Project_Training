@@ -19,12 +19,27 @@ if(isset($_POST['buttonInsert_User']))
     //Uppercase
     $Add_Firstname = strtoupper($Add_Firstname);
     $Add_Lastname = strtoupper($Add_Lastname);
+    //Regex
+    $value_Add_fContact_number = preg_match("/^[0][9][0-9]{9}$/", $Add_fContact_number);
+    $value_Add_Firstname = preg_match("/^[a-zA-Z]+([a-zA-Z]+)*[^\s]+$/", $Add_Firstname);
+    $value_Add_Lastname = preg_match("/^[a-zA-Z]+([a-zA-Z]+)*[^\s]+$/", $Add_Lastname);
+    $value_Add_fUsername = preg_match("/^[a-zA-Z0-9]+([_ a-zA-Z0-9]+)*[^\s]+$/", $Add_fUsername);
+    $value_Add_Password = preg_match("/^[a-zA-Z0-9]+$/", $Add_Password);
 
-    include_once('db_connection_master.php');
-    $db = new db_connection_master();
-    $db->db_insert_account($Add_Firstname,$Add_Lastname,$Add_fContact_number,$Add_fUsername,$Add_Password,$Add_Position);
+    if($value_Add_fContact_number == 1 && $value_Add_Firstname == 1 && $value_Add_Lastname == 1 && $value_Add_fUsername == 1 && $value_Add_Password == 1)
+    {
+        include_once('db_connection_master.php');
+        $db = new db_connection_master();
+        $db->db_insert_account($Add_Firstname,$Add_Lastname,$Add_fContact_number,$Add_fUsername,$Add_Password,$Add_Position);
 
-    include_once('message.php');
-    MessageGotoUserList('User has been added.');
+        include_once('message.php');
+        MessageGotoUserList('User has been added.');
+    }
+    else
+    {
+        session_start();
+        session_destroy();
+        header('Location: ../login_master.php');
+    }
 }
 ?>

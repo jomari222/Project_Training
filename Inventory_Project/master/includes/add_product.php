@@ -7,16 +7,30 @@
  */
 if(isset($_POST['buttonAddNewProduct']))
 {
+    //Information
     $Add_ProductName = $_POST['fProductName'];
     $Add_ProductPrice = $_POST['fNewProductPrice'];
     $Add_ProductStock = $_POST['fAddNewProduct_Stock'];
+    //Regex
+    $value_Add_ProductPrice = preg_match("/^[1-9]+[0-9]+(?:\.[0-9]{1,2})?$/", $Add_ProductPrice);
+    $value_Add_ProductName = preg_match("/^[a-zA-Z0-9]+([a-zA-Z0-9]+)*[^\s]+$/", $Add_ProductName);
+    $value_Add_ProductStock = filter_var($Add_ProductStock, FILTER_VALIDATE_INT);
 
-    include_once('db_connection_master.php');
-    $db = new db_connection_master();
+    if($value_Add_ProductPrice == 1 && $value_Add_ProductName == 1 && $value_Add_ProductStock == 1)
+    {
+        include_once('db_connection_master.php');
+        $db = new db_connection_master();
 
-    $db->db_insert_product($Add_ProductName,$Add_ProductPrice,$Add_ProductStock);
+        $db->db_insert_product($Add_ProductName,$Add_ProductPrice,$Add_ProductStock);
 
-    include_once('message.php');
-    MessageGotoProductList('Product has been added.');
+        include_once('message.php');
+        MessageGotoProductList('Product has been added.');
+    }
+    else
+    {
+        session_start();
+        session_destroy();
+        header('Location: ../login_master.php');
+    }
 }
 ?>

@@ -202,7 +202,7 @@ if(isset($_POST['buttonSearch_Date']))
                 </tr>
                 </tfoot>
                 <tbody>
-                <?php $db->db_select_order_table(); ?>
+                <?php $db->db_call_transactions(); ?>
                 </tbody>
             </table>
             <br>

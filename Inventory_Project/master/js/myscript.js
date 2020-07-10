@@ -186,7 +186,7 @@ $(document).ready(function()
         "pageLength": 10,
         "lengthMenu": [[10, 20], [10, 20]],
         "sPaginationType": "full_numbers",
-        "order": [[ 4, "desc" ]],
+        "order": [[ 5, "desc" ]],
         language: {
             paginate: {
                 next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',

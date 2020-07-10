@@ -122,7 +122,7 @@ class db_connection_master
             die();
         }
     }
-    //SELECT USERNAME TO GET DATA
+    //SELECT USERNAME TO GET DATA0
     public function db_select_master($username)
     {
         $sql_Select = $this->con->prepare('SELECT * FROM account WHERE username = ?');
@@ -431,6 +431,54 @@ class db_connection_master
                 </tr>';
             }
             $sql_Select->close();
+        }
+    }
+    public function db_call_transactions()
+    {
+        if($this->date_min == '' && $this->date_max == '')
+        {
+            $sql = 'CALL getAllTransactions()';
+
+            $sql_Select_order = $this->con->prepare($sql);
+            $sql_Select_order->execute() or die('Query error' . $this->con->error);
+
+            $result_order = $sql_Select_order->get_result();
+            while ($row_order = $result_order->fetch_assoc())
+            {
+                $total_amount = number_format($row_order['total_amount'], 2, '.', ',');
+
+                echo '<tr>
+                    <td class="linement">' . $row_order['fullName'] . '</td>
+                    <td class="linement">' . $row_order['store_name'] . '</td>
+                    <td class="linement">' . $row_order['product_name'] . '</td>
+                    <td class="linement">' . $row_order['quantity'] . '</td>
+                    <td class="linement">' . "₱" . $total_amount . '</td>
+                    <td class="linement">' . $row_order['date_ordered'] . '</td>
+                </tr>';
+            }
+        }
+        else
+        {
+            $sql = 'CALL getAllTransactionswithDate(?, ?)';
+
+            $sql_Select_order = $this->con->prepare($sql);
+            $sql_Select_order->bind_param('ss', $this->date_min,$this->date_max);
+            $sql_Select_order->execute() or die('Query error' . $this->con->error);
+
+            $result_order = $sql_Select_order->get_result();
+            while ($row_order = $result_order->fetch_assoc())
+            {
+                $total_amount = number_format($row_order['total_amount'], 2, '.', ',');
+
+                echo '<tr>
+                    <td class="linement">' . $row_order['fullName'] . '</td>
+                    <td class="linement">' . $row_order['store_name'] . '</td>
+                    <td class="linement">' . $row_order['product_name'] . '</td>
+                    <td class="linement">' . $row_order['quantity'] . '</td>
+                    <td class="linement">' . "₱" . $total_amount . '</td>
+                    <td class="linement">' . $row_order['date_ordered'] . '</td>
+                </tr>';
+            }
         }
     }
     //SELECT TABLE_ORDER FOR TABLE PAID

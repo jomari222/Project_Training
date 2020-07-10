@@ -43,35 +43,65 @@ $db->db_select_product_product_id($ID);
 
 if(isset($_POST['buttonChangePrice']))
 {
-    include_once('includes/message.php');
-
     $newPrice = $_POST['fNewPrice'];
 
-    $db->db_update_product_price($ID, $newPrice);
+    $value_newPrice = filter_var($newPrice, FILTER_VALIDATE_FLOAT);
+    if($value_newPrice == 1)
+    {
+        include_once('includes/message.php');
 
-    MessageBackInventory('Price has been change.');
+        $db->db_update_product_price($ID, $newPrice);
+
+        MessageBackInventory('Price has been change.');
+    }
+    else
+    {
+        session_start();
+        session_destroy();
+        header('Location: login_master.php');
+    }
 }
 
 if(isset($_POST['buttonAdd_Stock']))
 {
-    include_once('includes/message.php');
-
     $addStock = $_POST['fAdd_Stock'];
 
-    $db->db_select_Add_product_stock($ID,$addStock);
+    $value_addStock = filter_var($addStock, FILTER_VALIDATE_INT);
+    if($value_addStock == 1)
+    {
+        include_once('includes/message.php');
 
-    MessageBackInventory('Stock has been added.');
+        $db->db_select_Add_product_stock($ID,$addStock);
+
+        MessageBackInventory('Stock has been added.');
+    }
+    else
+    {
+        session_start();
+        session_destroy();
+        header('Location: login_master.php');
+    }
 }
 
 if(isset($_POST['buttonMinus_Stock']))
 {
-    include_once('includes/message.php');
-
     $minusStock = $_POST['fAdd_Stock'];
 
-    $db->db_select_Minus_product_stock($ID,$minusStock);
+    $value_minusStock = filter_var($minusStock, FILTER_VALIDATE_INT);
+    if($value_minusStock == 1)
+    {
+        include_once('includes/message.php');
 
-    MessageBackInventory('Stock has been deducted.');
+        $db->db_select_Minus_product_stock($ID,$minusStock);
+
+        MessageBackInventory('Stock has been deducted.');
+    }
+    else
+    {
+        session_start();
+        session_destroy();
+        header('Location: login_master.php');
+    }
 }
 
 if($ID == null)
