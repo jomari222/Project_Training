@@ -158,16 +158,18 @@ $db->db_select_master($fUsername);
                             <div class="form-group">
                                 <h3 class="">Expense</h3>
                                 <hr>
-                                <label id="lbl_Amount">Amount: </label>
-                                <input type="number" class="form-control" id="txtAmount" name="fAmount" placeholder="Enter Amount" min="0.00" step="any" onkeypress="" required/>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                                <br>
-                                <label id="lbl_Note">Remarks: </label>
-                                <textarea class="form-control" id="txtRemarks" name="fRemarks" rows="5" required></textarea>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                                <br>
+                                <div class="form-group">
+                                    <label id="lbl_Amount">Amount: </label>
+                                    <input type="number" class="form-control" id="txtAmount" name="fAmount" placeholder="Enter Amount" min="0.00" step="any" onkeypress="" required/>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field correctly.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label id="lbl_Note">Remarks: </label>
+                                    <textarea class="form-control" id="txtRemarks" name="fRemarks" rows="5" required></textarea>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field correctly.</div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -154,14 +154,24 @@ $db->db_select_master($fUsername);
                     <h3 class="">New Product</h3>
                 </div>
                 <div class="card-body" id="card_body">
-                    <label id="lbl_ProductName">Product Name: </label>
-                    <input type="text" class="form-control" id="txtProductName" name="fProductName" pattern="[^\s][a-zA-Z0-9]+( [a-zA-Z0-9]+)*[^\s]+" placeholder="Enter Product Name" onkeypress="" required/>
-                    <br>
-                    <label id="lbl_ProductName">Price: </label>
-                    <input type="number" class="form-control" id="txtNewProductPrice" name="fNewProductPrice" min="0.00" step="any" placeholder="Enter Price" onkeypress="" required/>
-                    <br>
-                    <label style="width: 100%" id="lbl_Add_Stock">Add Stock:</label>
-                    <input type="number" class="form-control" id="txtAddNewProduct_Stock" name="fAddNewProduct_Stock" placeholder="" min="1" max="9999" value="" required/>
+                    <div class="form-group">
+                        <label id="lbl_ProductName">Product Name: </label>
+                        <input type="text" class="form-control" id="txtProductName" name="fProductName" pattern="[^\s][a-zA-Z0-9]+( [a-zA-Z0-9]+)*[^\s]+" placeholder="Enter Product Name" onkeypress="" required/>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field correctly.</div>
+                    </div>
+                    <div class="form-group">
+                        <label id="lbl_ProductName">Price: </label>
+                        <input type="number" class="form-control" id="txtNewProductPrice" name="fNewProductPrice" min="0.00" step="any" placeholder="Enter Price" onkeypress="" required/>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field correctly.</div>
+                    </div>
+                    <div class="form-group">
+                        <label style="width: 100%" id="lbl_Add_Stock">Add Stock:</label>
+                        <input type="number" class="form-control" id="txtAddNewProduct_Stock" name="fAddNewProduct_Stock" placeholder="" min="1" max="9999" value="" required/>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field correctly.</div>
+                    </div>
                 </div>
                 <div class="card-footer" id="card_footer">
                     <button class="btn btn-block btn-dark" type="submit" id="btnAddNewProduct" name="buttonAddNewProduct">Add New Product</button>

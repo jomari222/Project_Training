@@ -76,7 +76,7 @@ if(isset($_POST['buttonUpdateAddress']))
     $barangay = $_POST['select_brgy'];
     $unit = $_POST['fAddress'];
 
-    $value_unit = preg_match("/^[A-Za-z0-9 ]+$/", $unit);
+    $value_unit = preg_match("/^[A-Za-z0-9 #]+$/", $unit);
     if($value_unit == 1)
     {
         include_once('includes/message.php');
@@ -146,12 +146,14 @@ if(isset($_POST['buttonUpdateAddress']))
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <label id="lblPhone_number">Phone number:
-                                            <input type="text" class="form-control" id="txtPhone_number" name="fPhone_number" placeholder="Enter Phone number" pattern="[0]{1}[9]{1}[0-9]{9}" onkeypress="return AvoidSpace()" maxlength="11" required/>
-                                        </label>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                        <div class="text-muted">Ex: 09123456789</div>
+                                        <div class="form-group">
+                                            <label id="lblPhone_number">Phone number:
+                                                <input type="text" class="form-control" id="txtPhone_number" name="fPhone_number" placeholder="Enter Phone number" pattern="[0]{1}[9]{1}[0-9]{9}" onkeypress="return AvoidSpace()" maxlength="11" required/>
+                                                <div class="valid-feedback">Valid.</div>
+                                                <div class="invalid-feedback">Please fill out this field correctly.</div>
+                                                <div class="text-muted">Ex: 09123456789</div>
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="col-md-5">
                                         <br>

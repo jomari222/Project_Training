@@ -14,8 +14,6 @@ if(isset($_POST['buttonInsert_User']))
     $Add_fUsername = $_POST['fUsername'];
     $Add_Password = $_POST['fPassword'];
     $Add_Position = $_POST['select_position'];
-    //Password
-    $Add_Password = password_hash($Add_Password, PASSWORD_BCRYPT);
     //Uppercase
     $Add_Firstname = strtoupper($Add_Firstname);
     $Add_Lastname = strtoupper($Add_Lastname);
@@ -28,6 +26,9 @@ if(isset($_POST['buttonInsert_User']))
 
     if($value_Add_fContact_number == 1 && $value_Add_Firstname == 1 && $value_Add_Lastname == 1 && $value_Add_fUsername == 1 && $value_Add_Password == 1)
     {
+        //Password
+        $Add_Password = password_hash($Add_Password, PASSWORD_BCRYPT);
+
         include_once('db_connection_master.php');
         $db = new db_connection_master();
         $db->db_insert_account($Add_Firstname,$Add_Lastname,$Add_fContact_number,$Add_fUsername,$Add_Password,$Add_Position);

@@ -59,24 +59,33 @@ if(isset($_POST['buttonInsertProduct']))
     $Add_Discount = $_POST['fDiscount'];
     $Add_Total_amount = $_POST['fTotalAmount'];
 
-    $db->check_product($Add_Product_ID);
-    if($Add_Quantity > $db->product_stock_order)
+    if(filter_var($Add_Total_amount, FILTER_VALIDATE_INT) && filter_var($Add_Product_ID, FILTER_VALIDATE_INT) && filter_var($Add_Product_amount, FILTER_VALIDATE_FLOAT) && filter_var($Add_Quantity, FILTER_VALIDATE_INT) && filter_var($Add_Discount, FILTER_VALIDATE_FLOAT) && filter_var($Add_Total_amount, FILTER_VALIDATE_FLOAT))
     {
-        include_once('includes/message.php');
-        MessageBackAccountID('Not enough stock.');
-    }
-    elseif($Add_Discount > $Add_Total_amount)
-    {
-        include_once('includes/message.php');
-        MessageBackAccountID('Discount is not valid.');
+        $db->check_product($Add_Product_ID);
+        if($Add_Quantity > $db->product_stock_order)
+        {
+            include_once('includes/message.php');
+            MessageBackAccountID('Not enough stock.');
+        }
+        elseif($Add_Discount > $Add_Total_amount)
+        {
+            include_once('includes/message.php');
+            MessageBackAccountID('Discount is not valid.');
+        }
+        else
+        {
+            $db->db_insert_order_customer_id($Add_Customer_ID,$Add_Product_ID,$Add_Quantity,$date_ordered,'',$Add_Discount,'','','',$Add_Total_amount);
+            $db->db_update_produce_order_remove($Add_Product_ID,$Add_Quantity);
+
+            include_once('includes/message.php');
+            MessageBackAccountID('Order has been added.');
+        }
     }
     else
     {
-        $db->db_insert_order_customer_id($Add_Customer_ID,$Add_Product_ID,$Add_Quantity,$date_ordered,'',$Add_Discount,'','','',$Add_Total_amount);
-        $db->db_update_produce_order_remove($Add_Product_ID,$Add_Quantity);
-
-        include_once('includes/message.php');
-        MessageBackAccountID('Order has been added.');
+        session_start();
+        session_destroy();
+        header('Location: login_master.php');
     }
 }
 ?>

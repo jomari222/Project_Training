@@ -121,6 +121,7 @@ class db_connection_master
             header('Location:inventory.php');
             die();
         }
+        $sql_Select->close();
     }
     //SELECT USERNAME TO GET DATA0
     public function db_select_master($username)
@@ -947,18 +948,10 @@ class db_connection_master
     //UPDATE PRODUCT PRICE
     public function db_update_product_price($product_id,$new_price)
     {
-        $sql_Select = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
-        $sql_Select->bind_param('s', $product_id);
-        $sql_Select->execute() or die('Query error'.$this->con->error);
-
-        $result = $sql_Select->get_result();
-        $row = $result->fetch_assoc();
-
         $sql_Update = $this->con->prepare('UPDATE product SET price = ? WHERE product_id = ?');
         $sql_Update->bind_param('ss', $new_price,$product_id);
         $sql_Update->execute() or die('Query error'.$this->con->error);
 
-        $sql_Select->close();
         $sql_Update->close();
     }
     //SELECT AND UPDATE STOCKS (ADD)
@@ -977,8 +970,8 @@ class db_connection_master
         $sql_Update->bind_param('ss', $newStock,$product_id);
         $sql_Update->execute() or die('Query error'.$this->con->error);
 
-        $sql_Select->close();
         $sql_Update->close();
+        $sql_Select->close();
     }
     //SELECT AND UPDATE STOCKS (MINUS)
     public function db_select_Minus_product_stock($product_id,$minusStock)
@@ -1012,6 +1005,8 @@ class db_connection_master
         $this->product_name = $row['product_name'];
         $this->current_price = $row['price'];
         $this->current_stock = $row['stock'];
+
+        $sql_Select->close();
     }
     //SELECT TO MODIFY IF
     public function db_select_table_order_for_checking($order_id)

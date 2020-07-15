@@ -45,8 +45,7 @@ if(isset($_POST['buttonChangePrice']))
 {
     $newPrice = $_POST['fNewPrice'];
 
-    $value_newPrice = filter_var($newPrice, FILTER_VALIDATE_FLOAT);
-    if($value_newPrice == 1)
+    if(filter_var($newPrice, FILTER_VALIDATE_INT))
     {
         include_once('includes/message.php');
 
@@ -56,7 +55,6 @@ if(isset($_POST['buttonChangePrice']))
     }
     else
     {
-        session_start();
         session_destroy();
         header('Location: login_master.php');
     }
@@ -66,8 +64,7 @@ if(isset($_POST['buttonAdd_Stock']))
 {
     $addStock = $_POST['fAdd_Stock'];
 
-    $value_addStock = filter_var($addStock, FILTER_VALIDATE_INT);
-    if($value_addStock == 1)
+    if(filter_var($addStock, FILTER_VALIDATE_INT))
     {
         include_once('includes/message.php');
 
@@ -77,7 +74,6 @@ if(isset($_POST['buttonAdd_Stock']))
     }
     else
     {
-        session_start();
         session_destroy();
         header('Location: login_master.php');
     }
@@ -87,8 +83,7 @@ if(isset($_POST['buttonMinus_Stock']))
 {
     $minusStock = $_POST['fAdd_Stock'];
 
-    $value_minusStock = filter_var($minusStock, FILTER_VALIDATE_INT);
-    if($value_minusStock == 1)
+    if(filter_var($minusStock, FILTER_VALIDATE_INT))
     {
         include_once('includes/message.php');
 
@@ -98,7 +93,6 @@ if(isset($_POST['buttonMinus_Stock']))
     }
     else
     {
-        session_start();
         session_destroy();
         header('Location: login_master.php');
     }
@@ -162,11 +156,13 @@ if($ID == null)
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-7">
-                                        <label id="lbl_Price">Price:
-                                            <input type="number" class="form-control" id="txtNewPrice" name="fNewPrice" placeholder="Amount" min="0.00" step="any" value="" required/>
-                                        </label>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
+                                        <div class="form-group">
+                                            <label id="lbl_Price">Price:
+                                                <input type="number" class="form-control" id="txtNewPrice" name="fNewPrice" placeholder="Amount" min="0" value="" required/>
+                                                <div class="valid-feedback">Valid.</div>
+                                                <div class="invalid-feedback">Please fill out this field correctly.</div>
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="col-md-5">
                                         <br>
@@ -189,12 +185,14 @@ if($ID == null)
                                 <div class="row">
                                     <div class="col-md-7">
                                         <div id="txt_Amount">
-                                            <label style="width: 100%" id="lbl_Add_Stock">Add Stock:
-                                                <input type="number" class="form-control" id="txtAdd_Stock" name="fAdd_Stock" placeholder="" min="1" max="9999" value="" required/>
-                                            </label>
+                                            <div class="form-group">
+                                                <label style="width: 100%" id="lbl_Add_Stock">Add/Remove Stock:
+                                                    <input type="number" class="form-control" id="txtAdd_Stock" name="fAdd_Stock" placeholder="" min="1" max="9999" step="1" pattern="[^1-9]{1}[0-9]" value="" required/>
+                                                    <div class="valid-feedback">Valid.</div>
+                                                    <div class="invalid-feedback">Please fill out this field correctly.</div>
+                                                </label>
+                                            </div>
                                         </div>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
                                     </div>
                                     <div class="col-md-5">
                                         <br>

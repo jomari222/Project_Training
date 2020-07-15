@@ -144,10 +144,10 @@ class db_connection_member
         $sql_Insert->close();
     }
     //INSERT INTO EXPENSE
-    public function db_insert_expense($amount,$remarks)
+    public function db_insert_expense($amount,$remarks,$date_expense)
     {
-        $sql_Insert = $this->con->prepare('INSERT INTO expense (account_id,amount, remarks)VALUES(?,?,?)');
-        $sql_Insert->bind_param('sss',$this->account_id,$amount,$remarks);
+        $sql_Insert = $this->con->prepare('INSERT INTO expense (account_id,amount, remarks, date_expense)VALUES(?,?,?,?)');
+        $sql_Insert->bind_param('sss',$this->account_id,$amount,$remarks,$date_expense);
         $sql_Insert->execute() or die('Query error'.$this->con->error);
 
         $sql_Insert->close();

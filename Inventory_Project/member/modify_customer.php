@@ -48,28 +48,49 @@ $db->db_select_customer_customer_id($ID);
 
 if(isset($_POST['buttonUpdatePhoneNumber']))
 {
-    include_once('includes/message.php');
-
     $phone_number = $_POST['fPhone_number'];
 
-    $db->db_update_customer_phone_number($ID,$phone_number);
+    $value_phone_number = preg_match("/^[0][9][0-9]{9}$/", $phone_number);
 
-    MessageGotoCustomerList('Contact number has been updated.');
+    if($value_phone_number == 1)
+    {
+        include_once('includes/message.php');
+
+        $db->db_update_customer_phone_number($ID,$phone_number);
+
+        MessageGotoCustomerList('Contact number has been updated.');
+    }
+    else
+    {
+        session_start();
+        session_destroy();
+        header('Location: login_member.php');
+    }
 }
 
 if(isset($_POST['buttonUpdateAddress']))
 {
-    include_once('includes/message.php');
-
     $region = $_POST['select_region'];
     $province = $_POST['select_province'];
     $city = $_POST['select_city_mun'];
     $barangay = $_POST['select_brgy'];
     $unit = $_POST['fAddress'];
 
-    $db->db_update_customer_address($ID,$region,$province,$city,$barangay,$unit);
+    $value_unit = preg_match("/^[A-Za-z0-9 ]+$/", $unit);
+    if($value_unit == 1)
+    {
+        include_once('includes/message.php');
 
-    MessageGotoCustomerList('Address has been updated.');
+        $db->db_update_customer_address($ID,$region,$province,$city,$barangay,$unit);
+
+        MessageGotoCustomerList('Address has been updated.');
+    }
+    else
+    {
+        session_start();
+        session_destroy();
+        header('Location: login_member.php');
+    }
 }
 ?>
 <html lang="en">

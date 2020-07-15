@@ -53,16 +53,15 @@ else
     echo " Invalid ";
 }
 
-$Add_Customer_ID = "s";
-$val_id = filter_var($Add_Customer_ID, FILTER_VALIDATE_INT);
-if($val_id == 1)
+$Add_Customer_ID = "90.1";
+if(!filter_var($Add_Customer_ID, FILTER_VALIDATE_INT))
 {
-    echo $Add_Customer_ID;
-    echo " Valid ";
+    echo " Invalid ";
 }
 else
 {
-    echo " Invalid ";
+    echo $Add_Customer_ID;
+    echo " Valid ";
 }
 
 $date_delivered = "29-01-2020";

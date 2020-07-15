@@ -17,12 +17,21 @@ if(isset($_POST['buttonInsert']))
     $Add_Amount = $_POST['fAmount'];
     $Add_Remarks = $_POST['fRemarks'];
 
-    include_once('db_connection_master.php');
-    $db = new db_connection_master();
-    $db->db_select_master($fUsername);
-    $db->db_insert_expense($Add_Amount,$Add_Remarks,$date_expense);
+    if(filter_var($Add_Amount, FILTER_VALIDATE_FLOAT))
+    {
+        include_once('db_connection_master.php');
+        $db = new db_connection_master();
+        $db->db_select_master($fUsername);
+        $db->db_insert_expense($Add_Amount,$Add_Remarks,$date_expense);
 
-    include_once('message.php');
-    MessageGotoExpenseList('Expense has been added.');
+        include_once('message.php');
+        MessageGotoExpenseList('Expense has been added.');
+    }
+    else
+    {
+        session_start();
+        session_destroy();
+        header('Location: ../login_master.php');
+    }
 }
 ?>

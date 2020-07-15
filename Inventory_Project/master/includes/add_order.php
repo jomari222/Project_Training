@@ -17,12 +17,7 @@ if(isset($_POST['buttonInsertProduct']))
     $Add_Discount = $_POST['fDiscount'];
     $Add_Total_amount = $_POST['fTotalAmount'];
     //Regex
-    $value_Add_Product_amount = filter_var($Add_Product_amount, FILTER_VALIDATE_FLOAT);
-    $value_Add_Total_amount = filter_var($Add_Total_amount, FILTER_VALIDATE_FLOAT);
-    $value_Add_Discount = filter_var($Add_Discount, FILTER_VALIDATE_FLOAT);
-    $value_Add_Quantity = filter_var($Add_Quantity, FILTER_VALIDATE_INT);
-
-    if($value_Add_Total_amount == 1 && $value_Add_Discount == 1 && $value_Add_Product_amount == 1 && $value_Add_Quantity == 1)
+    if(filter_var($Add_Total_amount, FILTER_VALIDATE_FLOAT) && filter_var($Add_Discount, FILTER_VALIDATE_FLOAT) && filter_var($Add_Product_amount, FILTER_VALIDATE_FLOAT) && filter_var($Add_Quantity, FILTER_VALIDATE_INT))
     {
         include_once('db_connection_master.php');
         $db = new db_connection_master();
