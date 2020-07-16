@@ -65,7 +65,7 @@ if(isset($_POST['buttonDeliveryDone']))
 {
     $date_delivered = $_POST['txtDateDelivery'];
 
-    $value_date_delivered = preg_match("/^\d{2}-\d{2}-\d{4}$/", $date_delivered);
+    $value_date_delivered = preg_match("/^\d{4}-\d{2}-\d{2}$/", $date_delivered);
 
     if($value_date_delivered == 1)
     {
@@ -86,7 +86,6 @@ if(isset($_POST['buttonDeliveryDone']))
     }
     else
     {
-        session_start();
         session_destroy();
         header('Location: login_member.php');
     }
@@ -97,10 +96,9 @@ if(isset($_POST['buttonPaymentDone']))
     $date_payment = $_POST['txtDatePaid'];
     $amount = $_POST['txtAmountPaid'];
 
-    $value_date_payment = preg_match("/^\d{2}-\d{2}-\d{4}$/", $date_payment);
-    $value_amount = filter_var($amount, FILTER_VALIDATE_FLOAT);
+    $value_date_payment = preg_match("/^\d{4}-\d{2}-\d{2}$/", $date_payment);
 
-    if($value_date_payment == 1 && $value_amount == 1)
+    if($value_date_payment == 1 && filter_var($amount, FILTER_VALIDATE_FLOAT))
     {
         $db->db_order_payment_checking($order_id);
         if($amount > $db->total_payment_of_order)
@@ -123,7 +121,6 @@ if(isset($_POST['buttonPaymentDone']))
     }
     else
     {
-        session_start();
         session_destroy();
         header('Location: login_member.php');
     }

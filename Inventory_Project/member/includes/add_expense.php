@@ -17,9 +17,7 @@ if(isset($_POST['buttonInsert']))
     $Add_Amount = $_POST['fAmount'];
     $Add_Remarks = $_POST['fRemarks'];
 
-    $value_Add_Amount = filter_var($Add_Amount, FILTER_VALIDATE_FLOAT);
-
-    if($value_Add_Amount == 1)
+    if(filter_var($Add_Amount, FILTER_VALIDATE_FLOAT))
     {
         include_once('db_connection_member.php');
         $db = new db_connection_member();

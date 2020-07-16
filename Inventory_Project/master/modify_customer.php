@@ -149,9 +149,9 @@ if(isset($_POST['buttonUpdateAddress']))
                                         <div class="form-group">
                                             <label id="lblPhone_number">Phone number:
                                                 <input type="text" class="form-control" id="txtPhone_number" name="fPhone_number" placeholder="Enter Phone number" pattern="[0]{1}[9]{1}[0-9]{9}" onkeypress="return AvoidSpace()" maxlength="11" required/>
+                                                <div class="text-muted">Ex: 09123456789</div>
                                                 <div class="valid-feedback">Valid.</div>
                                                 <div class="invalid-feedback">Please fill out this field correctly.</div>
-                                                <div class="text-muted">Ex: 09123456789</div>
                                             </label>
                                         </div>
                                     </div>

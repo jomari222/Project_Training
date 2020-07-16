@@ -60,14 +60,7 @@ if(isset($_POST['buttonInsertProduct']))
     $Add_Discount = $_POST['fDiscount'];
     $Add_Total_amount = $_POST['fTotalAmount'];
 
-    $value_Add_Customer_ID = filter_var($Add_Total_amount, FILTER_VALIDATE_INT);
-    $value_Add_Product_ID = filter_var($Add_Product_ID, FILTER_VALIDATE_INT);
-    $value_Add_Product_amount = filter_var($Add_Product_amount, FILTER_VALIDATE_FLOAT);
-    $value_Add_Quantity = filter_var($Add_Quantity, FILTER_VALIDATE_INT);
-    $value_Add_Discount = filter_var($Add_Discount, FILTER_VALIDATE_FLOAT);
-    $value_Add_Total_amount = filter_var($Add_Total_amount, FILTER_VALIDATE_FLOAT);
-
-    if($value_Add_Customer_ID == 1 && $value_Add_Product_ID == 1 && $value_Add_Product_amount == 1 && $value_Add_Quantity == 1 && $value_Add_Discount == 1 && $value_Add_Total_amount == 1)
+    if(filter_var($Add_Total_amount, FILTER_VALIDATE_INT) && filter_var($Add_Product_ID, FILTER_VALIDATE_INT) && filter_var($Add_Product_amount, FILTER_VALIDATE_FLOAT) && filter_var($Add_Quantity, FILTER_VALIDATE_INT) && filter_var($Add_Discount, FILTER_VALIDATE_FLOAT) && filter_var($Add_Total_amount, FILTER_VALIDATE_FLOAT))
     {
         $db->check_product($Add_Product_ID);
         if($Add_Quantity > $db->product_stock_order)
@@ -227,7 +220,7 @@ if(isset($_POST['buttonInsertProduct']))
                                     </div>
                                     <div class="col-md-5">
                                         <label id="lblDiscount">Discount:
-                                            <input type="text" class="form-control" id="txtDiscount" name="fDiscount" placeholder="Discount" required/>
+                                            <input type="number" class="form-control" id="txtDiscount" onkeypress="subtract_discount_amount()" oninput="subtract_discount_amount()" name="fDiscount" placeholder="Discount" required/>
                                         </label>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>

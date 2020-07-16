@@ -217,7 +217,7 @@ if(isset($_POST['buttonInsertProduct']))
                                     </div>
                                     <div class="col-md-5">
                                         <label id="lblDiscount">Discount:
-                                            <input type="text" class="form-control" id="txtDiscount" onkeypress="subtract_discount_amount()" oninput="subtract_discount_amount()" name="fDiscount" placeholder="Discount" required/>
+                                            <input type="number" class="form-control" id="txtDiscount" onkeypress="subtract_discount_amount()" oninput="subtract_discount_amount()" name="fDiscount" placeholder="Discount" required/>
                                         </label>
                                         <div class="valid-feedback">Valid.</div>
                                         <div class="invalid-feedback">Please fill out this field.</div>

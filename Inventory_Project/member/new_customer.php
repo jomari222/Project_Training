@@ -144,23 +144,30 @@ $db->db_select_member($fUsername);
                             <div class="form-group">
                                 <h3 class="">Information</h3>
                                 <hr>
-                                <label id="lbl_first_name">First name: </label>
-                                <input type="text" class="form-control" id="txtFirst_name" name="fFirst_name" pattern="[^\s][a-zA-Z]+( [a-zA-Z]+)*[^\s]+" placeholder="Enter First name" onkeypress="" required/>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                                <br>
-                                <label id="lbl_first_name">Last name: </label>
-                                <input type="text" class="form-control" id="txtLast_name" name="fLast_name" pattern="[^\s][a-zA-Z]+( [a-zA-Z]+)*[^\s]+" placeholder="Enter Last name" onkeypress="" required/>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                                <br>
-                                <label id="lbl_store_name">Store name: </label>
-                                <input type="text" class="form-control" id="txtStore_name" name="fStore_name" placeholder="Enter Store name" onkeypress=""/>
-                                <br>
+                                <div class="form-group">
+                                    <label id="lbl_first_name">First name: </label>
+                                    <input type="text" class="form-control" id="txtFirst_name" name="fFirst_name" pattern="[^\s][a-zA-Z]+( [a-zA-Z]+)*[^\s]+" placeholder="Enter First name" onkeypress="" required/>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field correctly.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label id="lbl_first_name">Last name: </label>
+                                    <input type="text" class="form-control" id="txtLast_name" name="fLast_name" pattern="[^\s][a-zA-Z]+( [a-zA-Z]+)*[^\s]+" placeholder="Enter Last name" onkeypress="" required/>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field correctly.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label id="lbl_store_name">Store name: </label>
+                                    <input type="text" class="form-control" id="txtStore_name" name="fStore_name" placeholder="Enter Store name" pattern="[^\s][a-zA-Z0-9]+( [a-zA-Z0-9]+)*[^\s]+" onkeypress=""/>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field correctly.</div>
+                                </div>
                                 <div class="form-group">
                                     <label id="lblPhone_number">Phone number: </label>
                                     <input type="text" class="form-control" id="txtPhone_number" name="fPhone_number_registration" placeholder="Enter Phone number" pattern="[0]{1}[9]{1}[0-9]{9}" onkeypress="return AvoidSpace()" maxlength="11"/>
                                     <div class="text-muted">Ex: 09123456789</div>
+                                    <div class="valid-feedback">Valid.</div>
+                                    <div class="invalid-feedback">Please fill out this field correctly.</div>
                                 </div>
                             </div>
                         </div>

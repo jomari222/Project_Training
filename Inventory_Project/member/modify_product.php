@@ -45,8 +45,7 @@ if(isset($_POST['buttonChangePrice']))
 {
     $newPrice = $_POST['fNewPrice'];
 
-    $value_newPrice = filter_var($newPrice, FILTER_VALIDATE_FLOAT);
-    if($value_newPrice == 1)
+    if(filter_var($newPrice, FILTER_VALIDATE_FLOAT))
     {
         include_once('includes/message.php');
 
@@ -56,7 +55,6 @@ if(isset($_POST['buttonChangePrice']))
     }
     else
     {
-        session_start();
         session_destroy();
         header('Location: login_member.php');
     }
@@ -66,8 +64,7 @@ if(isset($_POST['buttonAdd_Stock']))
 {
     $addStock = $_POST['fAdd_Stock'];
 
-    $value_addStock = filter_var($addStock, FILTER_VALIDATE_INT);
-    if($value_addStock == 1)
+    if(filter_var($addStock, FILTER_VALIDATE_INT))
     {
         include_once('includes/message.php');
 
@@ -77,7 +74,6 @@ if(isset($_POST['buttonAdd_Stock']))
     }
     else
     {
-        session_start();
         session_destroy();
         header('Location: login_member.php');
     }
@@ -87,8 +83,7 @@ if(isset($_POST['buttonMinus_Stock']))
 {
     $minusStock = $_POST['fAdd_Stock'];
 
-    $value_minusStock = filter_var($minusStock, FILTER_VALIDATE_INT);
-    if($value_minusStock == 1)
+    if(filter_var($minusStock, FILTER_VALIDATE_INT))
     {
         include_once('includes/message.php');
 
@@ -98,7 +93,6 @@ if(isset($_POST['buttonMinus_Stock']))
     }
     else
     {
-        session_start();
         session_destroy();
         header('Location: login_member.php');
     }

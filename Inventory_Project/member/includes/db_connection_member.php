@@ -179,6 +179,15 @@ class db_connection_member
         }
         $sql_Select->close();
     }
+    //INSERT TO PRODUCT FOR NEW PRODUCT
+    public function db_insert_product($product_name,$price,$stock)
+    {
+        $sql_Insert = $this->con->prepare('INSERT INTO product (product_name,price,stock)VALUES(?,?,?)');
+        $sql_Insert->bind_param('sss',$product_name,$price,$stock);
+        $sql_Insert->execute() or die('Query error'.$this->con->error);
+
+        $sql_Insert->close();
+    }
     //SELECT CUSTOMER FOR TABLE
     public function db_select_customer()
     {
