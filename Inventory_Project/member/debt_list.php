@@ -86,7 +86,7 @@ if(isset($_POST['buttonSearch_Date']))
 <br>
 <div class="row">
     <div class="col-md-12">
-        <h1 id="lblList">Debt Report </h1>
+        <h1 id="lblList">Credit Report </h1>
         <div class="table-responsive-md" id="table_div">
             <label>Date:</label>
             <br>

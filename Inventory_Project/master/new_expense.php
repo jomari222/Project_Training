@@ -167,6 +167,7 @@ $db->db_select_master($fUsername);
                                 <div class="form-group">
                                     <label id="lbl_Note">Remarks: </label>
                                     <textarea class="form-control" id="txtRemarks" name="fRemarks" rows="5" required></textarea>
+                                    <div class="text-muted">Careful using SPECIAL characters such as (", _) and others.</div>
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field correctly.</div>
                                 </div>

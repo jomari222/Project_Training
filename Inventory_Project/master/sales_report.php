@@ -191,7 +191,7 @@ if(isset($_POST['buttonDebt_list']))
                 </div>
                 <div class="col-md-2">
                     <form id="" action="" method="POST" class="">
-                        <button style="margin-left: 30%" class="btn btn-dark" type="submit" id="btnDebt_list" name="buttonDebt_list">DEBT LIST >></button>
+                        <button style="margin-left: 25%" class="btn btn-dark" type="submit" id="btnDebt_list" name="buttonDebt_list">CREDIT LIST >></button>
                     </form>
                 </div>
             </div>

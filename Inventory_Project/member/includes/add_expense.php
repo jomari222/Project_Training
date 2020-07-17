@@ -17,7 +17,9 @@ if(isset($_POST['buttonInsert']))
     $Add_Amount = $_POST['fAmount'];
     $Add_Remarks = $_POST['fRemarks'];
 
-    if(filter_var($Add_Amount, FILTER_VALIDATE_FLOAT))
+    $value_Add_Remarks = preg_match("/^$|[a-zA-Z0-9' -]+([a-zA-Z0-9' -]+)*[^\s]+$/", $Add_Remarks);
+
+    if(filter_var($Add_Amount, FILTER_VALIDATE_FLOAT) && $value_Add_Remarks == 1)
     {
         include_once('db_connection_member.php');
         $db = new db_connection_member();

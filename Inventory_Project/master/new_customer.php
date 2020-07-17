@@ -172,7 +172,7 @@ $db->db_select_master($fUsername);
                                 </div>
                                 <div class="form-group">
                                     <label id="lbl_store_name">Store name: </label>
-                                    <input type="text" class="form-control" id="txtStore_name" name="fStore_name" pattern="[^\s][a-zA-Z0-9]+( [a-zA-Z0-9]+)*[^\s]+" placeholder="Enter Store name" onkeypress=""/>
+                                    <input type="text" class="form-control" id="txtStore_name" name="fStore_name" pattern="[^\s][a-zA-Z0-9' -]+( [a-zA-Z0-9 ' -]+)*[^\s]+" placeholder="Enter Store name" onkeypress=""/>
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field correctly.</div>
                                 </div>

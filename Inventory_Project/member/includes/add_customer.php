@@ -26,23 +26,25 @@ if(isset($_POST['buttonInsert_customer']))
     $value_Add_Phone_number = preg_match("/^$|[0][9][0-9]{9}$/", $Add_Phone_number);
     $value_Add_Firstname = preg_match("/^[a-zA-Z]+([a-zA-Z]+)*[^\s]+$/", $Add_Firstname);
     $value_Add_Lastname = preg_match("/^[a-zA-Z]+([a-zA-Z]+)*[^\s]+$/", $Add_Lastname);
-    $value_Add_Storename = preg_match("/^$|[a-zA-Z0-9]+([a-zA-Z0-9]+)*[^\s]+$/", $Add_Storename);
+    $value_Add_Storename = preg_match("/^$|[a-zA-Z0-9' -]+([-][a-zA-Z0-9']+)*[^\s]+$/", $Add_Storename);
     $value_Add_Address = preg_match("/^[A-Za-z0-9 #]+$/", $Add_Address);
 
     if($value_Add_Phone_number == 1 && $value_Add_Firstname == 1 && $value_Add_Lastname == 1 && $value_Add_Storename == 1 && $value_Add_Address == 1)
     {
-        include_once('db_connection_member.php');
+        echo 'valid';
+        /*include_once('db_connection_member.php');
         $db = new db_connection_member();
         $db->db_insert_customer($Add_Firstname,$Add_Lastname,$Add_Storename,$Add_Phone_number,$Add_Region,$Add_Province,$Add_City_mun,$Add_Brgy,$Add_Address);
 
         include_once('message.php');
-        MessageGotoCustomerList('Customer has been added.');
+        MessageGotoCustomerList('Customer has been added.');*/
     }
     else
     {
-        session_start();
+        echo 'invalid';
+        /*session_start();
         session_destroy();
-        header('Location: ../login_member.php');
+        header('Location: ../login_member.php');*/
     }
 }
 ?>

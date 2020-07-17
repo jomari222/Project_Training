@@ -158,7 +158,7 @@ $db->db_select_member($fUsername);
                                 </div>
                                 <div class="form-group">
                                     <label id="lbl_store_name">Store name: </label>
-                                    <input type="text" class="form-control" id="txtStore_name" name="fStore_name" placeholder="Enter Store name" pattern="[^\s][a-zA-Z0-9]+( [a-zA-Z0-9]+)*[^\s]+" onkeypress=""/>
+                                    <input type="text" class="form-control" id="txtStore_name" name="fStore_name" placeholder="Enter Store name" pattern="[^\s][a-zA-Z0-9' -]+( [a-zA-Z0-9 ' -]+)*[^\s]+" onkeypress=""/>
                                     <div class="valid-feedback">Valid.</div>
                                     <div class="invalid-feedback">Please fill out this field correctly.</div>
                                 </div>
