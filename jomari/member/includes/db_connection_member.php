@@ -245,7 +245,7 @@ class db_connection_member
             $this->code_activation_id = $row['code_activation_id'];
             $this->db_insert_member($member_id,$phone_number,$first_name,$last_name,$position_id,$blocked);
             $this->db_insert_account($code_activation_id,$username,$password,$activation_code,$user_sponsor,$member_id);
-            $this->db_insert_fund($member_id,$peso_wallet,$voucher_points);
+            //$this->db_insert_fund($member_id,$peso_wallet,$voucher_points);
             $this->db_update_code_activation($activation_code);
         }
         elseif($row['activation_code'] == $activation_code && $row['used'] == 1)
@@ -374,6 +374,25 @@ class db_connection_member
         $sql_Select->close();
     }
 
+    public function db_select_account_table_procedure()
+    {
+        $sql = 'CALL get_AccountOfUser(?)';
+        $sql_Select = $this->con->prepare($sql);
+        $sql_Select->bind_param('s', $this->member_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        while($row = $result->fetch_assoc())
+        {
+            echo '<tr>
+                    <td class="linement">'.$row['username'].'</td>
+                    <td class="linement">'.$row['activation_code'].'</td>
+                    <td class="linement">'.$row['user_sponsor'].'</td>
+                </tr>';
+        }
+        $sql_Select->close();
+    }
+
     public function db_select_home_location_table()
     {
         $sql_Select = $this->con->prepare('SELECT * FROM address WHERE member_id = ?');
@@ -422,24 +441,25 @@ class db_connection_member
         $sql_Select->close();
     }
 
-    public function  db_select_table_region()
+    public function db_select_home_location_table_procedure()
     {
+        $sql = 'CALL get_AddressOfUser(?)';
+        $sql_Select = $this->con->prepare($sql);
+        $sql_Select->bind_param('s', $this->member_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
 
-    }
-
-    public function  db_select_table_province()
-    {
-
-    }
-
-    public function  db_select_table_city()
-    {
-
-    }
-
-    public function  db_select_table_barangay()
-    {
-
+        $result = $sql_Select->get_result();
+        while($row = $result->fetch_assoc())
+        {
+            echo '<tr>
+                    <td class="linement">'.$row['regDesc'].'</td>
+                    <td class="linement">'.$row['provDesc'].'</td>
+                    <td class="linement">'.$row['citymunDesc'].'</td>
+                    <td class="linement">'.$row['brgyDesc'].'</td>
+                    <td class="linement">'.$row['unit'].'</td>
+                </tr>';
+        }
+        $sql_Select->close();
     }
 
     public function db_insert_home_address_register($region,$province,$city,$brgy,$address,$id)

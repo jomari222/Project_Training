@@ -46,7 +46,7 @@ $db_select_location = new db_connection_member();
                         <div class="col-md-6">
                             <div class="form-group">
                                 <p id="lblActivation_code">Activation Code: </p>
-                                <input type="text" class="form-control" id="txtActivation_pin" name="fActivation_code" placeholder="Enter Activation Code" onkeypress="return AvoidSpace()" maxlength="20" minlength="20" required/>
+                                <input type="text" class="form-control" id="txtActivation_pin" name="fActivation_code" pattern="^[a-zA-Z0-9]+" placeholder="Enter Activation Code" onkeypress="return AvoidSpace()" maxlength="20" minlength="20" required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
@@ -59,13 +59,13 @@ $db_select_location = new db_connection_member();
                             </div>
                             <div class="form-group">
                                 <p id="lblUsername">Username: </p>
-                                <input type="text" class="form-control" id="txtUsername" name="fUsername_registration" onkeypress="return AvoidSpace()" placeholder="Enter Username" maxlength="60" required/>
+                                <input type="text" class="form-control" id="txtUsername" name="fUsername_registration" pattern="^[a-zA-Z0-9]+([a-zA-Z0-9]+)*[^\s]+" onkeypress="return AvoidSpace()" placeholder="Enter Username" maxlength="60" required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field. (Ex: 09123456789)</div>
                             </div>
                             <div class="form-group">
                                 <p id="lblPassword">Password: </p>
-                                <input type="password" class="form-control" id="txtPassword" name="fPassword" onkeypress="return AvoidSpace()" placeholder="Enter Password" maxlength="60" required/>
+                                <input type="password" class="form-control" id="txtPassword" name="fPassword" onkeypress="return AvoidSpace()" pattern="^[a-zA-Z0-9]+" placeholder="Enter Password" maxlength="60" required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>

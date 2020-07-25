@@ -9,15 +9,26 @@ session_start();
 $fPhone_number = $_SESSION['Phone_number'];
 if(isset($_POST['buttonAdd_Address']))
 {
+    //Information
     $addRegion = $_POST['select_region'];
     $addProvince = $_POST['select_province'];
     $addCity = $_POST['select_city_mun'];
     $addBrgy = $_POST['select_brgy'];
     $addAddress = $_POST['fAddress'];
+    //Regex
+    $value_Add_Address = preg_match("/^[A-Za-z0-9 #]+$/", $addAddress);
 
-    include_once('db_connection_member.php');
-    $db_add_account = new db_connection_member();
-    $db_add_account->db_select_member_login_phone_number($fPhone_number);
-    $db_add_account->db_insert_home_address($addRegion, $addProvince, $addCity, $addBrgy, $addAddress);
+    if($value_Add_Address == 1)
+    {
+        include_once('db_connection_member.php');
+        $db_add_account = new db_connection_member();
+        $db_add_account->db_select_member_login_phone_number($fPhone_number);
+        $db_add_account->db_insert_home_address($addRegion, $addProvince, $addCity, $addBrgy, $addAddress);
+    }
+    else
+    {
+        session_destroy();
+        header('Location: ../login_member.php');
+    }
 }
 ?>

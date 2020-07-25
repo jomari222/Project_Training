@@ -87,25 +87,25 @@ $db_select_user->db_select_member_mainpage($fPhone_number);
             <form action="includes/add_account.php" method="POST" class="needs-validation" novalidate>
                 <div class="form-group">
                     <p id="">Activation Code: </p>
-                    <input type="text" class="form-control" id="txtAdd_Activation_Code" name="fAdd_Activation_Code" maxlength="20" minlength="20" required/>
+                    <input type="text" class="form-control" id="txtAdd_Activation_Code" name="fAdd_Activation_Code" pattern="^[a-zA-Z0-9]+" maxlength="20" minlength="20" required/>
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
                 <div class="form-group">
                     <p id="lblCode">Username: </p>
-                    <input type="text" class="form-control" id="txtAdd_Username" name="fAdd_Username" maxlength="60" required/>
+                    <input type="text" class="form-control" id="txtAdd_Username" name="fAdd_Username" pattern="^[a-zA-Z0-9]+([a-zA-Z0-9]+)*[^\s]+" maxlength="60" required/>
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
                 <div class="form-group">
                     <p>Password:</p>
-                    <input class="form-control" type="password" id="txtAdd_Password" name="fAdd_Password" value="" minlength="6" maxlength="60" data-toggle="tooltip" data-placement="right" title="Minimum of 6 characters" required/>
+                    <input class="form-control" type="password" id="txtAdd_Password" name="fAdd_Password" pattern="^[a-zA-Z0-9]+" value="" minlength="6" maxlength="60" data-toggle="tooltip" data-placement="right" title="Minimum of 6 characters" required/>
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field (at least 6 characters).</div>
                 </div>
                 <div class="form-group">
                     <p id="">Sponsor's username: </p>
-                    <input type="text" class="form-control" id="txtAdd_Sponsor_Username" name="fAdd_Sponsor_Username" maxlength="60" required/>
+                    <input type="text" class="form-control" id="txtAdd_Sponsor_Username" name="fAdd_Sponsor_Username" pattern="^[a-zA-Z0-9]+([a-zA-Z0-9]+)*[^\s]+" maxlength="60" required/>
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                 </div>
@@ -138,7 +138,7 @@ $db_select_user->db_select_member_mainpage($fPhone_number);
                         </tr>
                         </tfoot>
                         <tbody>
-                        <?php $db_select_user->db_select_account_table(); ?>
+                        <?php $db_select_user->db_select_account_table_procedure(); ?>
                         </tbody>
                     </table>
                 </div>
@@ -176,7 +176,7 @@ $db_select_user->db_select_member_mainpage($fPhone_number);
                 </label>
                 <div class="form-group">
                     <p id="lblSponsor">Address: </p>
-                    <input type="text" class="form-control" id="txtAddress" name="fAddress" placeholder="Enter address" disabled required/>
+                    <input type="text" class="form-control" id="txtAddress" name="fAddress" pattern="" placeholder="Enter address" disabled required/>
                     <div class="valid-feedback">Valid.</div>
                     <div class="invalid-feedback">Please fill out this field.</div>
                     <div class="text-muted">House Number/Street (Ex: #111 Upper Street).</div>
@@ -214,7 +214,7 @@ $db_select_user->db_select_member_mainpage($fPhone_number);
                         </tr>
                         </tfoot>
                         <tbody>
-                        <?php $db_select_user->db_select_home_location_table(); ?>
+                        <?php $db_select_user->db_select_home_location_table_procedure(); ?>
                         </tbody>
                     </table>
                 </div>
