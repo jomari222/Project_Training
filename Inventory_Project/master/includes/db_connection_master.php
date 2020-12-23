@@ -746,7 +746,7 @@ class db_connection_master
                             <td class="linement">'.$row_product['product_name'].'</td>
                             <td class="linement">'.$row_order['quantity'].'</td>
                             <td class="linement">'."₱".$total_amount.'</td>
-                            <td class="linement">'.$row_order['payment_date'].'</td>
+                            <td class="linement">'.$row_order['date_received'].'</td>
                         </tr>';
                 }
             }
@@ -1177,7 +1177,7 @@ class db_connection_master
         $result_order = $sql_Select_order ->get_result();
         while($row_order = $result_order->fetch_assoc())
         {
-            if($row_order<0)
+            if($row_order<=0)
             {
                 $total_sales = "0";
             }
@@ -1189,6 +1189,14 @@ class db_connection_master
             {
                 $total_sales += $row_order['total_amount'];
             }
+        }
+        if($total_sales!=0)
+        {
+
+        }
+        else
+        {
+            $total_sales = 0;
         }
         $TTotalSales = number_format($total_sales, 2, '.', ',');
         echo "₱".$TTotalSales;
@@ -1212,6 +1220,14 @@ class db_connection_master
                 $total_expenses += $row['amount'];
             }
         }
+        if($total_expenses!=0)
+        {
+
+        }
+        else
+        {
+            $total_expenses = 0;
+        }
         $TTotalExpenses = number_format($total_expenses, 2, '.', ',');
         echo "₱".$TTotalExpenses;
     }
@@ -1225,7 +1241,7 @@ class db_connection_master
         $result = $sql_Select->get_result();
         while($row = $result->fetch_array())
         {
-            if($row<0)
+            if($row<=0)
             {
                 $total_order = "0";
             }
@@ -1233,6 +1249,14 @@ class db_connection_master
             {
                 $total_order = mysqli_num_rows($result);
             }
+        }
+        if($total_order!=0)
+        {
+
+        }
+        else
+        {
+            $total_order = 0;
         }
         echo $total_order;
     }

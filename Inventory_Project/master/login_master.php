@@ -22,7 +22,7 @@ if($_SESSION['username_admin'] != null)
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Jomari</title>
+    <title>JICSAM</title>
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -39,17 +39,17 @@ if($_SESSION['username_admin'] != null)
     <script src="js/myscript.js"></script>
 </head>
 <body class="container-fluid">
-<br>
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">
         <br>
         <br>
-        <div class="container-md p-4" id="dvLogin">
+        <div class="container-md" id="dvLogin">
             <form id="frmLogin" action="includes/login.php" method="POST" class="needs-validation" novalidate>
                 <div class="card bg-dark">
                     <div class="card-header bg-dark">
-                        <h1 class="text-center text-white">LOGIN FORM</h1>
+                        <h1 class="text-center text-white">JICSAM</h1>
+                        <h2 class="text-center text-white">LOGIN FORM</h2>
                     </div>
                     <div class="card-body" id="card_body">
                         <div class="form-group">

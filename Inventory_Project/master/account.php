@@ -59,7 +59,9 @@ if(isset($_POST['buttonInsertProduct']))
     $Add_Discount = $_POST['fDiscount'];
     $Add_Total_amount = $_POST['fTotalAmount'];
 
-    if(filter_var($Add_Total_amount, FILTER_VALIDATE_INT) && filter_var($Add_Product_ID, FILTER_VALIDATE_INT) && filter_var($Add_Product_amount, FILTER_VALIDATE_FLOAT) && filter_var($Add_Quantity, FILTER_VALIDATE_INT) && filter_var($Add_Discount, FILTER_VALIDATE_FLOAT) && filter_var($Add_Total_amount, FILTER_VALIDATE_FLOAT))
+    $value_Add_Discount = preg_match("/[0-9999999]$/", $Add_Discount);
+
+    if(filter_var($Add_Total_amount, FILTER_VALIDATE_INT) && filter_var($Add_Product_ID, FILTER_VALIDATE_INT) && filter_var($Add_Product_amount, FILTER_VALIDATE_FLOAT) && filter_var($Add_Quantity, FILTER_VALIDATE_INT) && $value_Add_Discount == 1 && filter_var($Add_Total_amount, FILTER_VALIDATE_FLOAT))
     {
         $db->check_product($Add_Product_ID);
         if($Add_Quantity > $db->product_stock_order)
@@ -83,6 +85,8 @@ if(isset($_POST['buttonInsertProduct']))
     }
     else
     {
+        //echo filter_var($Add_Total_amount, FILTER_VALIDATE_INT);
+        //echo filter_var($Add_Discount, FILTER_VALIDATE_INT);
         session_start();
         session_destroy();
         header('Location: login_master.php');
@@ -94,7 +98,7 @@ if(isset($_POST['buttonInsertProduct']))
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Jomari</title>
+    <title>JICSAM</title>
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">

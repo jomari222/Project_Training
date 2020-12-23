@@ -30,7 +30,7 @@ $db->db_select_member($fUsername);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Jomari</title>
+    <title>JICSAM</title>
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">

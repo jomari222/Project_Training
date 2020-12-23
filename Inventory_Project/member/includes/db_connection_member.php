@@ -147,7 +147,7 @@ class db_connection_member
     public function db_insert_expense($amount,$remarks,$date_expense)
     {
         $sql_Insert = $this->con->prepare('INSERT INTO expense (account_id,amount, remarks, date_expense)VALUES(?,?,?,?)');
-        $sql_Insert->bind_param('sss',$this->account_id,$amount,$remarks,$date_expense);
+        $sql_Insert->bind_param('ssss',$this->account_id,$amount,$remarks,$date_expense);
         $sql_Insert->execute() or die('Query error'.$this->con->error);
 
         $sql_Insert->close();
@@ -684,7 +684,7 @@ class db_connection_member
                             <td class="linement">'.$row_product['product_name'].'</td>
                             <td class="linement">'.$row_order['quantity'].'</td>
                             <td class="linement">'."₱".$total_amount.'</td>
-                            <td class="linement">'.$row_order['payment_date'].'</td>
+                            <td class="linement">'.$row_order['date_received'].'</td>
                         </tr>';
                 }
             }
@@ -1098,6 +1098,14 @@ class db_connection_member
                 $total_sales += $row_order['total_amount'];
             }
         }
+        if($total_sales!=0)
+        {
+
+        }
+        else
+        {
+            $total_sales = 0;
+        }
         $TTotalSales = number_format($total_sales, 2, '.', ',');
         echo "₱".$TTotalSales;
     }
@@ -1120,6 +1128,14 @@ class db_connection_member
                 $total_expenses += $row['amount'];
             }
         }
+        if($total_expenses!=0)
+        {
+
+        }
+        else
+        {
+            $total_expenses = 0;
+        }
         $TTotalExpenses = number_format($total_expenses, 2, '.', ',');
         echo "₱".$TTotalExpenses;
     }
@@ -1141,6 +1157,14 @@ class db_connection_member
             {
                 $total_order = mysqli_num_rows($result);
             }
+        }
+        if($total_order!=0)
+        {
+
+        }
+        else
+        {
+            $total_order = 0;
         }
         echo $total_order;
     }
