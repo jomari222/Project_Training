@@ -35,6 +35,12 @@ if (empty($_GET['ID'])):
     die();
 endif;
 
+$db->db_select_member($fUsername);
+if($db->position_id == 3)
+{
+    header("Location: account_customer.php");
+}
+
 $ID = $db->base64_url_decode($_GET['ID']);
 $db->db_select_id($ID);
 

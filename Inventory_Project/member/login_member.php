@@ -75,6 +75,7 @@ if($_SESSION['username'] != null)
                                 <input type="checkbox" class="form-check-input" id="chkShowPass" onclick="togglePassword()"/> Show Password
                             </label>
                         </div>
+                        <span id="create_account" onclick=""><a href="registration.php">Create account</a></span>
                     </div>
                     <div class="card-footer" id="card_footer">
                         <button class="btn btn-block btn-dark" type="submit" id="btnLogin" name="buttonLogin">LOGIN</button>

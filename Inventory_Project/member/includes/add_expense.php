@@ -22,7 +22,7 @@ if(isset($_POST['buttonInsert']))
     if(filter_var($Add_Amount, FILTER_VALIDATE_FLOAT) && $value_Add_Remarks == 1)
     {
         include_once('db_connection_member.php');
-        $db = new db_connection_member();
+        $db = new db_connection_members();
         $db->db_select_member($fUsername);
         $db->db_insert_expense($Add_Amount,$Add_Remarks,$date_expense);
 
@@ -33,7 +33,7 @@ if(isset($_POST['buttonInsert']))
     {
         session_start();
         session_destroy();
-        header('Location: ../login_member.php');
+        header('Location: ../login_members.php');
     }
 }
 ?>

@@ -7,5 +7,5 @@
  */
 session_start();
 session_destroy();
-header('Location: ../login_member.php');
+header('Location: ../login_members.php');
 ?>

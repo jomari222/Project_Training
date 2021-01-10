@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Jomari Garcia
- * Date: 2/27/2020
- * Time: 10:59 AM
+ * Date: 31/12/2020
+ * Time: 5:15 PM
  */
 session_start();
 
@@ -26,34 +26,15 @@ if($fUsername == null)
 {
     header('Location:login_member.php');
 }
-
 include_once('includes/db_connection_member.php');
 $db = new db_connection_member();
-
-if (empty($_GET['ID'])):
-    header("Location: customer.php");
-    die();
-endif;
-
 $db->db_select_member($fUsername);
-
-if($db->position_id == 3)
+$db->db_select_customer_id();
+$ID = $db->customer_id;
+if($db->position_id == 1 || $db->position_id == 2)
 {
-    header("Location: account_customer.php");
+    header("Location: dashboard.php");
 }
-
-$ID = $db->base64_url_decode($_GET['ID']);
-
-
-$db->db_select_id($ID);
-
-if(!filter_var($ID, FILTER_VALIDATE_INT))
-{
-    header('Location:customer.php');
-    die();
-}
-
-$db->db_select_customer_customer_id($ID);
 
 if(isset($_POST['buttonInsertProduct']))
 {
@@ -121,19 +102,35 @@ if(isset($_POST['buttonInsertProduct']))
     <script src="js/myscript.js"></script>
 </head>
 <body class="container-fluid">
-<br>
-<br>
 <div class="row">
-    <div class="col-md-4">
-        <form id="" action="includes/back_to_main.php" method="POST">
-            <button class="btn btn-dark" type="submit" id="btnbacktomain" name="buttonbacktomain"><a class="fa fa-chevron-left fa-lg"></a> BACK</button>
-        </form>
+    <div class="col-md-12">
+        <div class="container-fluid bg-dark" id="nav_bar">
+            <nav class="navbar navbar-expand-md navbar-dark" id="dark-nav">
+                <ul class="navbar-nav mr-md-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="account.php"><i class="fa fa-home fa-lg"></i> Welcome</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"></a>
+                    </li>
+                </ul>
+                <div class="dropdown">
+                    <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-user-circle fa-lg"></i> <?php $db->get_fullname_login(); ?>
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right bg-dark">
+                        <li class="nav-item active">
+                            <a class="nav-link text-white" href="includes/logout.php"><i class="fa fa-sign-out-alt fa-lg"></i> Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
     </div>
 </div>
+<br>
 <div class="row">
     <div class="col-md-12 text-center">
         <form id="" action="" method="POST">
-            <h1 id="lblList"><?php $db->get_fullname(); ?></h1>
             <h1 id="lblList">Order List</h1>
             <div class="table-responsive-md" id="table_div">
                 <table width="100%" class="table-bordered table-dark table-striped display text-center" id="table_orders">
@@ -147,7 +144,6 @@ if(isset($_POST['buttonInsertProduct']))
                         <th class="linement"> Date Ordered </th>
                         <th class="linement"> Date Delivered </th>
                         <th class="linement"> Date Paid </th>
-                        <th class="linement"> Action </th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -160,11 +156,10 @@ if(isset($_POST['buttonInsertProduct']))
                         <th class="linement"> Date Ordered </th>
                         <th class="linement"> Date Delivered </th>
                         <th class="linement"> Date Paid </th>
-                        <th class="linement"> Action </th>
                     </tr>
                     </tfoot>
                     <tbody>
-                    <?php $db->db_select_table_order_customer_id($ID); ?>
+                    <?php $db->db_select_table_order_customer_customer_id($ID); ?>
                     </tbody>
                 </table>
             </div>

@@ -31,8 +31,8 @@ if(isset($_POST['buttonRegister']))
     $peso_wallet = 200;
     $voucher_points = 0;
 
-    include_once ('db_connection_member.php');
-    $db_register_all_info = new db_connection_member();
+    include_once ('db_connection_memberss.php');
+    $db_register_all_info = new db_connection_members();
     $db_register_all_info->db_select_member_member_id();
     $db_register_all_info->db_select_account_insert_all_info($db_register_all_info->code_activation_id,$register_username,$register_password,$register_activation_code,$register_sponsor,$db_register_all_info->member_id_register,$register_phone_number,$addFirst_name,$addLast_name,$position_id,$blocked,$peso_wallet,$voucher_points);
     $db_register_all_info->db_insert_home_address_register($register_region,$register_province,$register_city_mun,$register_brgy,$register_address,$db_register_all_info->member_id_register);

@@ -29,6 +29,10 @@ if($fUsername == null)
 include_once('includes/db_connection_member.php');
 $db = new db_connection_member();
 $db->db_select_member($fUsername);
+if($db->position_id == 3)
+{
+    header("Location: account_customer.php");
+}
 
 if(isset($_POST['buttonSearch_Date']))
 {
@@ -92,15 +96,7 @@ if(isset($_POST['buttonDebt_list']))
                         <a class="nav-link"></a>
                     </li>
                     <li class="nav-item">
-                        <div class="dropdown">
-                            <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-user-alt fa-lg"></i>       Customer<span class="caret"></span>   </button>
-                            <ul class="dropdown-menu dropdown-menu-right bg-dark">
-                                <li class="nav-item active">
-                                    <a class="nav-link text-white" href="new_customer.php"><i class="fa fa-user-circle fa-lg"></i> New Customer</a>
-                                    <a class="nav-link text-white" href="customer.php"><i class="fa fa-user-check fa-lg"></i> Customer List</a>
-                                </li>
-                            </ul>
-                        </div>
+                        <a class="nav-link" href="customer.php"><i class="fa fa-user-check fa-lg"></i> Customer List</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"></a>
@@ -212,81 +208,31 @@ if(isset($_POST['buttonDebt_list']))
             <div class="row">
                 <div class="col-md-6" id="col_change_price">
                     <hr>
-                    <h5 class="center">Benz 4in1 MALUNGAY Healthy Cof:</h5>
+                    <h4 class="center">Mangosteen Purple Corn:</h4>
                     <div class="row">
                         <div class="col-md-6">
                             <h4 id="">Quantity: </h4>
-                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php if($db->Benz_4in1_MALUNGAY_Healthy_Cof == NULL) { $db->Benz_4in1_MALUNGAY_Healthy_Cof = 0; } echo $db->Benz_4in1_MALUNGAY_Healthy_Cof; ?>" readonly/>
+                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php if($db->Mangosteen_Purple_Corn == NULL) { $db->Mangosteen_Purple_Corn = 0; } echo $db->Mangosteen_Purple_Corn; ?>" readonly/>
                         </div>
                         <div class="col-md-6">
                             <h4 id="">Sales: </h4>
-                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $Benz_4in1_MALUNGAY_Healthy_Cof_Sale = number_format($db->Benz_4in1_MALUNGAY_Healthy_Cof_Sale, 2, '.', ','); echo "₱".$Benz_4in1_MALUNGAY_Healthy_Cof_Sale; ?>" readonly/>
+                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $Mangosteen_Purple_Corn_Sale = number_format($db->Mangosteen_Purple_Corn_Sale, 2, '.', ','); echo "₱".$Mangosteen_Purple_Corn_Sale; ?>" readonly/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <hr>
-                    <h5 class="center">Benz 4in1 Mangosteen Healthy C: </h5>
+                    <h4 class="center">Malunggay and Banaba: </h4>
                     <div class="row">
                         <div class="col-md-6">
                             <h4 id="">Quantity: </h4>
-                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php if($db->Benz_4in1_Mangosteen_Healthy_C == NULL) { $db->Benz_4in1_Mangosteen_Healthy_C = 0; } echo $db->Benz_4in1_Mangosteen_Healthy_C; ?>" readonly/>
+                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php if($db->Malunggay_and_Banaba == NULL) { $db->Malunggay_and_Banaba = 0; } echo $db->Malunggay_and_Banaba; ?>" readonly/>
                         </div>
                         <div class="col-md-6">
                             <h4 id="">Sales: </h4>
-                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $Benz_4in1_Mangosteen_Healthy_C_Sale = number_format($db->Benz_4in1_Mangosteen_Healthy_C_Sale, 2, '.', ','); echo "₱".$Benz_4in1_Mangosteen_Healthy_C_Sale; ?>" readonly/>
+                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $Malunggay_and_Banaba_Sale     = number_format($db->Malunggay_and_Banaba_Sale, 2, '.', ','); echo "₱".$Malunggay_and_Banaba_Sale; ?>" readonly/>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6" id="col_change_price">
-                    <hr>
-                    <h5 class="center">Benz 5in1 Healthy Coffee Mix: </h5>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4 id="">Quantity: </h4>
-                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php if($db->Benz_5in1_Healthy_Coffee_Mix == NULL) { $db->Benz_5in1_Healthy_Coffee_Mix = 0; } echo $db->Benz_5in1_Healthy_Coffee_Mix; ?>" readonly/>
-                        </div>
-                        <div class="col-md-6">
-                            <h4 id="">Sales: </h4>
-                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $Benz_5in1_Healthy_Coffee_Mix = number_format($db->Benz_5in1_Healthy_Coffee_Mix_Sale, 2, '.', ','); echo "₱".$Benz_5in1_Healthy_Coffee_Mix; ?>" readonly/>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <hr>
-                    <h5 class="center">Benz 8in1 Healthy Coffee Mix: </h5>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4 id="">Quantity: </h4>
-                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php if($db->Benz_8in1_Healthy_Coffee_Mix == NULL) { $db->Benz_8in1_Healthy_Coffee_Mix = 0; } echo $db->Benz_8in1_Healthy_Coffee_Mix; ?>" readonly/>
-                        </div>
-                        <div class="col-md-6">
-                            <h4 id="">Sales: </h4>
-                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $Benz_8in1_Healthy_Coffee_Mix = number_format($db->Benz_8in1_Healthy_Coffee_Mix_Sale, 2, '.', ','); echo "₱".$Benz_8in1_Healthy_Coffee_Mix; ?>" readonly/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6" id="col_change_price">
-                    <hr>
-                    <h5 class="center">Benz 8in1 Healthy CHOCO Mix: </h5>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4 id="">Quantity: </h4>
-                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php if($db->Benz_8in1_Healthy_CHOCO_Mix == NULL) { $db->Benz_8in1_Healthy_CHOCO_Mix = 0; } echo $db->Benz_8in1_Healthy_CHOCO_Mix; ?>" readonly/>
-                        </div>
-                        <div class="col-md-6">
-                            <h4 id="">Sales: </h4>
-                            <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $Benz_8in1_Healthy_CHOCO_Mix = number_format($db->Benz_8in1_Healthy_CHOCO_Mix_Sale, 2, '.', ','); echo "₱".$Benz_8in1_Healthy_CHOCO_Mix; ?>" readonly/>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <hr>
-
                 </div>
             </div>
             <br>

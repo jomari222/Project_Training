@@ -15,8 +15,8 @@ if(isset($_POST['buttonAdd_Address']))
     $addBrgy = $_POST['select_brgy'];
     $addAddress = $_POST['fAddress'];
 
-    include_once('db_connection_member.php');
-    $db_add_account = new db_connection_member();
+    include_once('db_connection_memberss.php');
+    $db_add_account = new db_connection_members();
     $db_add_account->db_select_member_login_phone_number($fPhone_number);
     $db_add_account->db_insert_home_address($addRegion, $addProvince, $addCity, $addBrgy, $addAddress);
 }

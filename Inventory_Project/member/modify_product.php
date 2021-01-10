@@ -29,6 +29,10 @@ if($fUsername == null)
 include_once('includes/db_connection_member.php');
 $db = new db_connection_member();
 $db->db_select_member($fUsername);
+if($db->position_id == 3)
+{
+    header("Location: account_customer.php");
+}
 
 $ID = $_GET['ID'];
 $db->db_select_product_id($ID);
@@ -56,7 +60,7 @@ if(isset($_POST['buttonChangePrice']))
     else
     {
         session_destroy();
-        header('Location: login_member.php');
+        header('Location: login_members.php');
     }
 }
 

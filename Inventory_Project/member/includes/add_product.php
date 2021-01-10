@@ -18,7 +18,7 @@ if(isset($_POST['buttonAddNewProduct']))
     if($value_Add_ProductPrice == 1 && $value_Add_ProductName == 1 && filter_var($Add_ProductStock, FILTER_VALIDATE_INT))
     {
         include_once('db_connection_member.php');
-        $db = new db_connection_member();
+        $db = new db_connection_members();
 
         $db->db_insert_product($Add_ProductName,$Add_ProductPrice,$Add_ProductStock);
 

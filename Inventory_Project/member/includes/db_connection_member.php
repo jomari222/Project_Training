@@ -22,18 +22,15 @@ class db_connection_member
     public $total_sales_modified;
     public $total_orders_modified;
     public $cancelled;
+    public $position_id;
+    public $account_id;
+    public $customer_id;
     //Product
-    public $Benz_4in1_MALUNGAY_Healthy_Cof;
-    public $Benz_4in1_Mangosteen_Healthy_C;
-    public $Benz_5in1_Healthy_Coffee_Mix;
-    public $Benz_8in1_Healthy_Coffee_Mix;
-    public $Benz_8in1_Healthy_CHOCO_Mix;
+    public $Mangosteen_Purple_Corn;
+    public $Malunggay_and_Banaba;
     //Sale each product
-    public $Benz_4in1_MALUNGAY_Healthy_Cof_Sale;
-    public $Benz_4in1_Mangosteen_Healthy_C_Sale;
-    public $Benz_5in1_Healthy_Coffee_Mix_Sale;
-    public $Benz_8in1_Healthy_Coffee_Mix_Sale;
-    public $Benz_8in1_Healthy_CHOCO_Mix_Sale;
+    public $Mangosteen_Purple_Corn_Sale;
+    public $Malunggay_and_Banaba_Sale;
     //Dates
     public $date_ordered;
     public $date_delivered;
@@ -59,16 +56,35 @@ class db_connection_member
         $result = $sql_Select->get_result();
         $row = $result->fetch_assoc();
 
-        if($row['username'] == $username && password_verify($password,$row['password']))
+        if($row['username'] == $username && password_verify($password,$row['password']) && $row['position_id'] == 1)
         {
             $_SESSION['username'] = $username;
             header('Location: ../dashboard.php');
+        }
+        else if($row['username'] == $username && password_verify($password,$row['password']) && $row['position_id'] == 2)
+        {
+            $_SESSION['username'] = $username;
+            header('Location: ../dashboard.php');
+        }
+        else if($row['username'] == $username && password_verify($password,$row['password']) && $row['position_id'] == 3)
+        {
+            $_SESSION['username'] = $username;
+            header('Location: ../account_customer.php');
         }
         else
         {
             include_once('message.php');
             MessageBackLogin("Username or Password is invalid");
         }
+    }
+    //INSERT TO ACCOUNT FOR NEW USER
+    public  function db_insert_account($firstname,$lastname,$contact_number,$username,$password,$position_id)
+    {
+        $sql_Insert = $this->con->prepare('INSERT INTO account (firstname,lastname,contact_number,username,password,position_id)VALUES(?,?,?,?,?,?)');
+        $sql_Insert->bind_param('ssssss',$firstname,$lastname,$contact_number,$username,$password,$position_id);
+        $sql_Insert->execute() or die('Query error'.$this->con->error);
+
+        $sql_Insert->close();
     }
     //Check Order ID
     public function db_select_order_id($order_id,$ID)
@@ -131,14 +147,27 @@ class db_connection_member
         $this->account_id = $row['account_id'];
         $this->first_name_login = $row['firstname'];
         $this->last_name_login = $row['lastname'];
+        $this->position_id = $row['position_id'];
 
         $sql_Select->close();
     }
-    //INSERT TO CUSTOMER FOR NEW CUSTOMER
-    public function db_insert_customer($firstname,$lastname,$store_name,$contact_number,$region,$province,$city,$brgy,$unit)
+    public function db_select_customer_id()
     {
-        $sql_Insert = $this->con->prepare('INSERT INTO customer (firstname,lastname,store_name,contact_number,region,province,city,barangay,unit)VALUES(?,?,?,?,?,?,?,?,?)');
-        $sql_Insert->bind_param('sssssssss',$firstname,$lastname,$store_name,$contact_number,$region,$province,$city,$brgy,$unit);
+        $sql_Select = $this->con->prepare('SELECT * FROM customer WHERE account_id = ?');
+        $sql_Select->bind_param('s',$this->account_id);
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        $row = $result->fetch_assoc();
+
+        $this->customer_id = $row['customer_id'];
+        $sql_Select->close();
+    }
+    //INSERT TO CUSTOMER FOR NEW CUSTOMER
+    public function db_insert_customer($firstname,$lastname,$store_name,$contact_number,$region,$province,$city,$brgy,$unit,$account_id)
+    {
+        $sql_Insert = $this->con->prepare('INSERT INTO customer (firstname,lastname,store_name,contact_number,region,province,city,barangay,unit,account_id)VALUES(?,?,?,?,?,?,?,?,?,?)');
+        $sql_Insert->bind_param('ssssssssss',$firstname,$lastname,$store_name,$contact_number,$region,$province,$city,$brgy,$unit,$account_id);
         $sql_Insert->execute() or die('Query error'.$this->con->error);
 
         $sql_Insert->close();
@@ -327,6 +356,84 @@ class db_connection_member
                     '.$delivery_date.'
                     '.$payment_date.'
                     <td class="linement"><a class="btn btn-dark" role="button" style="width:auto;" style="color: white" href="modify_order.php?ID='.$customer_id_id.'&order_id='.$order_id_id.'">Modify</a></td>
+                </tr>';
+            }
+        }
+    }
+    //SELECT CUSTOMER FOR TABLE (Customer)
+    public function db_select_table_order_customer_customer_id($customer_id)
+    {
+        $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE customer_id = ?');
+        $sql_Select->bind_param('s', $customer_id);
+
+        $sql_Select->execute() or die('Query error'.$this->con->error);
+
+        $result = $sql_Select->get_result();
+        while($row = $result->fetch_assoc())
+        {
+            if($row < 0)
+            {
+                include_once('message.php');
+                MessageBackMain('No records');
+            }
+            else
+            {
+                $sql_Select_product = $this->con->prepare('SELECT * FROM product WHERE product_id = ?');
+                $sql_Select_product->bind_param('s', $row['product_id']);
+                $sql_Select_product->execute() or die('Query error'.$this->con->error);
+
+                $result_product = $sql_Select_product->get_result();
+                $row_product = $result_product->fetch_assoc();
+
+                $price = number_format($row_product['price'], 2, '.', ',');
+                $total_amount = number_format($row['total_amount'], 2, '.', ',');
+                $discount = number_format($row['discount'], 2,'.',',');
+
+                if($row['delivered_status'] == "0")
+                {
+                    if($row['cancelled'] == 0)
+                    {
+                        $delivered_status = "Not yet delivered";
+                        $delivery_date = '<td style="background-color: darkgray; color: white" class="linement">'.$delivered_status.'</td>';
+                    }
+                    else
+                    {
+                        $cancelled_status = "CANCELLED";
+                        $delivery_date = '<td style="background-color: darkgray; color: white" class="linement">'.$cancelled_status.'</td>';
+                    }
+                }
+                else
+                {
+                    $delivery_date = '<td class="linement">'.$row['date_received'].'</td>';
+                }
+
+                if($row['payment_status'] == "0" && $row['payment_received'] != $row['total_amount'])
+                {
+                    $payment_status = "Unpaid";
+                    $payment_date = '<td style="background-color: darkgray; color: white" class="linement">'.$payment_status.'</td>';
+                }
+                else if($row['payment_status'] == "1" && $row['payment_received'] != $row['total_amount'])
+                {
+                    $payment_status = "Unpaid";
+                    $payment_date = '<td style="background-color: darkgray; color: white" class="linement">'.$payment_status.'</td>';
+                }
+                else
+                {
+                    $payment_date = '<td class="linement">'.$row['payment_date'].'</td>';
+                }
+
+                $customer_id_id = $this->base64_url_encode($row['customer_id']);
+                $order_id_id = $this->base64_url_encode($row['order_id']);
+
+                echo '<tr>
+                    <td class="linement">'.$row_product['product_name'].'</td>
+                    <td class="linement">'.$row['quantity'].'</td>
+                    <td class="linement">'."₱".$price.'</td>
+                    <td class="linement">'."₱".$discount.'</td>
+                    <td class="linement">'."₱".$total_amount.'</td>
+                    <td class="linement">'.$row['date_ordered'].'</td>
+                    '.$delivery_date.'
+                    '.$payment_date.'
                 </tr>';
             }
         }
@@ -553,28 +660,13 @@ class db_connection_member
 
                     if($row_order['product_id'] == 1)
                     {
-                        $this->Benz_4in1_MALUNGAY_Healthy_Cof += $row_order['quantity'];
-                        $this->Benz_4in1_MALUNGAY_Healthy_Cof_Sale += $row_order['total_amount'];
+                        $this->Mangosteen_Purple_Corn += $row_order['quantity'];
+                        $this->Mangosteen_Purple_Corn_Sale += $row_order['total_amount'];
                     }
                     if($row_order['product_id'] == 2)
                     {
-                        $this->Benz_4in1_Mangosteen_Healthy_C += $row_order['quantity'];
-                        $this->Benz_4in1_Mangosteen_Healthy_C_Sale += $row_order['total_amount'];
-                    }
-                    if($row_order['product_id'] == 3)
-                    {
-                        $this->Benz_5in1_Healthy_Coffee_Mix += $row_order['quantity'];
-                        $this->Benz_5in1_Healthy_Coffee_Mix_Sale += $row_order['total_amount'];
-                    }
-                    if($row_order['product_id'] == 4)
-                    {
-                        $this->Benz_8in1_Healthy_Coffee_Mix += $row_order['quantity'];
-                        $this->Benz_8in1_Healthy_Coffee_Mix_Sale += $row_order['total_amount'];
-                    }
-                    if($row_order['product_id'] == 5)
-                    {
-                        $this->Benz_8in1_Healthy_CHOCO_Mix += $row_order['quantity'];
-                        $this->Benz_8in1_Healthy_CHOCO_Mix_Sale += $row_order['total_amount'];
+                        $this->Malunggay_and_Banaba += $row_order['quantity'];
+                        $this->Malunggay_and_Banaba_Sale += $row_order['total_amount'];
                     }
                 }
             }
@@ -621,28 +713,13 @@ class db_connection_member
 
                     if($row['product_id'] == 1)
                     {
-                        $this->Benz_4in1_MALUNGAY_Healthy_Cof += $row['quantity'];
-                        $this->Benz_4in1_MALUNGAY_Healthy_Cof_Sale += $row['total_amount'];
+                        $this->Mangosteen_Purple_Corn += $row['quantity'];
+                        $this->Mangosteen_Purple_Corn_Sale += $row['total_amount'];
                     }
                     if($row['product_id'] == 2)
                     {
-                        $this->Benz_4in1_Mangosteen_Healthy_C += $row['quantity'];
-                        $this->Benz_4in1_Mangosteen_Healthy_C_Sale += $row['total_amount'];
-                    }
-                    if($row['product_id'] == 3)
-                    {
-                        $this->Benz_5in1_Healthy_Coffee_Mix += $row['quantity'];
-                        $this->Benz_5in1_Healthy_Coffee_Mix_Sale += $row['total_amount'];
-                    }
-                    if($row['product_id'] == 4)
-                    {
-                        $this->Benz_8in1_Healthy_Coffee_Mix += $row['quantity'];
-                        $this->Benz_8in1_Healthy_Coffee_Mix_Sale += $row['total_amount'];
-                    }
-                    if($row['product_id'] == 5)
-                    {
-                        $this->Benz_8in1_Healthy_CHOCO_Mix += $row['quantity'];
-                        $this->Benz_8in1_Healthy_CHOCO_Mix_Sale += $row['total_amount'];
+                        $this->Malunggay_and_Banaba += $row['quantity'];
+                        $this->Malunggay_and_Banaba_Sale += $row['total_amount'];
                     }
                 }
             }

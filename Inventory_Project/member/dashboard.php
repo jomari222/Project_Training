@@ -29,6 +29,10 @@ if($fUsername == null)
 include_once('includes/db_connection_member.php');
 $db = new db_connection_member();
 $db->db_select_member($fUsername);
+if($db->position_id == 3)
+{
+    header("Location: account_customer.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,15 +69,7 @@ $db->db_select_member($fUsername);
                         <a class="nav-link"></a>
                     </li>
                     <li class="nav-item">
-                        <div class="dropdown">
-                            <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-user-alt fa-lg"></i>       Customer<span class="caret"></span>   </button>
-                            <ul class="dropdown-menu dropdown-menu-right bg-dark">
-                                <li class="nav-item active">
-                                    <a class="nav-link text-white" href="new_customer.php"><i class="fa fa-user-circle fa-lg"></i> New Customer</a>
-                                    <a class="nav-link text-white" href="customer.php"><i class="fa fa-user-check fa-lg"></i> Customer List</a>
-                                </li>
-                            </ul>
-                        </div>
+                        <a class="nav-link" href="customer.php"><i class="fa fa-user-check fa-lg"></i> Customer List</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"></a>

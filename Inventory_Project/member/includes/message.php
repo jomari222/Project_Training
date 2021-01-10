@@ -45,7 +45,7 @@ function MessageBackAccountID($msg)
 function MessageCancelOrder($msg,$order_id)
 {
     include_once('db_connection_member.php');
-    $db = new db_connection_member();
+    $db = new db_connection_members();
 
     echo '<script type="text/javascript">if((confirm("'.$msg.'"))){ var meth = "'.$db->db_update_order_cancel($order_id).'"; location.pathname = "Inventory_Project/member/account.php"; setTimeout(window.location.pathname, 0);}</script>';
 }

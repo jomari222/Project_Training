@@ -2,6 +2,11 @@
 {
     background-color: whitesmoke;
 }
+#create_account
+{
+    background-color: white;
+    padding-left: 5%;
+}
 #txtFirst_name, #txtLast_name, #txtStore_name
 {
     text-transform: uppercase;

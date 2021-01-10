@@ -25,17 +25,11 @@ class db_connection_master
     public $total_orders_modified;
     public $cancelled;
     //Product
-    public $Benz_4in1_MALUNGAY_Healthy_Cof;
-    public $Benz_4in1_Mangosteen_Healthy_C;
-    public $Benz_5in1_Healthy_Coffee_Mix;
-    public $Benz_8in1_Healthy_Coffee_Mix;
-    public $Benz_8in1_Healthy_CHOCO_Mix;
+    public $Mangosteen_Purple_Corn;
+    public $Malunggay_and_Banaba;
     //Sale each product
-    public $Benz_4in1_MALUNGAY_Healthy_Cof_Sale;
-    public $Benz_4in1_Mangosteen_Healthy_C_Sale;
-    public $Benz_5in1_Healthy_Coffee_Mix_Sale;
-    public $Benz_8in1_Healthy_Coffee_Mix_Sale;
-    public $Benz_8in1_Healthy_CHOCO_Mix_Sale;
+    public $Mangosteen_Purple_Corn_Sale;
+    public $Malunggay_and_Banaba_Sale;
     //Dates
     public $date_ordered;
     public $date_delivered;
@@ -142,7 +136,7 @@ class db_connection_master
     //SELECT ALL POSITION FOR SELECT
     public function db_select_position()
     {
-        $sql_Select = $this->con->prepare('SELECT * FROM tbl_position');
+        $sql_Select = $this->con->prepare('SELECT * FROM tbl_position ORDER BY position_id LIMIT 2');
         $sql_Select->execute() or die('Query error'.$this->con->error);
 
         $result = $sql_Select->get_result();
@@ -525,28 +519,13 @@ class db_connection_master
 
                     if($row_order['product_id'] == 1)
                     {
-                        $this->Benz_4in1_MALUNGAY_Healthy_Cof += $row_order['quantity'];
-                        $this->Benz_4in1_MALUNGAY_Healthy_Cof_Sale += $row_order['total_amount'];
+                        $this->Mangosteen_Purple_Corn += $row_order['quantity'];
+                        $this->Mangosteen_Purple_Corn_Sale += $row_order['total_amount'];
                     }
                     if($row_order['product_id'] == 2)
                     {
-                        $this->Benz_4in1_Mangosteen_Healthy_C += $row_order['quantity'];
-                        $this->Benz_4in1_Mangosteen_Healthy_C_Sale += $row_order['total_amount'];
-                    }
-                    if($row_order['product_id'] == 3)
-                    {
-                        $this->Benz_5in1_Healthy_Coffee_Mix += $row_order['quantity'];
-                        $this->Benz_5in1_Healthy_Coffee_Mix_Sale += $row_order['total_amount'];
-                    }
-                    if($row_order['product_id'] == 4)
-                    {
-                        $this->Benz_8in1_Healthy_Coffee_Mix += $row_order['quantity'];
-                        $this->Benz_8in1_Healthy_Coffee_Mix_Sale += $row_order['total_amount'];
-                    }
-                    if($row_order['product_id'] == 5)
-                    {
-                        $this->Benz_8in1_Healthy_CHOCO_Mix += $row_order['quantity'];
-                        $this->Benz_8in1_Healthy_CHOCO_Mix_Sale += $row_order['total_amount'];
+                        $this->Malunggay_and_Banaba += $row_order['quantity'];
+                        $this->Malunggay_and_Banaba_Sale += $row_order['total_amount'];
                     }
                 }
             }
@@ -593,28 +572,13 @@ class db_connection_master
 
                     if($row['product_id'] == 1)
                     {
-                        $this->Benz_4in1_MALUNGAY_Healthy_Cof += $row['quantity'];
-                        $this->Benz_4in1_MALUNGAY_Healthy_Cof_Sale += $row['total_amount'];
+                        $this->Mangosteen_Purple_Corn += $row['quantity'];
+                        $this->Mangosteen_Purple_Corn_Sale += $row['total_amount'];
                     }
                     if($row['product_id'] == 2)
                     {
-                        $this->Benz_4in1_Mangosteen_Healthy_C += $row['quantity'];
-                        $this->Benz_4in1_Mangosteen_Healthy_C_Sale += $row['total_amount'];
-                    }
-                    if($row['product_id'] == 3)
-                    {
-                        $this->Benz_5in1_Healthy_Coffee_Mix += $row['quantity'];
-                        $this->Benz_5in1_Healthy_Coffee_Mix_Sale += $row['total_amount'];
-                    }
-                    if($row['product_id'] == 4)
-                    {
-                        $this->Benz_8in1_Healthy_Coffee_Mix += $row['quantity'];
-                        $this->Benz_8in1_Healthy_Coffee_Mix_Sale += $row['total_amount'];
-                    }
-                    if($row['product_id'] == 5)
-                    {
-                        $this->Benz_8in1_Healthy_CHOCO_Mix += $row['quantity'];
-                        $this->Benz_8in1_Healthy_CHOCO_Mix_Sale += $row['total_amount'];
+                        $this->Malunggay_and_Banaba += $row['quantity'];
+                        $this->Malunggay_and_Banaba_Sale += $row['total_amount'];
                     }
                 }
             }

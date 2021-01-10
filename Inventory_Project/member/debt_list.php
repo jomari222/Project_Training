@@ -29,6 +29,10 @@ if($fUsername == null)
 include_once('includes/db_connection_member.php');
 $db = new db_connection_member();
 $db->db_select_member($fUsername);
+if($db->position_id == 3)
+{
+    header("Location: account_customer.php");
+}
 
 if(isset($_POST['buttonSearch_Date']))
 {

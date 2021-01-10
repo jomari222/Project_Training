@@ -19,7 +19,7 @@ if(isset($_POST['buttonInsert_User']))
     $Add_Lastname = strtoupper($Add_Lastname);
     //Regex
     $value_Add_fContact_number = preg_match("/^[0][9][0-9]{9}$/", $Add_fContact_number);
-    $value_Add_Firstname = preg_match("/^[a-zA-Z]+([a-zA-Z]+)*[^\s]+$/", $Add_Firstname);
+    $value_Add_Firstname = preg_match("/^[a-zA-Z ]+([a-zA-Z ]+)*[^\s]+$/", $Add_Firstname);
     $value_Add_Lastname = preg_match("/^[a-zA-Z]+([a-zA-Z]+)*[^\s]+$/", $Add_Lastname);
     $value_Add_fUsername = preg_match("/^[a-zA-Z0-9]+([_ a-zA-Z0-9]+)*[^\s]+$/", $Add_fUsername);
     $value_Add_Password = preg_match("/^[a-zA-Z0-9]+$/", $Add_Password);
