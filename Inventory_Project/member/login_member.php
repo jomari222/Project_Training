@@ -23,6 +23,7 @@ if($_SESSION['username'] != null)
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>JICSAM</title>
+    <link rel="shortcut icon" href="images/Jicsam-Logo_title.png" />
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -46,10 +47,9 @@ if($_SESSION['username'] != null)
         <br>
         <div class="container-md" id="dvLogin">
             <form id="frmLogin" action="includes/login.php" method="POST" class="needs-validation" novalidate>
-                <div class="card bg-dark">
-                    <div class="card-header bg-dark">
-                        <h1 class="text-center text-white">JICSAM</h1>
-                        <h2 class="text-center text-white">LOGIN FORM</h2>
+                <div class="card" id="bg-green">
+                    <div class="card-header bg-white" id="">
+                        <img src="images/Jicsam-Logo.png" alt="JICSAM" id="Jicsam_Login">
                     </div>
                     <div class="card-body" id="card_body">
                         <div class="form-group">
@@ -78,7 +78,7 @@ if($_SESSION['username'] != null)
                         <span id="create_account" onclick=""><a href="registration.php">Create account</a></span>
                     </div>
                     <div class="card-footer" id="card_footer">
-                        <button class="btn btn-block btn-dark" type="submit" id="btnLogin" name="buttonLogin">LOGIN</button>
+                        <button class="btn btn-success text-white btn-block" type="submit" id="btnLogin" name="buttonLogin">LOGIN</button>
                     </div>
                 </div>
                 <br>

@@ -13,7 +13,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Jomari</title>
+    <title>JICSAM</title>
+    <link rel="shortcut icon" href="images/Jicsam-Logo_title.png" />
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -35,15 +36,15 @@
     <div class="col-md-1"></div>
     <div class="col-md-10">
         <form action="includes/add_customer.php" method="POST" class="needs-validation" novalidate>
-            <div class="card bg-dark">
-                <div class="card-header bg-dark">
+            <div class="card" id="bg-green">
+                <div class="card-header">
                     <h1 class="text-center text-white">Registration Form</h1>
                 </div>
                 <div class="card-body" id="card_body">
                     <div class="row">
                         <div class="col-md-6" id="col_information">
                             <div class="form-group">
-                                <h3 class="">Information</h3>
+                                <h3 class="" id="font_green">Information</h3>
                                 <hr>
                                 <div class="form-group">
                                     <label id="lbl_first_name">First name: </label>
@@ -90,30 +91,30 @@
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field correctly.</div>
                             </div>
-                            <h3 class="">Address</h3>
+                            <h3 class="" id="font_green">Address</h3>
                             <hr>
-                            <label id="">Region:
-                                <select name="select_region" id="slc_region" class="btn btn-dark dropdown-toggle form-control" required>
+                            <label id="lbl_address">Region:
+                                <select name="select_region" id="slc_region" class="btn btn-success dropdown-toggle text-white form-control" required>
 
                                 </select>
                             </label>
-                            <label id="">Province:
-                                <select name="select_province" id="slc_province" name="select_province" class="btn btn-dark dropdown-toggle form-control" disabled required>
+                            <label id="lbl_address">Province:
+                                <select name="select_province" id="slc_province" name="select_province" class="btn btn-success text-white dropdown-toggle form-control" disabled required>
 
                                 </select>
                             </label>
-                            <label id="">Municipality:
-                                <select name="select_city_mun" id="slc_citymun" class="btn btn-dark dropdown-toggle form-control" disabled required>
+                            <label id="lbl_address">Municipality:
+                                <select name="select_city_mun" id="slc_citymun" class="btn btn-success text-white dropdown-toggle form-control" disabled required>
 
                                 </select>
                             </label>
-                            <label id="">Barangay:
-                                <select name="select_brgy" id="slc_brgy" class="btn btn-dark dropdown-toggle form-control" disabled required>
+                            <label id="lbl_address">Barangay:
+                                <select name="select_brgy" id="slc_brgy" class="btn btn-success text-white dropdown-toggle form-control" disabled required>
 
                                 </select>
                             </label>
                             <div class="form-group">
-                                <label id="lblAddresss">Address: </label>
+                                <label id="lbl_address">Address: </label>
                                 <input type="text" class="form-control" id="txtAddress" name="fAddress" placeholder="Enter address" disabled required/>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
@@ -128,7 +129,7 @@
                     </div>
                 </div>
                 <div class="card-footer" id="card_footer">
-                    <button class="btn btn-block btn-dark" type="submit" id="btnInsert_customer" name="buttonInsert_customer">Register</button>
+                    <button class="btn btn-success text-white btn-block" type="submit" id="btnInsert_customer" name="buttonInsert_customer">Register</button>
                 </div>
             </div>
         </form>

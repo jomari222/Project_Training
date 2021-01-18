@@ -107,10 +107,10 @@ $(document).ready(function()
         "order": [[ 5, "desc" ]],
         language: {
             paginate: {
-                next: '<i class="fa fa-step-forward" data-toggle="tooltip" data-placement="right" title="Next"></i>',
-                previous: '<i class="fa fa-step-backward" data-toggle="tooltip" data-placement="left" title="Previous"></i>',
-                first: '<i class="fa fa-fast-backward" data-toggle="tooltip" data-placement="left" title="Start"></i>',
-                last: '<i class="fa fa-fast-forward" data-toggle="tooltip" data-placement="right" title="End"></i>'
+                next: '<i class="fa fa-step-forward" data-toggle="tooltip" id="paginate_buttons" data-placement="right" title="Next"></i>',
+                previous: '<i class="fa fa-step-backward" data-toggle="tooltip" id="paginate_buttons" data-placement="left" title="Previous"></i>',
+                first: '<i class="fa fa-fast-backward" data-toggle="tooltip" id="paginate_buttons" data-placement="left" title="Start"></i>',
+                last: '<i class="fa fa-fast-forward" data-toggle="tooltip" id="paginate_buttons" data-placement="right" title="End"></i>'
             }
         }
     } );
@@ -569,6 +569,40 @@ function multiply_qty_amount()
         total = amount * quantity;
         document.getElementById("txtTotalAmount").value = total;
         document.getElementById("txtDiscount").value = "0";
+    }
+}
+
+function multiply_qty_amount_Mangosteen()
+{
+    var amount = document.getElementById("txtAmount_Mangosteen").value;
+    var quantity = document.getElementById("txtQty_Mangosteen").value;
+    var total = "";
+
+    if(amount == "")
+    {
+        document.getElementById("txtTotalAmount_Mangosteen").value = "";
+    }
+    else
+    {
+        total = amount * quantity;
+        document.getElementById("txtTotalAmount_Mangosteen").value = total;
+    }
+}
+
+function multiply_qty_amount_Malunggay()
+{
+    var amount = document.getElementById("txtAmount_Malunggay").value;
+    var quantity = document.getElementById("txtQty_Malunggay").value;
+    var total = "";
+
+    if(amount == "")
+    {
+        document.getElementById("txtTotalAmount_Malunggay").value = "";
+    }
+    else
+    {
+        total = amount * quantity;
+        document.getElementById("txtTotalAmount_Malunggay").value = total;
     }
 }
 

@@ -42,10 +42,14 @@ function MessageBackAccountID($msg)
 {
     echo '<script type="text/javascript">alert("'.$msg.'"); setTimeout(window.location.pathname, 0);</script>';
 }
+function MessageOrderCustomerComplete($msg)
+{
+    echo '<script type="text/javascript">alert("'.$msg.'"); location.pathname = "Inventory_Project/member/account_customer.php"; setTimeout(window.location.pathname, 0);</script>';
+}
 function MessageCancelOrder($msg,$order_id)
 {
     include_once('db_connection_member.php');
-    $db = new db_connection_members();
+    $db = new db_connection_member();
 
     echo '<script type="text/javascript">if((confirm("'.$msg.'"))){ var meth = "'.$db->db_update_order_cancel($order_id).'"; location.pathname = "Inventory_Project/member/account.php"; setTimeout(window.location.pathname, 0);}</script>';
 }

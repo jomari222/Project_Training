@@ -86,6 +86,7 @@ if(isset($_POST['buttonInsertProduct']))
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>JICSAM</title>
+    <link rel="shortcut icon" href="images/Jicsam-Logo_title.png" />
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -104,20 +105,26 @@ if(isset($_POST['buttonInsertProduct']))
 <body class="container-fluid">
 <div class="row">
     <div class="col-md-12">
-        <div class="container-fluid bg-dark" id="nav_bar">
+        <div class="container-fluid" id="nav_bar">
             <nav class="navbar navbar-expand-md navbar-dark" id="dark-nav">
                 <ul class="navbar-nav mr-md-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="account.php"><i class="fa fa-home fa-lg"></i> Welcome</a>
+                        <a class="nav-link" href="account.php"><i class="fa fa-home fa-lg"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="order_customer.php"><i class="fa fa-list-alt fa-lg"></i> Order</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"></a>
                     </li>
                 </ul>
                 <div class="dropdown">
-                    <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-user-circle fa-lg"></i> <?php $db->get_fullname_login(); ?>
+                    <button id="dropdrop" class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-user-circle fa-lg"></i> <?php $db->get_fullname_login(); ?>
                         <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right bg-dark">
+                    <ul class="dropdown-menu dropdown-menu-right" id="dropdrop">
                         <li class="nav-item active">
                             <a class="nav-link text-white" href="includes/logout.php"><i class="fa fa-sign-out-alt fa-lg"></i> Logout</a>
                         </li>
@@ -164,79 +171,6 @@ if(isset($_POST['buttonInsertProduct']))
                 </table>
             </div>
         </form>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <br>
-        <div class="card bg-dark">
-            <div class="card-header text-center text-white bg-dark">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3 class="">Product</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body" id="card_body">
-                <div class="row">
-                    <form id="" action="" method="POST">
-                        <div class="col-md-12" id="">
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <form>
-                                        <label id="">Product name:
-                                            <select name="select_product" id="slc_product" onchange="showProduct(this.value)" class="btn btn-dark dropdown-toggle form-control" required>
-                                                <?php $db->db_select_product(); ?>
-                                            </select>
-                                        </label>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <div id="txt_Amount">
-                                            <label id="lbl_Amount">Amount:
-                                                <input type="text" class="form-control" id="txtAmount" name="fAmount" placeholder="Amount" value="" readonly required/>
-                                            </label>
-                                        </div>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label style="width: 100%" id="lblQty">Quantity:
-                                            <input type="number" class="form-control" id="txtQty" onkeypress="multiply_qty_amount()" oninput="multiply_qty_amount()" name="fQty" placeholder="Quantity" value="" max="9999" min="1" disabled required/>
-                                        </label>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-7">
-                                        <div id="txt_TotalAmount">
-                                            <label id="lbl_Amount">Total amount:
-                                                <input type="text" class="form-control" id="txtTotalAmount" name="fTotalAmount" placeholder="Total amount" value="" readonly required/>
-                                            </label>
-                                        </div>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label id="lblDiscount">Discount:
-                                            <input type="number" class="form-control" id="txtDiscount" onkeypress="subtract_discount_amount()" oninput="subtract_discount_amount()" name="fDiscount" placeholder="Discount" required/>
-                                        </label>
-                                        <div class="valid-feedback">Valid.</div>
-                                        <div class="invalid-feedback">Please fill out this field.</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn btn-block btn-dark" type="submit" id="btnInsertProduct" name="buttonInsertProduct">Insert</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <br>

@@ -31,6 +31,9 @@ class db_connection_member
     //Sale each product
     public $Mangosteen_Purple_Corn_Sale;
     public $Malunggay_and_Banaba_Sale;
+    //Product Price
+    public $Mangosteen_Purple_Corn_Price;
+    public $Malunggay_and_Banaba_Price;
     //Dates
     public $date_ordered;
     public $date_delivered;
@@ -262,8 +265,8 @@ class db_connection_member
                     <td class="linement">'.$row['store_name'].'</td>
                     <td class="linement">'.$row['unit']." ".$row_barangay['brgyDesc'].", ".$row_city_mun['citymunDesc']." ".$row_province['provDesc'].'</td>
                     <td class="linement">'.$row['contact_number'].'</td>
-                    <td class="linement"><a class="btn btn-dark btn-sm" href="account.php?ID='.$customer_id_id.'">Order</a></td>
-                    <td class="linement"><a class="btn btn-dark" role="button" style="width:auto;" style="color: white" href="modify_customer.php?ID='.$customer_id_id.'">Modify</a></td>
+                    <td class="linement"><a class="btn btn-success btn-sm" href="account.php?ID='.$customer_id_id.'">Order</a></td>
+                    <td class="linement"><a class="btn btn-success" role="button" style="width:auto;" style="color: white" href="modify_customer.php?ID='.$customer_id_id.'">Modify</a></td>
                 </tr>';
         }
         $sql_Select->close();
@@ -1244,6 +1247,30 @@ class db_connection_member
             $total_order = 0;
         }
         echo $total_order;
+    }
+
+    public function Mangosteen_Price()
+    {
+        $sql_Select_Product_Mangosteen = $this->con->prepare('SELECT * FROM product WHERE product_id = 1');
+        $sql_Select_Product_Mangosteen ->execute() or die('Query error'.$this->con->error);
+
+        $result_product = $sql_Select_Product_Mangosteen ->get_result();
+        while($row = $result_product->fetch_array())
+        {
+            $this->Mangosteen_Purple_Corn_Price = $row['price'];
+        }
+    }
+
+    public function Malunggay_Price()
+    {
+        $sql_Select_Product_Malunggay = $this->con->prepare('SELECT * FROM product WHERE product_id = 2');
+        $sql_Select_Product_Malunggay ->execute() or die('Query error'.$this->con->error);
+
+        $result_product = $sql_Select_Product_Malunggay ->get_result();
+        while($row = $result_product->fetch_array())
+        {
+            $this->Malunggay_and_Banaba_Price = $row['price'];
+        }
     }
 
     //GET DATA
