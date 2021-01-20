@@ -68,6 +68,7 @@ if(isset($_POST['buttonDebt_list']))
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>JICSAM</title>
+    <link rel="shortcut icon" href="images/Jicsam-Logo_title.png" />
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -157,23 +158,23 @@ if(isset($_POST['buttonDebt_list']))
     <div class="col-md-12">
         <h1 id="lblList">Sales Report </h1>
         <div class="table-responsive-md" id="table_div">
-            <label>Date:</label>
+            <label id="font_green">Date:</label>
             <br>
             <div class="row">
                 <div class="col-md-8">
                     <form id="" action="" method="POST" class="form-inline">
-                        <label>From:</label>
+                        <label id="font_green">From:</label>
                         <input style="margin-left: 1%" type="date" id="min-date" class="date-range-filter" name="name_min_date" placeholder="From: yyyy-mm-dd">
-                        <label style="margin-left: 1%" >To:</label>
+                        <label id="font_green" style="margin-left: 1%" >To:</label>
                         <input style="margin-left: 1%" type="date" id="max-date" class="date-range-filter" name="name_max_date" placeholder="To: yyyy-mm-dd">
-                        <button style="margin-left: 1%" class="btn btn-dark" type="submit" id="btnSearch_Date" name="buttonSearch_Date">Search</button>
+                        <button style="margin-left: 1%" class="btn btn-success" type="submit" id="btnSearch_Date" name="buttonSearch_Date">Search</button>
                     </form>
                 </div>
                 <div class="col-md-2">
                 </div>
                 <div class="col-md-2">
                     <form id="" action="" method="POST" class="">
-                        <button style="margin-left: 25%" class="btn btn-dark" type="submit" id="btnDebt_list" name="buttonDebt_list">CREDIT LIST >></button>
+                        <button style="margin-left: 25%" class="btn btn-success" type="submit" id="btnDebt_list" name="buttonDebt_list">CREDIT LIST >></button>
                     </form>
                 </div>
             </div>
@@ -208,28 +209,28 @@ if(isset($_POST['buttonDebt_list']))
             <div class="row">
                 <div class="col-md-6" id="col_change_price">
                     <hr>
-                    <h4 class="center">Mangosteen Purple Corn:</h4>
+                    <h4 class="center" id="font_green">Mangosteen Purple Corn:</h4>
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 id="">Quantity: </h4>
+                            <h4 id="font_green">Quantity: </h4>
                             <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php if($db->Mangosteen_Purple_Corn == NULL) { $db->Mangosteen_Purple_Corn = 0; } echo $db->Mangosteen_Purple_Corn; ?>" readonly/>
                         </div>
                         <div class="col-md-6">
-                            <h4 id="">Sales: </h4>
+                            <h4 id="font_green">Sales: </h4>
                             <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $Mangosteen_Purple_Corn_Sale = number_format($db->Mangosteen_Purple_Corn_Sale, 2, '.', ','); echo "₱".$Mangosteen_Purple_Corn_Sale; ?>" readonly/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <hr>
-                    <h4 class="center">Malunggay and Banaba: </h4>
+                    <h4 class="center" id="font_green">Malunggay and Banaba: </h4>
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 id="">Quantity: </h4>
+                            <h4 id="font_green">Quantity: </h4>
                             <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php if($db->Malunggay_and_Banaba == NULL) { $db->Malunggay_and_Banaba = 0; } echo $db->Malunggay_and_Banaba; ?>" readonly/>
                         </div>
                         <div class="col-md-6">
-                            <h4 id="">Sales: </h4>
+                            <h4 id="font_green">Sales: </h4>
                             <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $Malunggay_and_Banaba_Sale     = number_format($db->Malunggay_and_Banaba_Sale, 2, '.', ','); echo "₱".$Malunggay_and_Banaba_Sale; ?>" readonly/>
                         </div>
                     </div>
@@ -243,11 +244,11 @@ if(isset($_POST['buttonDebt_list']))
 
                 </div>
                 <div class="col-md-3">
-                    <h2 id="">Total Quantity: </h2>
+                    <h2 id="font_green">Total Quantity: </h2>
                     <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php echo $db->total_orders_modified; ?>" readonly/>
                 </div>
                 <div class="col-md-3">
-                    <h2 id="">Total Sales: </h2>
+                    <h2 id="font_green">Total Sales: </h2>
                     <input style="font-size: 28px" type="text" class="form-control" id="" name="" placeholder="" value="<?php $TTotalSales = number_format($db->total_sales_modified, 2, '.', ','); echo "₱".$TTotalSales; ?>" readonly/>
                 </div>
             </div>

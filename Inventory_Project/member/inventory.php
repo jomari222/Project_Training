@@ -41,6 +41,7 @@ if($db->position_id == 3)
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>JICSAM</title>
+    <link rel="shortcut icon" href="images/Jicsam-Logo_title.png" />
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -131,8 +132,8 @@ if($db->position_id == 3)
         <br>
         <br>
         <form action="includes/add_product.php" method="POST" class="needs-validation" novalidate>
-            <div class="card bg-dark">
-                <div class="card-header text-center text-white bg-dark">
+            <div class="card" id="bg-green">
+                <div class="card-header text-center text-white">
                     <h3 class="">New Product</h3>
                 </div>
                 <div class="card-body" id="card_body">
@@ -156,7 +157,7 @@ if($db->position_id == 3)
                     </div>
                 </div>
                 <div class="card-footer" id="card_footer">
-                    <button class="btn btn-block btn-dark" type="submit" id="btnAddNewProduct" name="buttonAddNewProduct">Add New Product</button>
+                    <button class="btn btn-block btn-success" type="submit" id="btnAddNewProduct" name="buttonAddNewProduct">Add New Product</button>
                 </div>
             </div>
         </form>

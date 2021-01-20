@@ -242,8 +242,8 @@ class db_connection_master
                     <td class="linement">'.$row['store_name'].'</td>
                     <td class="linement">'.$row['unit']." ".$row_barangay['brgyDesc'].", ".$row_city_mun['citymunDesc']." ".$row_province['provDesc'].'</td>
                     <td class="linement">'.$row['contact_number'].'</td>
-                    <td class="linement"><a class="btn btn-dark btn-sm" href="account.php?ID='.$customer_id_id.'">Order</a></td>
-                    <td class="linement"><a class="btn btn-dark" role="button" style="width:auto;" style="color: white" href="modify_customer.php?ID='.$customer_id_id.'">Modify</a></td>
+                    <td class="linement"><a class="btn btn-success btn-sm" href="account.php?ID='.$customer_id_id.'">Order</a></td>
+                    <td class="linement"><a class="btn btn-success" role="button" style="width:auto;" style="color: white" href="modify_customer.php?ID='.$customer_id_id.'">Modify</a></td>
                 </tr>';
         }
         $sql_Select->close();
@@ -266,6 +266,7 @@ class db_connection_master
     {
         $sql_Select = $this->con->prepare('SELECT * FROM table_order WHERE customer_id = ?');
         $sql_Select->bind_param('s', $customer_id);
+
         $sql_Select->execute() or die('Query error'.$this->con->error);
 
         $result = $sql_Select->get_result();
@@ -289,41 +290,57 @@ class db_connection_master
                 $total_amount = number_format($row['total_amount'], 2, '.', ',');
                 $discount = number_format($row['discount'], 2,'.',',');
 
+                $customer_id_id = $this->base64_url_encode($row['customer_id']);
+                $order_id_id = $this->base64_url_encode($row['order_id']);
+
                 if($row['delivered_status'] == "0")
                 {
                     if($row['cancelled'] == 0)
                     {
                         $delivered_status = "Not yet delivered";
                         $delivery_date = '<td style="background-color: darkgray; color: white" class="linement">'.$delivered_status.'</td>';
+
+                        $payment_status = "Unpaid";
+                        $payment_date = '<td style="background-color: darkgray; color: white" class="linement">'.$payment_status.'</td>';
+
+                        $order_status = '<td class="linement"><a class="btn btn-success" role="button" style="width:auto;" style="color: white" href="modify_order.php?ID='.$customer_id_id.'&order_id='.$order_id_id.'">Modify</a></td>';
                     }
                     else
                     {
                         $cancelled_status = "CANCELLED";
                         $delivery_date = '<td style="background-color: darkgray; color: white" class="linement">'.$cancelled_status.'</td>';
+
+                        $payment_status = "CANCELLED";
+                        $payment_date = '<td style="background-color: darkgray; color: white" class="linement">'.$payment_status.'</td>';
+
+                        $order_status = '<td class="linement"><a class="btn btn-success disabled" role="button" style="width:auto;" style="color: white" href="modify_order.php?ID='.$customer_id_id.'&order_id='.$order_id_id.'">Modify</a></td>';
                     }
                 }
                 else
                 {
                     $delivery_date = '<td class="linement">'.$row['date_received'].'</td>';
-                }
 
-                if($row['payment_status'] == "0" && $row['payment_received'] != $row['total_amount'])
-                {
-                    $payment_status = "Unpaid";
-                    $payment_date = '<td style="background-color: darkgray; color: white" class="linement">'.$payment_status.'</td>';
-                }
-                else if($row['payment_status'] == "1" && $row['payment_received'] != $row['total_amount'])
-                {
-                    $payment_status = "Unpaid";
-                    $payment_date = '<td style="background-color: darkgray; color: white" class="linement">'.$payment_status.'</td>';
-                }
-                else
-                {
-                    $payment_date = '<td class="linement">'.$row['payment_date'].'</td>';
-                }
+                    if($row['payment_status'] == "0" && $row['payment_received'] != $row['total_amount'])
+                    {
+                        $payment_status = "Unpaid";
+                        $payment_date = '<td style="background-color: darkgray; color: white" class="linement">'.$payment_status.'</td>';
 
-                $customer_id_id = $this->base64_url_encode($row['customer_id']);
-                $order_id_id = $this->base64_url_encode($row['order_id']);
+                        $order_status = '<td class="linement"><a class="btn btn-success" role="button" style="width:auto;" style="color: white" href="modify_order.php?ID='.$customer_id_id.'&order_id='.$order_id_id.'">Modify</a></td>';
+                    }
+                    else if($row['payment_status'] == "1" && $row['payment_received'] != $row['total_amount'])
+                    {
+                        $payment_status = "With balance";
+                        $payment_date = '<td style="background-color: darkgray; color: white" class="linement">'.$payment_status.'</td>';
+
+                        $order_status = '<td class="linement"><a class="btn btn-success" role="button" style="width:auto;" style="color: white" href="modify_order.php?ID='.$customer_id_id.'&order_id='.$order_id_id.'">Modify</a></td>';
+                    }
+                    else
+                    {
+                        $payment_date = '<td class="linement">'.$row['payment_date'].'</td>';
+
+                        $order_status = '<td class="linement"><a class="btn btn-success" role="button" style="width:auto;" style="color: white" href="modify_order.php?ID='.$customer_id_id.'&order_id='.$order_id_id.'">Modify</a></td>';
+                    }
+                }
 
                 echo '<tr>
                     <td class="linement">'.$row_product['product_name'].'</td>
@@ -334,7 +351,7 @@ class db_connection_master
                     <td class="linement">'.$row['date_ordered'].'</td>
                     '.$delivery_date.'
                     '.$payment_date.'
-                    <td class="linement"><a class="btn btn-dark" role="button" style="width:auto;" style="color: white" href="modify_order.php?ID='.$customer_id_id.'&order_id='.$order_id_id.'">Modify</a></td>
+                    '.$order_status.'
                 </tr>';
             }
         }
@@ -849,7 +866,7 @@ class db_connection_master
                     <td class="linement">'.$row['product_name'].'</td>
                     <td class="linement">'."₱".$price.'</td>
                     <td class="linement">'.$row['stock'].'</td>
-                    <td class="linement"><a class="btn btn-dark btn-sm" href="modify_product.php?ID='.$row['product_id'].'">Edit</a></td>
+                    <td class="linement"><a class="btn btn-success btn-sm" href="modify_product.php?ID='.$row['product_id'].'">Edit</a></td>
                 </tr>';
         }
         $sql_Select->close();

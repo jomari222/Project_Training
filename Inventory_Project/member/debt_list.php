@@ -63,6 +63,7 @@ if(isset($_POST['buttonSearch_Date']))
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>JICSAM</title>
+    <link rel="shortcut icon" href="images/Jicsam-Logo_title.png" />
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -83,7 +84,7 @@ if(isset($_POST['buttonSearch_Date']))
 <div class="row">
     <div class="col-md-4">
         <form id="" action="includes/back_sales_report.php" method="POST">
-            <button class="btn btn-dark" type="submit" id="btnbacktosales_report" name="buttonbacktosales_report"><a class="fa fa-chevron-left fa-lg"></a> BACK</button>
+            <button class="btn btn-success" type="submit" id="btnbacktosales_report" name="buttonbacktosales_report"><a class="fa fa-chevron-left fa-lg"></a> BACK</button>
         </form>
     </div>
 </div>
@@ -101,7 +102,7 @@ if(isset($_POST['buttonSearch_Date']))
                         <input style="margin-left: 1%" type="date" id="min-date" class="date-range-filter" name="name_min_date" placeholder="From: yyyy-mm-dd">
                         <label style="margin-left: 1%" >To:</label>
                         <input style="margin-left: 1%" type="date" id="max-date" class="date-range-filter" name="name_max_date" placeholder="To: yyyy-mm-dd">
-                        <button style="margin-left: 1%" class="btn btn-dark" type="submit" id="btnSearch_Date" name="buttonSearch_Date">Search</button>
+                        <button style="margin-left: 1%" class="btn btn-success" type="submit" id="btnSearch_Date" name="buttonSearch_Date">Search</button>
                     </form>
                 </div>
             </div>

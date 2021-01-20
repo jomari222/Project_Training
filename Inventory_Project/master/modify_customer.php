@@ -99,6 +99,7 @@ if(isset($_POST['buttonUpdateAddress']))
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>JICSAM</title>
+    <link rel="shortcut icon" href="images/Jicsam-Logo_title.png" />
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -120,7 +121,7 @@ if(isset($_POST['buttonUpdateAddress']))
 <div class="row">
     <div class="col-md-4">
         <form id="" action="includes/back_to_main.php" method="POST">
-            <button class="btn btn-dark" type="submit" id="btnbacktomain" name="buttonbacktomain"><a class="fa fa-chevron-left fa-lg"></a> BACK</button>
+            <button class="btn btn-success" type="submit" id="btnbacktomain" name="buttonbacktomain"><a class="fa fa-chevron-left fa-lg"></a> BACK</button>
         </form>
     </div>
 </div>
@@ -129,8 +130,8 @@ if(isset($_POST['buttonUpdateAddress']))
     <div class="col-md-2">
     </div>
     <div class="col-md-8">
-        <div class="card bg-dark">
-            <div class="card-header text-center text-white bg-dark">
+        <div class="card" id="bg-green">
+            <div class="card-header text-center text-white">
                 <h3 class="">Modify</h3>
             </div>
             <div class="card-body" id="card_body">
@@ -140,7 +141,7 @@ if(isset($_POST['buttonUpdateAddress']))
                 <hr>
                 <div class="row">
                     <div class="col-md-6" id="col_change_price">
-                        <h2 class="text-center">Update Phone number</h2>
+                        <h2 class="text-center" id="font_green">Update Phone number</h2>
                         <hr>
                         <form action="" method="POST" class="needs-validation" novalidate>
                             <div class="form-group">
@@ -157,7 +158,7 @@ if(isset($_POST['buttonUpdateAddress']))
                                     </div>
                                     <div class="col-md-5">
                                         <br>
-                                        <button class="btn btn-block btn-dark" type="submit" id="btnUpdatePhoneNumber" name="buttonUpdatePhoneNumber">Update</button>
+                                        <button class="btn btn-block btn-success" type="submit" id="btnUpdatePhoneNumber" name="buttonUpdatePhoneNumber">Update</button>
                                     </div>
                                 </div>
                             </div>
@@ -167,7 +168,7 @@ if(isset($_POST['buttonUpdateAddress']))
                         <form action="" method="POST" class="needs-validation" novalidate>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h2 class="text-center">Update Address</h2>
+                                    <h2 id="font_green" class="text-center">Update Address</h2>
                                     <hr>
                                 </div>
                             </div>
@@ -175,22 +176,22 @@ if(isset($_POST['buttonUpdateAddress']))
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label id="">Region:
-                                            <select id="slc_region" name="select_region" class="btn btn-dark dropdown-toggle form-control" required>
+                                            <select id="slc_region" name="select_region" class="btn btn-success dropdown-toggle form-control" required>
 
                                             </select>
                                         </label>
                                         <label id="">Province:
-                                            <select id="slc_province" name="select_province" class="btn btn-dark dropdown-toggle form-control" disabled required>
+                                            <select id="slc_province" name="select_province" class="btn btn-success dropdown-toggle form-control" disabled required>
 
                                             </select>
                                         </label>
                                         <label id="">Municipality:
-                                            <select id="slc_citymun" name="select_city_mun" class="btn btn-dark dropdown-toggle form-control" disabled required>
+                                            <select id="slc_citymun" name="select_city_mun" class="btn btn-success dropdown-toggle form-control" disabled required>
 
                                             </select>
                                         </label>
                                         <label id="">Barangay:
-                                            <select id="slc_brgy" name="select_brgy" class="btn btn-dark dropdown-toggle form-control" disabled required>
+                                            <select id="slc_brgy" name="select_brgy" class="btn btn-success dropdown-toggle form-control" disabled required>
 
                                             </select>
                                         </label>
@@ -202,7 +203,7 @@ if(isset($_POST['buttonUpdateAddress']))
                                             <div class="text-muted">House Number/Street (Ex: #111 Upper Street).</div>
                                         </div>
                                         <br>
-                                        <button class="btn btn-block btn-dark" type="submit" id="btnUpdateAddress" name="buttonUpdateAddress">Update</button>
+                                        <button class="btn btn-block btn-success" type="submit" id="btnUpdateAddress" name="buttonUpdateAddress">Update</button>
                                     </div>
                                 </div>
                             </div>

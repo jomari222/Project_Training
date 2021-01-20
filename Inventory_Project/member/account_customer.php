@@ -151,6 +151,7 @@ if(isset($_POST['buttonInsertProduct']))
                         <th class="linement"> Date Ordered </th>
                         <th class="linement"> Date Delivered </th>
                         <th class="linement"> Date Paid </th>
+                        <th class="linement"> Action </th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -163,6 +164,7 @@ if(isset($_POST['buttonInsertProduct']))
                         <th class="linement"> Date Ordered </th>
                         <th class="linement"> Date Delivered </th>
                         <th class="linement"> Date Paid </th>
+                        <th class="linement"> Action </th>
                     </tr>
                     </tfoot>
                     <tbody>

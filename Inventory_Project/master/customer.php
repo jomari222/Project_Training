@@ -31,6 +31,7 @@ $db->db_select_master($fUsername);
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>JICSAM</title>
+    <link rel="shortcut icon" href="images/Jicsam-Logo_title.png" />
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -49,7 +50,7 @@ $db->db_select_master($fUsername);
 <body class="container-fluid">
 <div class="row">
     <div class="col-md-12">
-        <div class="container-fluid bg-dark" id="nav_bar">
+        <div class="container-fluid" id="nav_bar">
             <nav class="navbar navbar-expand-md navbar-dark" id="dark-nav">
                 <ul class="navbar-nav mr-md-auto">
                     <li class="nav-item">
@@ -60,8 +61,8 @@ $db->db_select_master($fUsername);
                     </li>
                     <li class="nav-item">
                         <div class="dropdown">
-                            <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-users fa-lg"></i> Users<span class="caret"></span>   </button>
-                            <ul class="dropdown-menu dropdown-menu-right bg-dark">
+                            <button id="dropdrop" class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-users fa-lg"></i> Users<span class="caret"></span>   </button>
+                            <ul class="dropdown-menu dropdown-menu-right" id="dropdrop">
                                 <li class="nav-item active">
                                     <a class="nav-link text-white" href="new_user.php"><i class="fa fa-user-circle fa-lg"></i> New User</a>
                                     <a class="nav-link text-white" href="user_list.php"><i class="fa fa-user-check fa-lg"></i> User List</a>
@@ -92,8 +93,8 @@ $db->db_select_master($fUsername);
                     </li>
                     <li class="nav-item">
                         <div class="dropdown">
-                            <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-minus fa-lg"></i>       Expenses<span class="caret"></span>   </button>
-                            <ul class="dropdown-menu dropdown-menu-right bg-dark">
+                            <button id="dropdrop" class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-minus fa-lg"></i>       Expenses<span class="caret"></span>   </button>
+                            <ul class="dropdown-menu dropdown-menu-right" id="dropdrop">
                                 <li class="nav-item active">
                                     <a class="nav-link text-white" href="new_expense.php"><i class="fa fa-minus-circle fa-lg"></i> New Expense</a>
                                     <a class="nav-link text-white" href="expenses.php"><i class="fa fa-minus-square fa-lg"></i> Expenses List</a>
@@ -105,8 +106,8 @@ $db->db_select_master($fUsername);
                         <a class="nav-link"></a>
                     </li>
                     <li class="dropdown">
-                        <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-list-alt fa-lg"></i>       Reports<span class="caret"></span>   </button>
-                        <ul class="dropdown-menu dropdown-menu-right bg-dark">
+                        <button id="dropdrop" class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-list-alt fa-lg"></i>       Reports<span class="caret"></span>   </button>
+                        <ul class="dropdown-menu dropdown-menu-right" id="dropdrop">
                             <li class="nav-item active">
                                 <a class="nav-link text-white" href="sales_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Sales Report</a>
                                 <a class="nav-link text-white" href="stock_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Stock Report</a>
@@ -116,9 +117,9 @@ $db->db_select_master($fUsername);
                     </li>
                 </ul>
                 <div class="dropdown">
-                    <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-user-circle fa-lg"></i> <?php $db->get_fullname_login(); ?>
+                    <button id="dropdrop" class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-user-circle fa-lg"></i> <?php $db->get_fullname_login(); ?>
                         <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right bg-dark">
+                    <ul class="dropdown-menu dropdown-menu-right" id="dropdrop">
                         <li class="nav-item active">
                             <a class="nav-link text-white" href="includes/logout.php"><i class="fa fa-sign-out-alt fa-lg"></i> Logout</a>
                         </li>

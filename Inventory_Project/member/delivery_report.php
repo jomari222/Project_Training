@@ -63,6 +63,7 @@ if(isset($_POST['buttonSearch_Date']))
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>JICSAM</title>
+    <link rel="shortcut icon" href="images/Jicsam-Logo_title.png" />
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -152,14 +153,14 @@ if(isset($_POST['buttonSearch_Date']))
     <div class="col-md-12">
         <h1 id="lblList">Delivery Report </h1>
         <div class="table-responsive-md" id="table_div">
-            <label>Date:</label>
+            <label id="font_green">Date:</label>
             <br>
             <form id="" action="" method="POST" class="form-inline">
-                <label>From:</label>
+                <label id="font_green">From:</label>
                 <input style="margin-left: 1%" type="date" id="min-date" class="date-range-filter" name="name_min_date" placeholder="From: yyyy-mm-dd">
-                <label style="margin-left: 1%" >To:</label>
+                <label id="font_green" style="margin-left: 1%" >To:</label>
                 <input style="margin-left: 1%" type="date" id="max-date" class="date-range-filter" name="name_max_date" placeholder="To: yyyy-mm-dd">
-                <button style="margin-left: 1%" class="btn btn-dark" type="submit" id="btnSearch_Date" name="buttonSearch_Date">Search</button>
+                <button style="margin-left: 1%" class="btn btn-success" type="submit" id="btnSearch_Date" name="buttonSearch_Date">Search</button>
             </form>
             <br>
             <table width="100%" class="table-bordered table-dark table-striped display" id="table_Transactions">

@@ -11,13 +11,14 @@
     background-color: #036d45;
     border-radius: 4%;
 }
-#btnOrderMangosteen, #btnOrderMalunggay
+#btnOrderMangosteen, #btnOrderMalunggay, #buttonPaymentDone
 {
     background-color: whitesmoke;
     color: #036d45;
 }
 #font_green, #lbl_first_name, #lblUsername, #lblPassword, #lblshowpassword, #lblPhone_number,
-#lbl_store_name, #lbl_address, #lbl_product_name, #lbl_amount, #lblQty, #lbl_Amount, #lblDiscount
+#lbl_store_name, #lbl_address, #lbl_product_name, #lbl_amount, #lblQty, #lbl_Amount, #lblDiscount,
+#lbl_ProductName, #lbl_Add_Stock, #lbl_Note, #lblList, #lbl_Price
 {
     color: #036d45;
 }
@@ -185,8 +186,6 @@ input[name=txtDateDelivery],[name=txtDatePaid]{
 
 /* Set a style for all buttons */
 button[name=buttonPaymentDone] {
-    background-color: #343a40;
-    color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -197,38 +196,22 @@ button[name=buttonPaymentDone] {
 
 /* Set a style for all buttons */
 button[name=buttonDeliveryDone] {
-    background-color: #343a40;
-    color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
     width: 100%;
     opacity: 0.9;
-}
-
-button:hover[name=buttonDeliveryDone] {
-    opacity:1;
-}
-
-button:hover[name=buttonDeliveryDone] {
-    opacity:1;
 }
 
 /* Set a style for all buttons */
 button[name=buttonCancelOrder] {
-    background-color: #343a40;
-    color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
     width: 100%;
     opacity: 0.9;
-}
-
-button:hover[name=buttonCancelOrder] {
-    opacity:1;
 }
 
 /* Extra styles for the cancel button */

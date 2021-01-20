@@ -41,6 +41,7 @@ if($db->position_id == 3)
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>JICSAM</title>
+    <link rel="shortcut icon" href="images/Jicsam-Logo_title.png" />
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -130,15 +131,15 @@ if($db->position_id == 3)
     <div class="col-md-3"></div>
     <div class="col-md-6">
         <form action="includes/add_expense.php" method="POST" class="needs-validation" novalidate>
-            <div class="card bg-dark">
-                <div class="card-header bg-dark">
+            <div class="card" id="bg-green">
+                <div class="card-header">
                     <h1 class="text-center text-white">New Expense</h1>
                 </div>
                 <div class="card-body" id="card_body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <h3 class="">Expense</h3>
+                                <h3 class="" id="font_green">Expense</h3>
                                 <hr>
                                 <div class="form-group">
                                     <label id="lbl_Amount">Amount: </label>
@@ -158,7 +159,7 @@ if($db->position_id == 3)
                     </div>
                 </div>
                 <div class="card-footer" id="card_footer">
-                    <button class="btn btn-block btn-dark" type="submit" id="btnInsert" name="buttonInsert">Insert</button>
+                    <button class="btn btn-block btn-success" type="submit" id="btnInsert" name="buttonInsert">Insert</button>
                 </div>
             </div>
         </form>

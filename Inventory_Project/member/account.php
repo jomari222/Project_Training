@@ -105,6 +105,7 @@ if(isset($_POST['buttonInsertProduct']))
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>JICSAM</title>
+    <link rel="shortcut icon" href="images/Jicsam-Logo_title.png" />
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -174,8 +175,8 @@ if(isset($_POST['buttonInsertProduct']))
 <div class="row">
     <div class="col-md-4">
         <br>
-        <div class="card bg-dark">
-            <div class="card-header text-center text-white bg-dark">
+        <div class="card" id="bg-green">
+            <div class="card-header text-center text-white">
                 <div class="row">
                     <div class="col-md-12">
                         <h3 class="">Product</h3>
@@ -190,8 +191,8 @@ if(isset($_POST['buttonInsertProduct']))
                             <div class="row">
                                 <div class="col-md-12">
                                     <form>
-                                        <label id="">Product name:
-                                            <select name="select_product" id="slc_product" onchange="showProduct(this.value)" class="btn btn-dark dropdown-toggle form-control" required>
+                                        <label id="font_green">Product name:
+                                            <select name="select_product" id="slc_product" onchange="showProduct(this.value)" class="btn btn-success dropdown-toggle form-control" required>
                                                 <?php $db->db_select_product(); ?>
                                             </select>
                                         </label>
@@ -236,7 +237,7 @@ if(isset($_POST['buttonInsertProduct']))
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn btn-block btn-dark" type="submit" id="btnInsertProduct" name="buttonInsertProduct">Insert</button>
+                            <button class="btn btn-block btn-success" type="submit" id="btnInsertProduct" name="buttonInsertProduct">Insert</button>
                         </div>
                     </form>
                 </div>

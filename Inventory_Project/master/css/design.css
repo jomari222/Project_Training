@@ -2,6 +2,63 @@
 {
     background-color: whitesmoke;
 }
+#bg-green
+{
+    background-color: #036d45;
+}
+#bg-green_product
+{
+    background-color: #036d45;
+    border-radius: 4%;
+}
+#btnOrderMangosteen, #btnOrderMalunggay, #buttonPaymentDone
+{
+    background-color: whitesmoke;
+    color: #036d45;
+}
+#font_green, #lbl_first_name, #lblUsername, #lblPassword, #lblshowpassword, #lblPhone_number,
+#lbl_store_name, #lbl_address, #lbl_product_name, #lbl_amount, #lblQty, #lbl_Amount, #lblDiscount,
+#lbl_ProductName, #lbl_Add_Stock, #lbl_Note, #lblList, #lbl_Price
+{
+    color: #036d45;
+}
+#login_title
+{
+    color: #036d45;
+}
+#Jicsam_Login
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+#malunggay_img
+{
+    width: 100%;
+    height: 400px;
+}
+#txtUsername, #txtPassword
+{
+    border-color: #036d45;
+}
+#chkShowPass
+{
+    background-color: #036d45;
+}
+#lblshowpassword, #lblPassword, #lblUsername, #lblList
+{
+    color: #036d45;
+}
+#dark-nav
+{
+    background-color: #036d45;
+}
+#create_account
+{
+    background-color: white;
+    padding-left: 5%;
+}
 #txtFirst_name, #txtLast_name, #txtStore_name
 {
     text-transform: uppercase;
@@ -16,12 +73,13 @@
 }
 #nav_bar
 {
+    background-color: #036d45;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
 }
 hr
 {
-    background-color: #0c0c0c;
+    background-color: #036d45;
     display: block;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
@@ -32,7 +90,7 @@ hr
 }
 #col_information, #col_products, #col_change_price
 {
-    border-right: solid #343a40;
+    border-right: solid #036d45;
 }
 #col_product, #col_payment
 {
@@ -45,6 +103,7 @@ input[type=text],[type=number],[type=password],[type=date]
 .tableheaders
 {
     font-size: 130%;
+    background-color: #036d45;
 }
 .linement
 {
@@ -64,7 +123,7 @@ input[type=text],[type=number],[type=password],[type=date]
 }
 #lblShow_Address, #lblShow_orders, #lblSearch_orders, #lblSearch_Address, #lblShow_Transactions, #lblSearch_Transactions, #lblShow_Expenses, #lblSearch_Expenses
 {
-    color: black;
+    color: #036d45;
 }
 #table_Address_info, #table_orders, #table_Expenses
 {
@@ -72,14 +131,20 @@ input[type=text],[type=number],[type=password],[type=date]
 }
 .paginate_button
 {
-    background-color: #343a40;
+    background-color: #036d45;
 }
 .paging_simple_numbers
 {
     color: white;
 }
+#paginate_buttons
+{
+    color: black;
+}
 #dropdrop
 {
+    border-color: #036d45;
+    background-color: #036d45;
     color: lightgray;
 }
 .center
@@ -91,7 +156,7 @@ input[type=text],[type=number],[type=password],[type=date]
 }
 #username_icon, #password_icon
 {
-    background-color: #343a40;
+    background-color: #036d45;
     padding-right: 8%;
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
@@ -109,7 +174,6 @@ input[type=text],[type=number],[type=password],[type=date]
     margin-top: 40%;
 }
 
-
 /* Full-width input fields */
 input[name=txtDateDelivery],[name=txtDatePaid]{
     width: 100%;
@@ -122,8 +186,6 @@ input[name=txtDateDelivery],[name=txtDatePaid]{
 
 /* Set a style for all buttons */
 button[name=buttonPaymentDone] {
-    background-color: #343a40;
-    color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -134,28 +196,16 @@ button[name=buttonPaymentDone] {
 
 /* Set a style for all buttons */
 button[name=buttonDeliveryDone] {
-    background-color: #343a40;
-    color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
     width: 100%;
     opacity: 0.9;
-}
-
-button:hover[name=buttonPaymentDone] {
-    opacity:1;
-}
-
-button:hover[name=buttonDeliveryDone] {
-    opacity:1;
 }
 
 /* Set a style for all buttons */
 button[name=buttonCancelOrder] {
-    background-color: #343a40;
-    color: white;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
@@ -164,9 +214,6 @@ button[name=buttonCancelOrder] {
     opacity: 0.9;
 }
 
-button:hover[name=buttonCancelOrder] {
-    opacity:1;
-}
 /* Extra styles for the cancel button */
 .cancelbtn {
     padding: 14px 20px;
@@ -207,7 +254,6 @@ button:hover[name=buttonCancelOrder] {
 }
 
 /* The Close Button (x) */
-/* The Close Button (x) */
 .close {
     position: absolute;
     right: 35px;
@@ -235,4 +281,8 @@ button:hover[name=buttonCancelOrder] {
     .cancelbtn, .signupbtn {
         width: 100%;
     }
+}
+.btn
+{
+    background-color: #036d45;
 }

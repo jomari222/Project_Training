@@ -93,7 +93,7 @@ $(document).ready(function()
     {
         const $this = $(this);
         $this.attr("id", "slcEntries");
-        $this.addClass('btn btn-dark');
+        $this.addClass('btn btn-success');
     });
 } );
 //Orders Table
@@ -133,7 +133,7 @@ $(document).ready(function()
     {
         const $this = $(this);
         $this.attr("id", "slcEntries_orders");
-        $this.addClass('btn btn-dark');
+        $this.addClass('btn btn-success');
     });
 } );
 //Customer Orders Table
@@ -174,7 +174,7 @@ $(document).ready(function()
     {
         const $this = $(this);
         $this.attr("id", "slcEntries_orders");
-        $this.addClass('btn btn-dark');
+        $this.addClass('btn btn-success');
     });
 } );
 //Transactions Table
@@ -215,7 +215,7 @@ $(document).ready(function()
     {
         const $this = $(this);
         $this.attr("id", "slcEntries_Transactions");
-        $this.addClass('btn btn-dark');
+        $this.addClass('btn btn-success');
     });
 } );
 ////////////////////////////////////////
@@ -255,7 +255,7 @@ $(document).ready(function()
     {
         const $this = $(this);
         $this.attr("id", "slcEntries_Address");
-        $this.addClass('btn btn-info');
+        $this.addClass('btn btn-success');
     });
 } );
 //Expenses Table
@@ -296,7 +296,7 @@ $(document).ready(function()
     {
         const $this = $(this);
         $this.attr("id", "slcEntries_Expenses");
-        $this.addClass('btn btn-dark');
+        $this.addClass('btn btn-success');
     });
 } );
 function AvoidSpace(event)
@@ -344,7 +344,7 @@ $(document).ready(function()
     {
         const $this = $(this);
         $this.attr("id", "slcEntries_Transactions");
-        $this.addClass('btn btn-dark');
+        $this.addClass('btn btn-success');
     });
 } );
 $(document).ready(function()

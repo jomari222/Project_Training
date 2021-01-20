@@ -115,6 +115,7 @@ if($ID == null)
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>JICSAM</title>
+    <link rel="shortcut icon" href="images/Jicsam-Logo_title.png" />
 
     <link rel="stylesheet" href="css/bootstrap.css">
     <script src="js/jquery-3.3.1.js"></script>
@@ -135,7 +136,7 @@ if($ID == null)
 <div class="row">
     <div class="col-md-4">
         <form id="" action="includes/back_to_inventory.php" method="POST">
-            <button class="btn btn-dark" type="submit" id="btnbacktoinventory" name="buttonbacktoinventory"><a class="fa fa-chevron-left fa-lg"></a> BACK</button>
+            <button class="btn btn-success" type="submit" id="btnbacktoinventory" name="buttonbacktoinventory"><a class="fa fa-chevron-left fa-lg"></a> BACK</button>
         </form>
     </div>
 </div>
@@ -144,17 +145,17 @@ if($ID == null)
     <div class="col-md-2">
     </div>
     <div class="col-md-8">
-        <div class="card bg-dark">
-            <div class="card-header text-center text-white bg-dark">
+        <div class="card" id="bg-green">
+            <div class="card-header text-center text-white">
                 <h3 class="">Modify</h3>
             </div>
             <div class="card-body" id="card_body">
-                <h1 class="text-center"><?php $db->get_product_name() ?></h1>
+                <h1 id="font_green" class="text-center"><?php $db->get_product_name() ?></h1>
                 <hr>
                 <div class="row">
                     <div class="col-md-6" id="col_change_price">
-                        <h2 class="text-center">Change Price</h2>
-                        <h2 class="text-center"><?php $db->get_product_price(); ?></h2>
+                        <h2 id="font_green" class="text-center">Change Price</h2>
+                        <h2 id="font_green" class="text-center"><?php $db->get_product_price(); ?></h2>
                         <hr>
                         <form action="" method="POST" class="needs-validation" novalidate>
                             <div class="form-group">
@@ -168,7 +169,7 @@ if($ID == null)
                                     </div>
                                     <div class="col-md-5">
                                         <br>
-                                        <button class="btn btn-block btn-dark" type="submit" id="btnChangePrice" name="buttonChangePrice">Change Price</button>
+                                        <button class="btn btn-block btn-success" type="submit" id="btnChangePrice" name="buttonChangePrice">Change Price</button>
                                     </div>
                                 </div>
                             </div>
@@ -178,8 +179,8 @@ if($ID == null)
                         <form action="" method="POST" class="needs-validation" novalidate>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h2 class="text-center">Add/Remove Stock</h2>
-                                    <h2 class="text-center"><?php $db->get_product_stock(); ?></h2>
+                                    <h2 id="font_green" class="text-center">Add/Remove Stock</h2>
+                                    <h2 id="font_green" class="text-center"><?php $db->get_product_stock(); ?></h2>
                                     <hr>
                                 </div>
                             </div>
@@ -198,10 +199,10 @@ if($ID == null)
                                         <br>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <button class="btn btn-block btn-dark" type="submit" id="btnAdd_Stock" name="buttonAdd_Stock"><i class="fa fa-plus fa-lg"></i></button>
+                                                <button class="btn btn-block btn-success" type="submit" id="btnAdd_Stock" name="buttonAdd_Stock"><i class="fa fa-plus fa-lg"></i></button>
                                             </div>
                                             <div class="col-md-6">
-                                                <button class="btn btn-block btn-dark" type="submit" id="btnMinus_Stock" name="buttonMinus_Stock"><i class="fa fa-minus fa-lg"></i></button>
+                                                <button class="btn btn-block btn-success" type="submit" id="btnMinus_Stock" name="buttonMinus_Stock"><i class="fa fa-minus fa-lg"></i></button>
                                             </div>
                                         </div>
                                     </div>

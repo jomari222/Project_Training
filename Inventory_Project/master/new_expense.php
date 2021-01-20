@@ -37,6 +37,7 @@ $db->db_select_master($fUsername);
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>JICSAM</title>
+    <link rel="shortcut icon" href="images/Jicsam-Logo_title.png" />
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -55,7 +56,7 @@ $db->db_select_master($fUsername);
 <body class="container-fluid">
 <div class="row">
     <div class="col-md-12">
-        <div class="container-fluid bg-dark" id="nav_bar">
+        <div class="container-fluid" id="nav_bar">
             <nav class="navbar navbar-expand-md navbar-dark" id="dark-nav">
                 <ul class="navbar-nav mr-md-auto">
                     <li class="nav-item">
@@ -66,8 +67,8 @@ $db->db_select_master($fUsername);
                     </li>
                     <li class="nav-item">
                         <div class="dropdown">
-                            <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-users fa-lg"></i> Users<span class="caret"></span>   </button>
-                            <ul class="dropdown-menu dropdown-menu-right bg-dark">
+                            <button id="dropdrop" class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-users fa-lg"></i> Users<span class="caret"></span>   </button>
+                            <ul class="dropdown-menu dropdown-menu-right" id="dropdrop">
                                 <li class="nav-item active">
                                     <a class="nav-link text-white" href="new_user.php"><i class="fa fa-user-circle fa-lg"></i> New User</a>
                                     <a class="nav-link text-white" href="user_list.php"><i class="fa fa-user-check fa-lg"></i> User List</a>
@@ -98,8 +99,8 @@ $db->db_select_master($fUsername);
                     </li>
                     <li class="nav-item">
                         <div class="dropdown">
-                            <button id="dropdrop" class="btn btn-dark dropdown-toggle text-white" type="button" data-toggle="dropdown"><i class="fa fa-minus fa-lg"></i>       Expenses<span class="caret"></span>   </button>
-                            <ul class="dropdown-menu dropdown-menu-right bg-dark">
+                            <button id="dropdrop" class="btn btn-success dropdown-toggle text-white" type="button" data-toggle="dropdown"><i class="fa fa-minus fa-lg"></i>       Expenses<span class="caret"></span>   </button>
+                            <ul class="dropdown-menu dropdown-menu-right" id="dropdrop">
                                 <li class="nav-item active">
                                     <a class="nav-link text-white" href="new_expense.php"><i class="fa fa-minus-circle fa-lg"></i> New Expense</a>
                                     <a class="nav-link text-white" href="expenses.php"><i class="fa fa-minus-square fa-lg"></i> Expenses List</a>
@@ -111,8 +112,8 @@ $db->db_select_master($fUsername);
                         <a class="nav-link"></a>
                     </li>
                     <li class="dropdown">
-                        <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-list-alt fa-lg"></i>       Reports<span class="caret"></span>   </button>
-                        <ul class="dropdown-menu dropdown-menu-right bg-dark">
+                        <button id="dropdrop" class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-list-alt fa-lg"></i>       Reports<span class="caret"></span>   </button>
+                        <ul class="dropdown-menu dropdown-menu-right" id="dropdrop">
                             <li class="nav-item active">
                                 <a class="nav-link text-white" href="sales_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Sales Report</a>
                                 <a class="nav-link text-white" href="stock_report.php"><i class="fa fa-clipboard-check fa-lg"></i> Stock Report</a>
@@ -122,9 +123,9 @@ $db->db_select_master($fUsername);
                     </li>
                 </ul>
                 <div class="dropdown">
-                    <button id="dropdrop" class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-user-circle fa-lg"></i> <?php $db->get_fullname_login(); ?>
+                    <button id="dropdrop" class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown"><i class="fa fa-user-circle fa-lg"></i> <?php $db->get_fullname_login(); ?>
                         <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right bg-dark">
+                    <ul class="dropdown-menu dropdown-menu-right" id="dropdrop">
                         <li class="nav-item active">
                             <a class="nav-link text-white" href="includes/logout.php"><i class="fa fa-sign-out-alt fa-lg"></i> Logout</a>
                         </li>
@@ -140,15 +141,15 @@ $db->db_select_master($fUsername);
     <div class="col-md-3"></div>
     <div class="col-md-6">
         <form action="includes/add_expense.php" method="POST" class="needs-validation" novalidate>
-            <div class="card bg-dark">
-                <div class="card-header bg-dark">
+            <div class="card" id="bg-green">
+                <div class="card-header">
                     <h1 class="text-center text-white">New Expense</h1>
                 </div>
                 <div class="card-body" id="card_body">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <h3 class="">Expense</h3>
+                                <h3 id="font_green" class="">Expense</h3>
                                 <hr>
                                 <div class="form-group">
                                     <label id="lbl_Amount">Amount: </label>
@@ -168,7 +169,7 @@ $db->db_select_master($fUsername);
                     </div>
                 </div>
                 <div class="card-footer" id="card_footer">
-                    <button class="btn btn-block btn-dark" type="submit" id="btnInsert" name="buttonInsert">Insert</button>
+                    <button class="btn btn-block btn-success" type="submit" id="btnInsert" name="buttonInsert">Insert</button>
                 </div>
             </div>
         </form>

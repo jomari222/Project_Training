@@ -144,6 +144,7 @@ if(isset($_POST['buttonCancelOrder']))
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>JICSAM</title>
+    <link rel="shortcut icon" href="images/Jicsam-Logo_title.png" />
 
     <script src="js/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -164,17 +165,17 @@ if(isset($_POST['buttonCancelOrder']))
 <br>
 <div class="row">
     <div class="col-md-4">
-        <button class="btn btn-dark" type="submit" onclick="history.go(-1)" id="btnbacktocustomer" name="buttonbacktocustomer"><a class="fa fa-chevron-left fa-lg"></a> BACK</button>
+        <button class="btn btn-success" type="submit" onclick="history.go(-1)" id="btnbacktocustomer" name="buttonbacktocustomer"><a class="fa fa-chevron-left fa-lg"></a> BACK</button>
     </div>
 </div>
 <br>
 <hr>
 <div class="col-md-12 text-center">
     <h1 id="lblList" name=""><?php $db->get_fullname(); ?></h1>
-    <h1><?php $db->get_order_id_product_name(); ?></h1>
-    <h1>Total: <?php $db->price_bought(); ?></h1>
-    <h1>Credit: <?php $db->get_credit(); ?></h1>
-    <h1>Last Paid: <?php $db->get_last_date(); ?></h1>
+    <h1 id="font_green"><?php $db->get_order_id_product_name(); ?></h1>
+    <h1 id="font_green">Total: <?php $db->price_bought(); ?></h1>
+    <h1 id="font_green">Credit: <?php $db->get_credit(); ?></h1>
+    <h1 id="font_green">Last Paid: <?php $db->get_last_date(); ?></h1>
 </div>
 <hr>
 <div id="frmpopup_modify">
@@ -187,28 +188,28 @@ if(isset($_POST['buttonCancelOrder']))
                 <form class="" action="" method="post">
                     <?php if($db->order_id_delivery_date == '0000-00-00' && $db->cancelled == 0) { ?>
                         <div class="clearfix">
-                            <button name="buttonCancelOrder" type="submit" class="signupbtn">Cancel Order</button>
+                            <button name="buttonCancelOrder" type="submit" class="signupbtn btn btn-success">Cancel Order</button>
                         </div>
                     <?php } else { ?>
                         <div class="clearfix">
-                            <button name="buttonCancelOrder" type="submit" class="signupbtn" disabled>Cancel Order</button>
+                            <button name="buttonCancelOrder" type="submit" class="signupbtn btn btn-success" disabled>Cancel Order</button>
                         </div>
                     <?php } ?>
                     <hr style="width: 100%">
-                    <h1>Delivery</h1>
+                    <h1 id="font_green">Delivery</h1>
                     <hr>
                 </form>
                 <form class="" action="" method="post">
-                    <label><b>Date Delivered</b></label>
+                    <label id="font_green"><b>Date Delivered</b></label>
                     <?php if($db->order_id_delivery_date == '0000-00-00' && $db->cancelled == 0) { ?>
                         <input type="date" placeholder="Enter Date" name="txtDateDelivery" required>
                         <div class="clearfix">
-                            <button name="buttonDeliveryDone" type="submit" class="signupbtn">Done</button>
+                            <button name="buttonDeliveryDone" type="submit" class="btn btn-success">Done</button>
                         </div>
                     <?php } else { ?>
                         <input type="date" placeholder="Enter Date" name="txtDateDelivery" value="<?php echo $db->order_id_delivery_date; ?>" readonly>
                         <div class="clearfix">
-                            <button name="buttonDeliveryDone" type="submit" class="signupbtn" disabled>Done</button>
+                            <button name="buttonDeliveryDone" type="submit" class="btn btn-success" disabled>Done</button>
                         </div>
                     <?php } ?>
                 </form>
@@ -217,17 +218,17 @@ if(isset($_POST['buttonCancelOrder']))
         <div class="col-md-4">
             <form class="modal-content" action="" method="post">
                 <div class="container">
-                    <h1>Payment</h1>
+                    <h1 id="font_green">Payment</h1>
                     <hr>
-                    <label><b>Date Paid</b></label>
+                    <label id="font_green"><b>Date Paid</b></label>
                     <?php if($db->order_id_delivery_date != '0000-00-00' && $db->payment_received != $db->price_bought) { ?>
                         <input type="date" placeholder="Enter Date" name="txtDatePaid" required>
 
-                        <label><b>Amount</b></label>
+                        <label id="font_green"><b>Amount</b></label>
                         <input type="text" class="form-control" placeholder="Enter Amount" name="txtAmountPaid" required>
 
                         <div class="clearfix">
-                            <button name="buttonPaymentDone" type="submit" class="signupbtn">Done</button>
+                            <button name="buttonPaymentDone" type="submit" class="btn btn-success">Done</button>
                         </div>
                     <?php } else { ?>
                         <input type="date" placeholder="Enter Date" name="txtDatePaid" value="<?php echo $db->order_id_payment_date; ?>" readonly>
@@ -236,7 +237,7 @@ if(isset($_POST['buttonCancelOrder']))
                         <input type="text" class="form-control" placeholder="Enter Amount" name="txtAmountPaid" value="<?php echo $db->paid_amount; ?>" readonly>
 
                         <div class="clearfix">
-                            <button name="buttonPaymentDone" type="submit" class="signupbtn" disabled>Done</button>
+                            <button name="buttonPaymentDone" type="submit" class="btn btn-success" disabled>Done</button>
                         </div>
                     <?php } ?>
                 </div>
